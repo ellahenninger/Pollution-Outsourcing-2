@@ -1,0 +1,163 @@
+<table class="texreg" style="margin: 10px auto;border-collapse: collapse;border-spacing: 0px;color: #000000;border-top: 2px solid #000000;">
+<caption>Environmental Performance and Pollution Outsourcing</caption>
+<thead>
+<tr>
+<th>&nbsp;</th>
+<th style="padding-left: 5px;padding-right: 5px;border-bottom: 1px solid #000000;" colspan="4">PM2.5 (pop. weighted)</th>
+</tr>
+<tr>
+<th style="padding-left: 5px;padding-right: 5px;">&nbsp;</th>
+<th style="padding-left: 5px;padding-right: 5px;">Model 5</th>
+<th style="padding-left: 5px;padding-right: 5px;">Model 6</th>
+<th style="padding-left: 5px;padding-right: 5px;">Model 7</th>
+<th style="padding-left: 5px;padding-right: 5px;">Model 8</th>
+</tr>
+</thead>
+<tbody>
+<tr style="border-top: 1px solid #000000;">
+<td style="padding-left: 5px;padding-right: 5px;">Pollution Outsourcing</td>
+<td style="padding-left: 5px;padding-right: 5px;">0.02</td>
+<td style="padding-left: 5px;padding-right: 5px;">0.04<sup>&#42;&#42;&#42;</sup></td>
+<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
+<td style="padding-left: 5px;padding-right: 5px;">0.07<sup>&#42;&#42;&#42;</sup></td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
+<td style="padding-left: 5px;padding-right: 5px;">(0.01)</td>
+<td style="padding-left: 5px;padding-right: 5px;">(0.01)</td>
+<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
+<td style="padding-left: 5px;padding-right: 5px;">(0.01)</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">Democracy</td>
+<td style="padding-left: 5px;padding-right: 5px;">0.02</td>
+<td style="padding-left: 5px;padding-right: 5px;">0.11<sup>&#42;&#42;&#42;</sup></td>
+<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
+<td style="padding-left: 5px;padding-right: 5px;">0.04</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
+<td style="padding-left: 5px;padding-right: 5px;">(0.03)</td>
+<td style="padding-left: 5px;padding-right: 5px;">(0.04)</td>
+<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
+<td style="padding-left: 5px;padding-right: 5px;">(0.04)</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">Democracy x Pollution Outsourcing</td>
+<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
+<td style="padding-left: 5px;padding-right: 5px;">-0.07<sup>&#42;&#42;&#42;</sup></td>
+<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
+<td style="padding-left: 5px;padding-right: 5px;">-0.05<sup>&#42;&#42;&#42;</sup></td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
+<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
+<td style="padding-left: 5px;padding-right: 5px;">(0.02)</td>
+<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
+<td style="padding-left: 5px;padding-right: 5px;">(0.02)</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">Population</td>
+<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
+<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
+<td style="padding-left: 5px;padding-right: 5px;">0.30<sup>&#42;&#42;&#42;</sup></td>
+<td style="padding-left: 5px;padding-right: 5px;">0.33<sup>&#42;&#42;&#42;</sup></td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
+<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
+<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
+<td style="padding-left: 5px;padding-right: 5px;">(0.03)</td>
+<td style="padding-left: 5px;padding-right: 5px;">(0.03)</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">GDP per capita</td>
+<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
+<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
+<td style="padding-left: 5px;padding-right: 5px;">0.34<sup>&#42;&#42;&#42;</sup></td>
+<td style="padding-left: 5px;padding-right: 5px;">0.31<sup>&#42;&#42;&#42;</sup></td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
+<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
+<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
+<td style="padding-left: 5px;padding-right: 5px;">(0.08)</td>
+<td style="padding-left: 5px;padding-right: 5px;">(0.08)</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">GDP per capita squ.</td>
+<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
+<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
+<td style="padding-left: 5px;padding-right: 5px;">-0.02<sup>&#42;&#42;&#42;</sup></td>
+<td style="padding-left: 5px;padding-right: 5px;">-0.01<sup>&#42;&#42;&#42;</sup></td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
+<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
+<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
+<td style="padding-left: 5px;padding-right: 5px;">(0.01)</td>
+<td style="padding-left: 5px;padding-right: 5px;">(0.01)</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">Constant</td>
+<td style="padding-left: 5px;padding-right: 5px;">3.45<sup>&#42;&#42;&#42;</sup></td>
+<td style="padding-left: 5px;padding-right: 5px;">3.41<sup>&#42;&#42;&#42;</sup></td>
+<td style="padding-left: 5px;padding-right: 5px;">-3.10<sup>&#42;&#42;&#42;</sup></td>
+<td style="padding-left: 5px;padding-right: 5px;">-3.45<sup>&#42;&#42;&#42;</sup></td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
+<td style="padding-left: 5px;padding-right: 5px;">(0.03)</td>
+<td style="padding-left: 5px;padding-right: 5px;">(0.03)</td>
+<td style="padding-left: 5px;padding-right: 5px;">(0.49)</td>
+<td style="padding-left: 5px;padding-right: 5px;">(0.50)</td>
+</tr>
+<tr style="border-top: 1px solid #000000;">
+<td style="padding-left: 5px;padding-right: 5px;">Controls</td>
+<td style="padding-left: 5px;padding-right: 5px;">\xmark</td>
+<td style="padding-left: 5px;padding-right: 5px;">\ding{51}</td>
+<td style="padding-left: 5px;padding-right: 5px;">\ding{51}</td>
+<td style="padding-left: 5px;padding-right: 5px;">\ding{51}</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">Country-FE</td>
+<td style="padding-left: 5px;padding-right: 5px;">\ding{51}</td>
+<td style="padding-left: 5px;padding-right: 5px;">\ding{51}</td>
+<td style="padding-left: 5px;padding-right: 5px;">\ding{51}</td>
+<td style="padding-left: 5px;padding-right: 5px;">\ding{51}</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">Year-FE</td>
+<td style="padding-left: 5px;padding-right: 5px;">\ding{51}</td>
+<td style="padding-left: 5px;padding-right: 5px;">\ding{51}</td>
+<td style="padding-left: 5px;padding-right: 5px;">\ding{51}</td>
+<td style="padding-left: 5px;padding-right: 5px;">\ding{51}</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">R<sup>2</sup></td>
+<td style="padding-left: 5px;padding-right: 5px;">0.97</td>
+<td style="padding-left: 5px;padding-right: 5px;">0.97</td>
+<td style="padding-left: 5px;padding-right: 5px;">0.97</td>
+<td style="padding-left: 5px;padding-right: 5px;">0.97</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">Adj. R<sup>2</sup></td>
+<td style="padding-left: 5px;padding-right: 5px;">0.96</td>
+<td style="padding-left: 5px;padding-right: 5px;">0.96</td>
+<td style="padding-left: 5px;padding-right: 5px;">0.97</td>
+<td style="padding-left: 5px;padding-right: 5px;">0.97</td>
+</tr>
+<tr style="border-bottom: 2px solid #000000;">
+<td style="padding-left: 5px;padding-right: 5px;">Num. obs.</td>
+<td style="padding-left: 5px;padding-right: 5px;">2823</td>
+<td style="padding-left: 5px;padding-right: 5px;">2823</td>
+<td style="padding-left: 5px;padding-right: 5px;">2747</td>
+<td style="padding-left: 5px;padding-right: 5px;">2747</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="font-size: 0.8em;" colspan="5"><sup>&#42;&#42;&#42;</sup>p &lt; 0.01; <sup>&#42;&#42;</sup>p &lt; 0.05; <sup>&#42;</sup>p &lt; 0.1</td>
+</tr>
+</tfoot>
+</table>
