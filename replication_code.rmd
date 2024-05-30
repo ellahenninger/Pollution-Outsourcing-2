@@ -12,6 +12,8 @@ output:
 This R-Markdown file replicates all analyses and figures included in the paper "What Makes Democracies Greener? The Role of Pollution Offshoring" by Tobias Böhmelt, Ella Henninger, and Thomas Bernauer.
 
 ## Data
+ - **Outsourcing data**: Presberger and Bernauer (2023), https://www.sciencedirect.com/science/article/pii/S0959378023000031?via%3Dihub
+ - **Pollution data**: Van Donkelaar et al. (2021), https://pubs.acs.org/doi/full/10.1021/acs.est.1c05309
  - **Main data**: Quality of Governance database (QoG), https://www.gu.se/en/quality-government/qog-data
  - **Economic data**: World Development Indicators (2023), https://databank.worldbank.org/source/world-development-indicators#
  - **Democracy data**: V-Dem (2023), https://www.v-dem.net/data/the-v-dem-dataset/
@@ -35,7 +37,8 @@ This R-Markdown file replicates all analyses and figures included in the paper "
 
 5. Quantities of interest
 5.1 Simulated interaction term and marginal effects
-5.2 Expected values outsourcing & first difference: high/low democracy
+5.2 Expected values outsourcing & first difference: Model group 1
+5.3 Expected values & first differences PM2.5: Model group 2
 
 6. Robustness checks
 6.1 Replacing DV with ecological footprint data
@@ -193,7 +196,7 @@ data_s <- dplyr::select(data, "cname", "ccode", "year", "ccodealp",
                               "log_pop", "log_pop_den", "fh_cl", "fh_fog",
                               "cf_bw_pop_mean_outs", "cf_en_pop_mean_outs", "cf_lu_pop_mean_outs", "cf_mf_pop_mean_outs",
                               "dr_pg", "fh_status", "env_treaties",  "wdi_trade",
-                              "p_polity2", "vdem_partip", "vdem_delibdem")
+                              "p_polity2", "vdem_partip", "vdem_delibdem", "wdi_gdpind")
 
 ```
 
@@ -207,8 +210,8 @@ data_s <- dplyr::select(data, "cname", "ccode", "year", "ccodealp",
 #-------------------------------------------------------------------------------
 # Table: Summary statistics
 #-------------------------------------------------------------------------------
-# data_descript <- data_s[which(!is.na(data_s$log_cc_outs) &
-#                               data_s$log_ef_carb != -Inf),]
+data_descript <- data_s[which(!is.na(data_s$log_cc_outs) &
+                              data_s$log_ef_carb != -Inf),]
 # 
 # options("modelsummary_format_numeric_latex" = "plain")
 # datasummary(formula = (`Pollution Outsourcing` = cf_cc_pop_mean_outs) + (`ln(Pollution Outsourcing)` = log_cc_outs) +
@@ -224,7 +227,7 @@ data_s <- dplyr::select(data, "cname", "ccode", "year", "ccodealp",
 #             title = "Summary statistics",
 #             data = data_descript,
 #             output = "latex")
-summary(data_s$log_cc_outs)
+
 ```
 
 ## Correlations
@@ -236,7 +239,7 @@ summary(data_s$log_cc_outs)
 #-------------------------------------------------------------------------------
 data_cor <- data_descript[,c("log_cc_outs", "log_pm25_pop", "log_wdi_co2", "log_ef_carb",
                              "vdem_polyarchy", "log_gdp", "log_gdp_pc", "log_pop", 
-                             "fh_cl", "p_polity2", "wdi_trade", "env_treaties", "dr_pg")]
+                             "fh_cl", "p_polity2", "wdi_trade", "env_treaties", "dr_pg", "wdi_gdpind")]
 
 data_cor <- na.omit(data_cor)
 
@@ -280,24 +283,26 @@ m1_outsource <- lm(log_cc_outs ~ vdem_polyarchy +
 #-------------------------------------------------------------------------------
 # Controls
 #-------------------------------------------------------------------------------
-m2_c <- lm(log_cc_outs ~ log_pop + log_gdp_pc + log_gdp_pc_sq +
+m2_c <- lm(log_cc_outs ~ log_pop + log_gdp_pc + log_gdp_pc_sq + # wdi_trade + wdi_gdpind + 
                       as.factor(year) + as.factor(ccode),
                      data = data_s[which(!is.na(data_s$vdem_polyarchy)),])
 
 #-------------------------------------------------------------------------------
 # Base model + controls
 #-------------------------------------------------------------------------------
-m3_outsource_c <- lm(log_cc_outs ~ vdem_polyarchy + log_pop + log_gdp_pc + log_gdp_pc_sq + 
+m3_outsource_c <- lm(log_cc_outs ~ vdem_polyarchy + log_pop + log_gdp_pc + log_gdp_pc_sq + # wdi_trade + wdi_gdpind +
                       as.factor(year) + as.factor(ccode),
                      data = data_s)
 
 #-------------------------------------------------------------------------------
 # Base model + controls + restriction
 #-------------------------------------------------------------------------------
-m4_restricted_c <- lm(log_cc_outs ~ vdem_polyarchy + log_pop + log_gdp_pc + log_gdp_pc_sq +
+m4_restricted_c <- lm(log_cc_outs ~ vdem_polyarchy + log_pop + log_gdp_pc + log_gdp_pc_sq + # wdi_trade + wdi_gdpind
                        as.factor(year) + as.factor(ccode),
                       data = data_s[which(!is.na(data_s$log_pm25_pop)),])
 
+stargazer(list(m1_outsource, m2_c, m3_outsource_c, m4_restricted_c), 
+          type = "text", omit = c("ccode", "year"))
 
 ## Output
 htmlreg(list(m1_outsource, m2_c, m3_outsource_c, m4_restricted_c),
@@ -361,7 +366,7 @@ m6_out_dem_int <- lm(log_pm25_pop ~ log_cc_outs + vdem_polyarchy +
 #-------------------------------------------------------------------------------
 # Base model + controls
 #-------------------------------------------------------------------------------
-m7_c <- lm(log_pm25_pop ~ log_pop + log_gdp_pc + log_gdp_pc_sq +
+m7_c <- lm(log_pm25_pop ~ log_pop + log_gdp_pc + log_gdp_pc_sq + # wdi_trade + wdi_gdpind + 
             as.factor(year) + as.factor(ccode),
            data = data_s[which(!is.na(data_s$log_pm25_pop) &
                                !is.na(data_s$log_cc_outs) &
@@ -372,9 +377,12 @@ m7_c <- lm(log_pm25_pop ~ log_pop + log_gdp_pc + log_gdp_pc_sq +
 #-------------------------------------------------------------------------------
 m8_out_dem_int_c <- lm(log_pm25_pop ~ log_cc_outs + vdem_polyarchy + 
                         log_cc_outs*vdem_polyarchy +
-                        log_pop + log_gdp_pc + log_gdp_pc_sq +
+                        log_pop + log_gdp_pc + log_gdp_pc_sq + # wdi_trade + wdi_gdpind + 
                         as.factor(year) + as.factor(ccode),
                        data = data_s)
+
+stargazer(list(m5_out_dem, m6_out_dem_int, m7_c, m8_out_dem_int_c), 
+          type = "text", omit = c("ccode", "year"))
 
 ## Output
 htmlreg(list(m5_out_dem, m6_out_dem_int, m7_c, m8_out_dem_int_c),
@@ -472,9 +480,9 @@ dev.off()
 # library(ggExtra)
 # library(cowplot)
 # 
-# base_plot <- 
-#   plot_cme(m6_out_dem_int, 
-#          variables = "log_cc_outs", 
+# base_plot <-
+#   plot_cme(m8_out_dem_int_c,
+#          variables = "log_cc_outs",
 #          condition = "vdem_polyarchy",
 #          conf_level = 0.95) +
 # ggtitle("Marginal Effect at the Mean of Pollution Outsourcing") +
@@ -491,7 +499,7 @@ dev.off()
 # # Create the histogram plot for the x-axis variable
 # hist_plot <- ggplot(data_s, aes(x = vdem_polyarchy)) +
 #   geom_histogram(bins = 30, fill = viridis(1, alpha = 0.25), color = viridis(1, alpha = 0.75)) +
-#   theme_void() 
+#   theme_void()
 # 
 # # Combine the base plot and histogram plot using cowplot
 # combined_plot <- ggdraw() +
@@ -532,6 +540,27 @@ interplot(m8_out_dem_int_c,
         panel.background = element_blank())
 
 dev.off()
+
+
+## Alternatively
+library(margins)
+library(broom)
+library(ggExtra)
+
+meff <- margins(m8_out_dem_int_c, variables = "log_cc_outs", at = list(vdem_polyarchy = seq(0.016, 0.926, length.out = 30)))
+meff_df <- as.data.frame(summary(meff))
+
+p <- ggplot(meff_df, aes(x = vdem_polyarchy, y = AME)) +
+  geom_line() +
+  geom_ribbon(aes(ymin = AME - 1.96 * SE, ymax = AME + 1.96 * SE), alpha = 0.2) +
+  labs(x = "Democracy (vdem_polyarchy)", y = "Marginal Effect of Pollution Outsourcing", 
+       title = "Marginal Effect of Pollution Outsourcing on Pollution") +
+  theme_minimal()
+
+# Add the marginal histogram
+p_with_hist <- ggMarginal(p, type = "histogram", margins = "x", size = 5, bins = 30, fill = "blue", alpha = 0.5)
+
+print(p)
 
 ```
 
@@ -828,8 +857,8 @@ for(sim in 1:nsim){
 
 #-------------------------------------------------------------------------------
 # Determine "reasonable" variation of outsourcing
-range_outsource <- aggregate(data_ova$log_cc_outs,
-                             by = list(data_ova$cname),
+range_outsource <- aggregate(data_ova2$log_cc_outs,
+                             by = list(data_ova2$cname),
                              FUN = range)
 
 names(range_outsource) <- c("country", "range")
@@ -846,6 +875,28 @@ max_outsource <- range_outsource$range[,2][which.max(range_outsource$diff)]
 
 
 #-------------------------------------------------------------------------------
+# Determine "reasonable" variation of dem
+range_dem2 <- aggregate(data_ova2$vdem_polyarchy,
+                        by = list(data_ova2$cname),
+                        FUN = range)
+
+names(range_dem2) <- c("country", "range")
+
+# get the difference
+range_dem2$diff <- range_dem2$range[,2]- range_dem2$range[,1]
+
+# get the respective country
+max_range_dem_country2 <- range_dem2$country[which.max(range_dem2$diff)]
+
+# and the respective values (min and max > used for setting the scenario)
+min_dem2 <- range_dem2$range[,1][which.max(range_dem2$diff)]
+max_dem2 <- range_dem2$range[,2][which.max(range_dem2$diff)]
+
+range_dem2 <- as.vector(seq(min_dem, max_dem, length.out = 30))
+
+
+
+#-------------------------------------------------------------------------------
 ## Create empty matrix to store the scenarios
 cases2 <- array(NA, 
                 c(dim(X2), 4))
@@ -857,24 +908,24 @@ cases2[,,] <- X2
 colnames(cases2) <- names(beta_hat2)
 
 ## Case 1: min dem & min outsource
-cases2[ ,"vdem_polyarchy", 1] <- min_dem
+cases2[ ,"vdem_polyarchy", 1] <- min_dem2
 cases2[ ,"log_cc_outs", 1] <- min_outsource
-cases2[ ,"log_cc_outs:vdem_polyarchy", 1] <- min_dem*min_outsource
+cases2[ ,"log_cc_outs:vdem_polyarchy", 1] <- min_dem2*min_outsource
 
 ## Case 2: min dem & max outsource
-cases2[ ,"vdem_polyarchy", 2] <- min_dem
+cases2[ ,"vdem_polyarchy", 2] <- min_dem2
 cases2[ ,"log_cc_outs", 2] <- max_outsource
-cases2[ ,"log_cc_outs:vdem_polyarchy", 2] <- min_dem*max_outsource
+cases2[ ,"log_cc_outs:vdem_polyarchy", 2] <- min_dem2*max_outsource
 
 ## Case 3: max dem & min outsource
-cases2[ ,"vdem_polyarchy", 3] <- max_dem
+cases2[ ,"vdem_polyarchy", 3] <- max_dem2
 cases2[ ,"log_cc_outs", 3] <- min_outsource
-cases2[ ,"log_cc_outs:vdem_polyarchy", 3] <- max_dem*min_outsource
+cases2[ ,"log_cc_outs:vdem_polyarchy", 3] <- max_dem2*min_outsource
 
 ## Case 4: max dem & max outsource
-cases2[ ,"vdem_polyarchy", 4] <- max_dem
+cases2[ ,"vdem_polyarchy", 4] <- max_dem2
 cases2[ ,"log_cc_outs", 4] <- max_outsource
-cases2[ ,"log_cc_outs:vdem_polyarchy", 4] <- max_dem*max_outsource
+cases2[ ,"log_cc_outs:vdem_polyarchy", 4] <- max_dem2*max_outsource
 
 
 #-------------------------------------------------------------------------------
@@ -899,7 +950,7 @@ E_Y_c_hat2 <- matrix(NA, nrow = 4, ncol = 1)
 
 for(i in 1:4){                                       # four rounds (for scenarios)
   ev_point <- beta_hat2 %*% t(cases2[,,i])           # use beta_hat (not simulated)
-  ev_point_plus_gamma <- ev_point + 1/2*sigma_hat^2  # use sigma_hat (not simulated)
+  ev_point_plus_gamma <- ev_point + 1/2*sigma_hat2^2 # use sigma_hat (not simulated)
   ev_point_transf <- exp(ev_point_plus_gamma)        # transform
   ev_point_transf_m <- ev_point_transf               # E(y)
   tmp_val_point <- apply(ev_point_transf_m, 1, mean) # now average results
@@ -1323,22 +1374,6 @@ stargazer(list(m3_add_int, m3_add_c, m3_add_int_c),
 
 ``` 
 
-## FDI >= 0
-
-```{r FDI restricted}
-
-#-------------------------------------------------------------------------------
-# Base model + interaction
-#-------------------------------------------------------------------------------
-m3_ind_int_restr <- lm(log_wdi_co2 ~ lag_log_wdi_co2 + export_fdi_index + vdem_polyarchy + 
-                         export_fdi_index * vdem_polyarchy + 
-                         as.factor(year) + as.factor(ccode),
-                       data = data_s[which(data_s$wdi_fdiin >= 0),])
-
-stargazer(m3_ind_int_restr, type = "text", omit = c("ccode", "year"))
-
-```
-
 ## No lagged DV
 
 ```{r no lagged DV}
@@ -1430,147 +1465,3 @@ model_re <- plm(log_wdi_co2 ~ lag_log_wdi_co2 + export_fdi_index + vdem_polyarch
 summary(model_re)
 ```
 
-## Random subsample
-
-```{r subsample}
-
-#-------------------------------------------------------------------------------
-# Random subsample
-#-------------------------------------------------------------------------------
-
-## get data used for estimation
-data_sample <- data_s[which(data_s$export_fdi_index %in% m3_ind_int$model$export_fdi_index),]
-
-## create empty storage object
-subsamples <- list()
-
-## set seed
-set.seed(19961910)
-seeds <- rpois(10, 100)
-
-## get 10 random subsamples of size 1500
-for(i in 1:length(seeds)){
- set.seed(seeds[i])
- subsamples[[i]] <- data_sample[sample(1:nrow(data_sample), 1500), ] ## randomly selected rows
-}
-
-
-#-------------------------------------------------------------------------------
-# Run model
-#-------------------------------------------------------------------------------
-
-## create empty storage object
-reg_subsamples <- list()
-
-for(i in 1:10){
-reg_subsamples[[i]] <- lm(log_wdi_co2 ~ lag_log_wdi_co2 + export_fdi_index + vdem_polyarchy + 
-                           export_fdi_index * vdem_polyarchy + 
-                           as.factor(year) + as.factor(ccode),
-                          data = subsamples[[i]])
-}
-
-## extract relevant beta coefficients and standard errors
-mod_summary <- list()
-int_est <- matrix(NA,
-                    nrow = 10,
-                    ncol = 2)
-
-## identify interaction term
-number_coefs <- c()
-
-for(i in 1:10){
-number_coefs[i] <- nrow(summary(reg_subsamples[[i]])$coefficients)
-}
-
-## loop through the 10 regressions and extract
-for(i in 1:10){
-  mod_summary[[i]] <- summary(reg_subsamples[[i]])
-  int_est[i,1:2] <- mod_summary[[i]]$coefficients[number_coefs[i],1:2]
-}
-
-## add column names
-colnames(int_est)[1:2] <- c("Est.", "SE")
-
-## get sampling distributions of coefficients
-set.seed(123456)
-nsim <- 1000
-sim_int <- matrix(NA,
-                    ncol = nrow(int_est),
-                    nrow = nsim)
-
-for(j in 1:nrow(int_est)){
-  sim_int[,j] <- rnorm(n = nsim,
-                         mean = int_est[j,1],
-                         sd = int_est[j,2])
-}
-
-## get point estimates & CIs
-res_int <- matrix(NA,
-                    ncol = 3,
-                    nrow = nrow(int_est))
-
-for(i in 1:nrow(int_est)){
-  res_int[i,] <- quantile(x = sim_int[,i],
-                          probs =  c(0.025, 0.5, 0.975))
-}
-
-## add column names
-colnames(res_int)[1:3] <- c("CI_low", "Est", "CI_up")
-res_int <- as.data.frame(res_int)
-
-
-#-------------------------------------------------------------------------------
-# Plot the data
-#-------------------------------------------------------------------------------
-color_est <- ifelse(res_int$CI_low > 0 & res_int$CI_up < 0|
-                    res_int$CI_low < 0 & res_int$CI_up > 0,
-                    "darkgrey", viridis(3)[1])
-
-color_ci <- ifelse(res_int$CI_low > 0 & res_int$CI_up < 0|
-                   res_int$CI_low < 0 & res_int$CI_up > 0,
-                   "darkgrey", viridis(3, alpha = 0.4)[1]) 
-
-
-pdf("plots/subsamples.pdf")
-
-par(mar = c(5.1, 4.1, 2.5, 2.1)) # c(bottom, left, top, right))
-
-plot(y = rev(c(0.2,0.4, 0.6, 0.8, 1, 1.2,
-               1.4, 1.6, 1.8, 2)),
-     x = res_int$Est,
-     col = color_est,
-     ylim = c(0,2.2),
-     xlim = c(-0.2,0.3),
-     xlab = "Interaction Export-FDI x Democracy",
-     pch = 19,
-     main = NULL, 
-     bty = "n",
-     ylab = "",
-     yaxt = "n",
-     cex = 1.5,
-     cex.lab = 1.1)
-
-segments(y0 = rev(c(0.2,0.4, 0.6, 0.8, 1, 1.2,
-                1.4, 1.6, 1.8, 2)), 
-         y1 = rev(c(0.2,0.4, 0.6, 0.8, 1, 1.2,
-                1.4, 1.6, 1.8, 2)), 
-         x0 = res_int$CI_low,
-         x1 = res_int$CI_up,
-         col = color_ci,
-         lwd = 4, cex = 1.5, lend = 1)
-
-text(x = 0.18,
-     y = rev(c(0.2,0.4, 0.6, 0.8, 1, 1.2,
-           1.4, 1.6, 1.8, 2)),
-     labels = c("1. subsample", "2. subsample",
-                "3. subsample", "4. subsample", "5. subsample", "6. subsample",
-                "7. subsample", "8. subsample", "9. subsample", "10. subsample"),
-     cex = 1)
-
-segments(x0 = 0, y0 = 0,
-         x1 = 0, y1 = 2.5,
-         lty = "dashed", lwd = 2)
-
-dev.off()
-
-```
