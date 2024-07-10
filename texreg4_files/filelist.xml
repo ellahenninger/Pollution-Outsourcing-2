@@ -1,10 +1,6 @@
 <xml xmlns:o="urn:schemas-microsoft-com:office:office">
- <o:MainFile HRef="../texreg1.doc"/>
+ <o:MainFile HRef="../texreg4.doc"/>
  <o:File HRef="themedata.thmx"/>
  <o:File HRef="colorschememapping.xml"/>
- <o:File HRef="image001.png"/>
- <o:File HRef="image002.png"/>
- <o:File HRef="image003.jpg"/>
- <o:File HRef="image004.jpg"/>
  <o:File HRef="filelist.xml"/>
 </xml>
