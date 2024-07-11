@@ -16,19 +16,19 @@ xmlns="http://www.w3.org/TR/REC-html40">
   <o:Author>Henninger  Ella</o:Author>
   <o:LastAuthor>Henninger  Ella</o:LastAuthor>
   <o:Revision>2</o:Revision>
-  <o:Created>2024-07-09T12:42:00Z</o:Created>
-  <o:LastSaved>2024-07-09T12:45:00Z</o:LastSaved>
+  <o:Created>2024-07-10T16:04:00Z</o:Created>
+  <o:LastSaved>2024-07-10T16:08:00Z</o:LastSaved>
   <o:Pages>1</o:Pages>
-  <o:Words>161</o:Words>
-  <o:Characters>937</o:Characters>
-  <o:Bytes>10096</o:Bytes>
-  <o:Lines>156</o:Lines>
-  <o:Paragraphs>121</o:Paragraphs>
-  <o:CharactersWithSpaces>977</o:CharactersWithSpaces>
+  <o:Words>209</o:Words>
+  <o:Characters>1206</o:Characters>
+  <o:Bytes>13687</o:Bytes>
+  <o:Lines>241</o:Lines>
+  <o:Paragraphs>157</o:Paragraphs>
+  <o:CharactersWithSpaces>1258</o:CharactersWithSpaces>
   <o:Version>16.00</o:Version>
  </o:DocumentProperties>
  <o:CustomDocumentProperties>
-  <o:GrammarlyDocumentId dt:dt="string">904454174d28fe619a9c6958587088ecf8c96ee9705ac1dcf1082e7ca651a2c3</o:GrammarlyDocumentId>
+  <o:GrammarlyDocumentId dt:dt="string">68561042781228d0c3e21e2b9ca939288e2bce8fdc6bf39b847d95925e06f059</o:GrammarlyDocumentId>
  </o:CustomDocumentProperties>
  <o:OfficeDocumentSettings>
   <o:AllowPNG/>
@@ -39,7 +39,7 @@ xmlns="http://www.w3.org/TR/REC-html40">
 <!--[if gte mso 9]><xml>
  <w:WordDocument>
   <w:View>Print</w:View>
-  <w:Zoom>131</w:Zoom>
+  <w:Zoom>81</w:Zoom>
   <w:SpellingState>Clean</w:SpellingState>
   <w:GrammarState>Clean</w:GrammarState>
   <w:TrackMoves>false</w:TrackMoves>
@@ -682,6 +682,12 @@ p.msonormal0, li.msonormal0, div.msonormal0
 	font-family:"Times New Roman",serif;
 	mso-fareast-font-family:"Times New Roman";
 	mso-fareast-theme-font:minor-fareast;}
+span.SpellE
+	{mso-style-name:"";
+	mso-spl-e:yes;}
+span.GramE
+	{mso-style-name:"";
+	mso-gram-e:yes;}
 .MsoChpDefault
 	{mso-style-type:export-only;
 	mso-default-props:yes;
@@ -733,798 +739,1081 @@ div.WordSection1
  mso-yfti-tbllook:1184'>
  <thead>
   <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
-   <td colspan=4 style='border:none;border-bottom:solid windowtext 1.0pt;
+   <td colspan=5 style='border:none;border-bottom:solid windowtext 1.0pt;
    mso-border-bottom-alt:solid windowtext .5pt;padding:.75pt .75pt .75pt .75pt'>
-   <p class=MsoNormal align=center style='margin-bottom:6.0pt;text-align:center'><a
-   name="_Hlk171428739"><b><span style='mso-fareast-font-family:"Times New Roman";
+   <p class=MsoNormal align=center style='margin-top:7.5pt;margin-right:0cm;
+   margin-bottom:7.5pt;margin-left:0cm;text-align:center'><a
+   name="_Hlk171527264"><b><span style='mso-fareast-font-family:"Times New Roman";
    color:black'>Table 2: Environmental Performance and Pollution Outsourcing<o:p></o:p></span></b></a></p>
    </td>
-   <span style='mso-bookmark:_Hlk171428739'></span>
+   <span style='mso-bookmark:_Hlk171527264'></span>
   </tr>
   <tr style='mso-yfti-irow:1'>
    <td style='border:none;border-bottom:solid windowtext 1.0pt;mso-border-top-alt:
    solid windowtext .5pt;mso-border-top-alt:solid windowtext .5pt;mso-border-bottom-alt:
    solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
    <p class=MsoNormal align=center style='text-align:center'><span
-   style='mso-bookmark:_Hlk171428739'><b><span style='mso-fareast-font-family:
+   style='mso-bookmark:_Hlk171527264'><b><span style='mso-fareast-font-family:
    "Times New Roman";color:black'>&nbsp;<o:p></o:p></span></b></span></p>
    </td>
-   <span style='mso-bookmark:_Hlk171428739'></span>
+   <span style='mso-bookmark:_Hlk171527264'></span>
    <td style='border:none;border-bottom:solid windowtext 1.0pt;mso-border-top-alt:
    solid windowtext .5pt;mso-border-top-alt:solid windowtext .5pt;mso-border-bottom-alt:
    solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
    <p class=MsoNormal align=center style='text-align:center'><span
-   style='mso-bookmark:_Hlk171428739'><b><span style='mso-fareast-font-family:
+   style='mso-bookmark:_Hlk171527264'><b><span style='mso-fareast-font-family:
    "Times New Roman";color:black'>Model 5<o:p></o:p></span></b></span></p>
    </td>
-   <span style='mso-bookmark:_Hlk171428739'></span>
+   <span style='mso-bookmark:_Hlk171527264'></span>
    <td style='border:none;border-bottom:solid windowtext 1.0pt;mso-border-top-alt:
    solid windowtext .5pt;mso-border-top-alt:solid windowtext .5pt;mso-border-bottom-alt:
    solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
    <p class=MsoNormal align=center style='text-align:center'><span
-   style='mso-bookmark:_Hlk171428739'><b><span style='mso-fareast-font-family:
+   style='mso-bookmark:_Hlk171527264'><b><span style='mso-fareast-font-family:
    "Times New Roman";color:black'>Model 6<o:p></o:p></span></b></span></p>
    </td>
-   <span style='mso-bookmark:_Hlk171428739'></span>
+   <span style='mso-bookmark:_Hlk171527264'></span>
    <td style='border:none;border-bottom:solid windowtext 1.0pt;mso-border-top-alt:
    solid windowtext .5pt;mso-border-top-alt:solid windowtext .5pt;mso-border-bottom-alt:
    solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
    <p class=MsoNormal align=center style='text-align:center'><span
-   style='mso-bookmark:_Hlk171428739'><b><span style='mso-fareast-font-family:
+   style='mso-bookmark:_Hlk171527264'><b><span style='mso-fareast-font-family:
    "Times New Roman";color:black'>Model 7<o:p></o:p></span></b></span></p>
    </td>
-   <span style='mso-bookmark:_Hlk171428739'></span>
+   <span style='mso-bookmark:_Hlk171527264'></span>
+   <td style='border:none;border-bottom:solid windowtext 1.0pt;mso-border-top-alt:
+   solid windowtext .5pt;mso-border-top-alt:solid windowtext .5pt;mso-border-bottom-alt:
+   solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
+   <p class=MsoNormal align=center style='text-align:center'><span
+   style='mso-bookmark:_Hlk171527264'><b><span style='mso-fareast-font-family:
+   "Times New Roman";color:black'>Model 8<o:p></o:p></span></b></span></p>
+   </td>
+   <span style='mso-bookmark:_Hlk171527264'></span>
   </tr>
  </thead>
  <tr style='mso-yfti-irow:2'>
   <td style='border:none;mso-border-top-alt:solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
   style='mso-fareast-font-family:"Times New Roman";color:black'>Pollution
   Outsourcing (Within)<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
   <td style='border:none;mso-border-top-alt:solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
   style='mso-fareast-font-family:"Times New Roman";color:black'>0.07<sup>***</sup><o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
   <td style='border:none;mso-border-top-alt:solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>0.09<sup>***</sup><o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;mso-border-top-alt:solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
   style='mso-fareast-font-family:"Times New Roman";color:black'>&nbsp;<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
   <td style='border:none;mso-border-top-alt:solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>0.03<sup>***</sup><o:p></o:p></span></span></p>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>0.04<sup>***</sup><o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
  </tr>
  <tr style='mso-yfti-irow:3'>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
   style='mso-fareast-font-family:"Times New Roman";color:black'>&nbsp;<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
   style='mso-fareast-font-family:"Times New Roman";color:black'>(0.01)<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>(0.01)<o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
   style='mso-fareast-font-family:"Times New Roman";color:black'>&nbsp;<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
   style='mso-fareast-font-family:"Times New Roman";color:black'>(0.01)<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
  </tr>
  <tr style='mso-yfti-irow:4'>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
   style='mso-fareast-font-family:"Times New Roman";color:black'>Pollution
   Outsourcing (Between)<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
   style='mso-fareast-font-family:"Times New Roman";color:black'>0.22<sup>***</sup><o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>0.30<sup>***</sup><o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
   style='mso-fareast-font-family:"Times New Roman";color:black'>&nbsp;<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>-0.05<o:p></o:p></span></span></p>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>0.02<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
  </tr>
  <tr style='mso-yfti-irow:5'>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
   style='mso-fareast-font-family:"Times New Roman";color:black'>&nbsp;<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
   style='mso-fareast-font-family:"Times New Roman";color:black'>(0.03)<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>(0.08)<o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
   style='mso-fareast-font-family:"Times New Roman";color:black'>&nbsp;<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>(0.04)<o:p></o:p></span></span></p>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>(0.05)<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
  </tr>
  <tr style='mso-yfti-irow:6'>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
   style='mso-fareast-font-family:"Times New Roman";color:black'>Democracy
   (Within)<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
   style='mso-fareast-font-family:"Times New Roman";color:black'>0.17<sup>***</sup><o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>0.25<sup>***</sup><o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
   style='mso-fareast-font-family:"Times New Roman";color:black'>&nbsp;<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>0.14<sup>***</sup><o:p></o:p></span></span></p>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>0.21<sup>***</sup><o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
  </tr>
  <tr style='mso-yfti-irow:7'>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
   style='mso-fareast-font-family:"Times New Roman";color:black'>&nbsp;<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
   style='mso-fareast-font-family:"Times New Roman";color:black'>(0.03)<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>(0.03)<o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
   style='mso-fareast-font-family:"Times New Roman";color:black'>&nbsp;<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>(0.02)<o:p></o:p></span></span></p>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>(0.03)<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
  </tr>
  <tr style='mso-yfti-irow:8'>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
   style='mso-fareast-font-family:"Times New Roman";color:black'>Democracy
   (Between)<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>0.60<sup>**</sup><o:p></o:p></span></span></p>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>0.62<sup>**</sup><o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>0.97<sup>**</sup><o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
   style='mso-fareast-font-family:"Times New Roman";color:black'>&nbsp;<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>-0.75<sup>***</sup><o:p></o:p></span></span></p>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>-0.41<sup>*</sup><o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
  </tr>
  <tr style='mso-yfti-irow:9'>
-  <td style='border:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:
-  solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
   style='mso-fareast-font-family:"Times New Roman";color:black'>&nbsp;<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
-  <td style='border:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:
-  solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
   style='mso-fareast-font-family:"Times New Roman";color:black'>(0.25)<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
-  <td style='border:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:
-  solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>(0.40)<o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
   style='mso-fareast-font-family:"Times New Roman";color:black'>&nbsp;<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
-  <td style='border:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:
-  solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>(0.14)<o:p></o:p></span></span></p>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>(0.22)<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
  </tr>
  <tr style='mso-yfti-irow:10'>
-  <td style='border:none;mso-border-top-alt:solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>Population
-  (Within)<o:p></o:p></span></span></p>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>Democracy x
+  Pollution Outsourcing (W)<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
-  <td style='border:none;mso-border-top-alt:solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
   style='mso-fareast-font-family:"Times New Roman";color:black'>&nbsp;<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
-  <td style='border:none;mso-border-top-alt:solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>0.23<sup>***</sup><o:p></o:p></span></span></p>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>-0.05<sup>***</sup><o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
-  <td style='border:none;mso-border-top-alt:solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>0.23<sup>***</sup><o:p></o:p></span></span></p>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>&nbsp;<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>-0.04<sup>***</sup><o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
  </tr>
  <tr style='mso-yfti-irow:11'>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
   style='mso-fareast-font-family:"Times New Roman";color:black'>&nbsp;<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
   style='mso-fareast-font-family:"Times New Roman";color:black'>&nbsp;<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>(0.02)<o:p></o:p></span></span></p>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>(0.01)<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>(0.02)<o:p></o:p></span></span></p>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>&nbsp;<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>(0.01)<o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
  </tr>
  <tr style='mso-yfti-irow:12'>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>Population
-  (Between)<o:p></o:p></span></span></p>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>Democracy x
+  Pollution Outsourcing (B)<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
   style='mso-fareast-font-family:"Times New Roman";color:black'>&nbsp;<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>0.04<sup>*</sup><o:p></o:p></span></span></p>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>-0.14<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>0.07<sup>**</sup><o:p></o:p></span></span></p>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>&nbsp;<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>-0.13<sup>**</sup><o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
  </tr>
  <tr style='mso-yfti-irow:13'>
-  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
+  <td style='border:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:
+  solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
   style='mso-fareast-font-family:"Times New Roman";color:black'>&nbsp;<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
-  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:
+  solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
   style='mso-fareast-font-family:"Times New Roman";color:black'>&nbsp;<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
-  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>(0.02)<o:p></o:p></span></span></p>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:
+  solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>(0.12)<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
-  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>(0.04)<o:p></o:p></span></span></p>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:
+  solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>&nbsp;<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:
+  solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>(0.07)<o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
  </tr>
  <tr style='mso-yfti-irow:14'>
-  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>GDP per capita
+  <td style='border:none;mso-border-top-alt:solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>Population
   (Within)<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
-  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;mso-border-top-alt:solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
   style='mso-fareast-font-family:"Times New Roman";color:black'>&nbsp;<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
-  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>0.06<o:p></o:p></span></span></p>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;mso-border-top-alt:solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>&nbsp;<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
-  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>0.06<o:p></o:p></span></span></p>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;mso-border-top-alt:solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>0.23<sup>***</sup><o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;mso-border-top-alt:solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>0.23<sup>***</sup><o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
  </tr>
  <tr style='mso-yfti-irow:15'>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
   style='mso-fareast-font-family:"Times New Roman";color:black'>&nbsp;<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
   style='mso-fareast-font-family:"Times New Roman";color:black'>&nbsp;<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>(0.05)<o:p></o:p></span></span></p>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>&nbsp;<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>(0.05)<o:p></o:p></span></span></p>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>(0.02)<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>(0.02)<o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
  </tr>
  <tr style='mso-yfti-irow:16'>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>GDP per capita<sup>2</sup>
-  (Within)<o:p></o:p></span></span></p>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>Population
+  (Between)<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
   style='mso-fareast-font-family:"Times New Roman";color:black'>&nbsp;<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>0.02<sup>***</sup><o:p></o:p></span></span></p>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>&nbsp;<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>0.02<sup>***</sup><o:p></o:p></span></span></p>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>0.04<sup>*</sup><o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>0.09<sup>**</sup><o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
  </tr>
  <tr style='mso-yfti-irow:17'>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
   style='mso-fareast-font-family:"Times New Roman";color:black'>&nbsp;<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
   style='mso-fareast-font-family:"Times New Roman";color:black'>&nbsp;<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>(0.00)<o:p></o:p></span></span></p>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>&nbsp;<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>(0.00)<o:p></o:p></span></span></p>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>(0.02)<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>(0.04)<o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
  </tr>
  <tr style='mso-yfti-irow:18'>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
   style='mso-fareast-font-family:"Times New Roman";color:black'>GDP per capita
-  (Between)<o:p></o:p></span></span></p>
+  (Within)<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
   style='mso-fareast-font-family:"Times New Roman";color:black'>&nbsp;<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>0.54<sup>**</sup><o:p></o:p></span></span></p>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>&nbsp;<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>0.55<sup>**</sup><o:p></o:p></span></span></p>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>0.06<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>0.04<o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
  </tr>
  <tr style='mso-yfti-irow:19'>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
   style='mso-fareast-font-family:"Times New Roman";color:black'>&nbsp;<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
   style='mso-fareast-font-family:"Times New Roman";color:black'>&nbsp;<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>(0.26)<o:p></o:p></span></span></p>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>&nbsp;<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>(0.24)<o:p></o:p></span></span></p>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>(0.05)<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>(0.05)<o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
  </tr>
  <tr style='mso-yfti-irow:20'>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>GDP per capita<sup>2</sup>
+  (Within)<o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>&nbsp;<o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>&nbsp;<o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>0.02<sup>***</sup><o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>0.02<sup>***</sup><o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+ </tr>
+ <tr style='mso-yfti-irow:21'>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>&nbsp;<o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>&nbsp;<o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>&nbsp;<o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>(0.00)<o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>(0.00)<o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+ </tr>
+ <tr style='mso-yfti-irow:22'>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>GDP per capita
+  (Between)<o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>&nbsp;<o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>&nbsp;<o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>0.54<sup>**</sup><o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>0.39<o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+ </tr>
+ <tr style='mso-yfti-irow:23'>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>&nbsp;<o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>&nbsp;<o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>&nbsp;<o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>(0.26)<o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>(0.25)<o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+ </tr>
+ <tr style='mso-yfti-irow:24'>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
   style='mso-fareast-font-family:"Times New Roman";color:black'>GDP per capita<sup>2</sup>
   (Between)<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
   style='mso-fareast-font-family:"Times New Roman";color:black'>&nbsp;<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>&nbsp;<o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
   style='mso-fareast-font-family:"Times New Roman";color:black'>0.00<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>0.01<o:p></o:p></span></span></p>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>0.02<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
- </tr>
- <tr style='mso-yfti-irow:21'>
-  <td style='border:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:
-  solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>&nbsp;<o:p></o:p></span></span></p>
-  </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
-  <td style='border:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:
-  solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>&nbsp;<o:p></o:p></span></span></p>
-  </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
-  <td style='border:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:
-  solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>(0.02)<o:p></o:p></span></span></p>
-  </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
-  <td style='border:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:
-  solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>(0.01)<o:p></o:p></span></span></p>
-  </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
- </tr>
- <tr style='mso-yfti-irow:22'>
-  <td style='border:none;mso-border-top-alt:solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>Constant<o:p></o:p></span></span></p>
-  </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
-  <td style='border:none;mso-border-top-alt:solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>0.36<sup>***</sup><o:p></o:p></span></span></p>
-  </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
-  <td style='border:none;mso-border-top-alt:solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>-3.80<sup>***</sup><o:p></o:p></span></span></p>
-  </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
-  <td style='border:none;mso-border-top-alt:solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>-4.52<sup>***</sup><o:p></o:p></span></span></p>
-  </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
- </tr>
- <tr style='mso-yfti-irow:23'>
-  <td style='border:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:
-  solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>&nbsp;<o:p></o:p></span></span></p>
-  </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
-  <td style='border:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:
-  solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>(0.13)<o:p></o:p></span></span></p>
-  </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
-  <td style='border:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:
-  solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>(1.13)<o:p></o:p></span></span></p>
-  </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
-  <td style='border:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:
-  solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>(1.23)<o:p></o:p></span></span></p>
-  </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
- </tr>
- <tr style='mso-yfti-irow:24'>
-  <td style='border:none;mso-border-top-alt:solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>Controls<o:p></o:p></span></span></p>
-  </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
-  <td style='border:none;mso-border-top-alt:solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>No<o:p></o:p></span></span></p>
-  </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
-  <td style='border:none;mso-border-top-alt:solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>Yes<o:p></o:p></span></span></p>
-  </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
-  <td style='border:none;mso-border-top-alt:solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>Yes<o:p></o:p></span></span></p>
-  </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
  </tr>
  <tr style='mso-yfti-irow:25'>
-  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>Country-FE<o:p></o:p></span></span></p>
+  <td style='border:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:
+  solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>&nbsp;<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
-  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>Yes<o:p></o:p></span></span></p>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:
+  solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>&nbsp;<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
-  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>Yes<o:p></o:p></span></span></p>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:
+  solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>&nbsp;<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
-  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>Yes<o:p></o:p></span></span></p>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:
+  solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>(0.02)<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:
+  solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>(0.01)<o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
  </tr>
  <tr style='mso-yfti-irow:26'>
-  <td style='border:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:
-  solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>Year-FE<o:p></o:p></span></span></p>
+  <td style='border:none;mso-border-top-alt:solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>Constant<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
-  <td style='border:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:
-  solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>Yes<o:p></o:p></span></span></p>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;mso-border-top-alt:solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>0.33<sup>**</sup><o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
-  <td style='border:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:
-  solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>Yes<o:p></o:p></span></span></p>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;mso-border-top-alt:solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>0.17<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
-  <td style='border:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:
-  solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>Yes<o:p></o:p></span></span></p>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;mso-border-top-alt:solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>-3.80<sup>***</sup><o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;mso-border-top-alt:solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>-4.27<sup>***</sup><o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
  </tr>
  <tr style='mso-yfti-irow:27'>
-  <td style='border:none;mso-border-top-alt:solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>AIC<o:p></o:p></span></span></p>
+  <td style='border:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:
+  solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>&nbsp;<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
-  <td style='border:none;mso-border-top-alt:solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>-4009.55<o:p></o:p></span></span></p>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:
+  solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>(0.13)<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
-  <td style='border:none;mso-border-top-alt:solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>-4914.28<o:p></o:p></span></span></p>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:
+  solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>(0.20)<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
-  <td style='border:none;mso-border-top-alt:solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>-4965.35<o:p></o:p></span></span></p>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:
+  solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>(1.13)<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:
+  solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>(1.23)<o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
  </tr>
  <tr style='mso-yfti-irow:28'>
-  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>BIC<o:p></o:p></span></span></p>
+  <td style='border:none;mso-border-top-alt:solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>Controls<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
-  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>-3807.12<o:p></o:p></span></span></p>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;mso-border-top-alt:solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>\<span
+  class=SpellE><span class=GramE>xmark</span></span><o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
-  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>-4700.88<o:p></o:p></span></span></p>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;mso-border-top-alt:solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>Yes<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
-  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>-4726.84<o:p></o:p></span></span></p>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;mso-border-top-alt:solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>Yes<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;mso-border-top-alt:solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>Yes<o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
  </tr>
  <tr style='mso-yfti-irow:29'>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>Log Likelihood<o:p></o:p></span></span></p>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>Country-FE<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>2036.78<o:p></o:p></span></span></p>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>Yes<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>2491.14<o:p></o:p></span></span></p>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>Yes<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>2520.67<o:p></o:p></span></span></p>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>Yes<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>Yes<o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
  </tr>
  <tr style='mso-yfti-irow:30'>
-  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>Num. obs.<o:p></o:p></span></span></p>
+  <td style='border:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:
+  solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>Year-FE<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
-  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>4130<o:p></o:p></span></span></p>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:
+  solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>Yes<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
-  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>3930<o:p></o:p></span></span></p>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:
+  solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>Yes<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
-  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>3930<o:p></o:p></span></span></p>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:
+  solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>Yes<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:
+  solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>Yes<o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
  </tr>
  <tr style='mso-yfti-irow:31'>
-  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>Num. groups: Country<o:p></o:p></span></span></p>
+  <td style='border:none;mso-border-top-alt:solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>AIC<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
-  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>163<o:p></o:p></span></span></p>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;mso-border-top-alt:solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>-4090.29<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
-  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>161<o:p></o:p></span></span></p>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;mso-border-top-alt:solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>-4095.10<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
-  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>161<o:p></o:p></span></span></p>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;mso-border-top-alt:solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>-4914.28<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;mso-border-top-alt:solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>-4969.57<o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
  </tr>
  <tr style='mso-yfti-irow:32'>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>BIC<o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>-3889.44<o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>-3881.70<o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>-4700.88<o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>-4718.51<o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+ </tr>
+ <tr style='mso-yfti-irow:33'>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>Log Likelihood<o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>2077.14<o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>2081.55<o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>2491.14<o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>2524.78<o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+ </tr>
+ <tr style='mso-yfti-irow:34'>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>Num. obs.<o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>3930<o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>3930<o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>3930<o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>3930<o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+ </tr>
+ <tr style='mso-yfti-irow:35'>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>Num. groups: Country<o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>161<o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>161<o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>161<o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>161<o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+ </tr>
+ <tr style='mso-yfti-irow:36'>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
   style='mso-fareast-font-family:"Times New Roman";color:black'>Var: Country
   (Intercept)<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
   style='mso-fareast-font-family:"Times New Roman";color:black'>0.56<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>0.56<o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
   style='mso-fareast-font-family:"Times New Roman";color:black'>0.17<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
   <td style='border:none;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
   style='mso-fareast-font-family:"Times New Roman";color:black'>0.14<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
  </tr>
- <tr style='mso-yfti-irow:33'>
+ <tr style='mso-yfti-irow:37'>
   <td style='border:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:
   solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
   style='mso-fareast-font-family:"Times New Roman";color:black'>Var: Residual<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
   <td style='border:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:
   solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
-  style='mso-fareast-font-family:"Times New Roman";color:black'>0.02<o:p></o:p></span></span></p>
-  </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
-  <td style='border:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:
-  solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
   style='mso-fareast-font-family:"Times New Roman";color:black'>0.01<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
   <td style='border:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:
   solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
   style='mso-fareast-font-family:"Times New Roman";color:black'>0.01<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:
+  solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>0.01<o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
+  <td style='border:none;border-bottom:solid windowtext 1.0pt;mso-border-bottom-alt:
+  solid windowtext .5pt;padding:.75pt 3.75pt .75pt 3.75pt'>
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
+  style='mso-fareast-font-family:"Times New Roman";color:black'>0.01<o:p></o:p></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Hlk171527264'></span>
  </tr>
- <tr style='mso-yfti-irow:34;mso-yfti-lastrow:yes'>
-  <td colspan=4 style='border:none;mso-border-top-alt:solid windowtext .5pt;
+ <tr style='mso-yfti-irow:38;mso-yfti-lastrow:yes'>
+  <td colspan=5 style='border:none;mso-border-top-alt:solid windowtext .5pt;
   padding:.75pt .75pt .75pt .75pt'>
-  <p class=MsoNormal><span style='mso-bookmark:_Hlk171428739'><span
+  <p class=MsoNormal><span style='mso-bookmark:_Hlk171527264'><span
   style='font-size:9.5pt;mso-fareast-font-family:"Times New Roman";color:black'>Notes:<sup>
   ***</sup>p &lt; 0.01; <sup>**</sup>p &lt; 0.05; <sup>*</sup>p &lt; 0.1<o:p></o:p></span></span></p>
   </td>
-  <span style='mso-bookmark:_Hlk171428739'></span>
+  <span style='mso-bookmark:_Hlk171527264'></span>
  </tr>
 </table>
 
-<span style='mso-bookmark:_Hlk171428739'></span>
-
-<p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+<span style='mso-bookmark:_Hlk171527264'></span>
 
 <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
 

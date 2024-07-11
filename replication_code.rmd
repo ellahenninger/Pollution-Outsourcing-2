@@ -32,8 +32,10 @@ This R-Markdown file replicates all analyses and figures included in the paper "
 3.2 Correlations
 
 4. Analyses
-4.1 Models Democracy and pollution outsourcing
-4.2 Models Pollution outsourcing and environmental performance
+4.1 Models democracy and pollution outsourcing
+4.2 Models pollution outsourcing and environmental performance
+4.3 Plots model group 1
+4.4 Plots model group 2
 
 5. Quantities of interest
 5.1 Simulated interaction term and marginal effects
@@ -139,6 +141,13 @@ data$log_wdi_co2 <- log(1 + data$wdi_co2)  ## plus 1 to avoid negative numbers
 
 ## outsourced CO2
 data$log_cc_outs <- log(data$cf_cc_pop_mean_outs)
+data$log_cc_sum_outs <- log(data$cf_cc_pop_sum_outs + 1)
+
+## other outsourcing variabes
+data$log_lu_outs <- log(data$cf_lu_pop_mean_outs + 1)
+data$log_en_outs <- log(data$cf_en_pop_mean_outs)
+data$log_mf_outs <- log(data$cf_mf_pop_mean_outs)
+data$log_bw_outs <- log(data$cf_bw_pop_mean_outs)
 
 ## pm2.5
 data$log_pm25_pop <- log(data$populationweightedpm25ugm3)
@@ -172,15 +181,6 @@ data$env_treaties <- data$env_treaties/100
 data$fh_cl <- 8 - data$fh_cl
 
 #-------------------------------------------------------------------------------
-# Create environmental treaties variable
-#-------------------------------------------------------------------------------
-data <- data %>% 
-  group_by(ccode) %>% 
-  mutate(env_treaties = ifelse(any(!is.na(iea_sum_i)), zoo::na.locf(iea_sum_i), NA))
-
-data$env_treaties <- data$env_treaties/100
-
-#-------------------------------------------------------------------------------
 # Rescale political globalization variable (1-10)
 #-------------------------------------------------------------------------------
 data$dr_pg <- data$dr_pg/100
@@ -189,7 +189,9 @@ data$dr_pg <- data$dr_pg/100
 # Subset data to relevant variables
 #-------------------------------------------------------------------------------
 data_s <- dplyr::select(data, "cname", "ccode", "year", "ccodealp", 
-                              "insourced_GHG", "cf_cc_pop_mean", "cf_cc_pop_mean_outs", "log_cc_outs",
+                              "insourced_GHG", "cf_cc_pop_mean", "cf_cc_pop_mean_outs", "cf_cc_pop_sum_outs", "log_cc_outs",
+                              "log_cc_sum_outs",
+                              "log_lu_outs", "log_mf_outs", "log_bw_outs", "log_en_outs",
                               "log_pm25_pop", "log_pm25_geo", "log_wdi_co2",
                               "populationweightedpm25ugm3", "geographicmeanpm25ugm3",
                               "ef_carb", "log_ef_carb",
@@ -460,30 +462,75 @@ dev.off()
 #-------------------------------------------------------------------------------
 # Mean and de-meaning
 #-------------------------------------------------------------------------------
-
 data_s <- data_s %>%
   group_by(ccode) %>%
   mutate(
     demeaned_log_co2 = log_wdi_co2 - mean(log_wdi_co2, na.rm = T),
     demeaned_log_pm25 = log_pm25_pop - mean(log_pm25_pop, na.rm = T),
     demeaned_log_cc_outs = log_cc_outs - mean(log_cc_outs, na.rm = T),
+    demeaned_log_cc_sum_outs = log_cc_sum_outs - mean(log_cc_sum_outs, na.rm = T),
+    demeaned_log_bw_outs = log_bw_outs - mean(log_bw_outs, na.rm = T),
+    demeaned_log_en_outs = log_en_outs - mean(log_en_outs, na.rm = T),
+    demeaned_log_lu_outs = log_lu_outs - mean(log_lu_outs, na.rm = T),
+    demeaned_log_mf_outs = log_mf_outs - mean(log_mf_outs, na.rm = T),
     demeaned_cc_outs  = cf_cc_pop_mean_outs - mean(cf_cc_pop_mean_outs, na.rm = T),
+    demeaned_ef_carb = ef_carb - mean(ef_carb, na.rm = T),
+    demeaned_env_treat = env_treaties - mean(env_treaties, na.rm = T),
+    demeaned_dr_pg = dr_pg - mean(dr_pg, na.rm = T),
+    demeaned_trade = wdi_trade - mean(wdi_trade, na.rm = T),
+    demeaned_gdp = log_gdp - mean(log_gdp, na.rm = T),
     demeaned_vdem_poly = vdem_polyarchy - mean(vdem_polyarchy, na.rm = T),
+    demeaned_fh = fh_cl - mean(fh_cl, na.rm = T),
+    demeaned_polity = p_polity2 - mean(p_polity2, na.rm = T),
     demeaned_log_pop = log_pop - mean(log_pop, na.rm = T),
     demeaned_log_gdp_pc = log_gdp_pc - mean(log_gdp_pc, na.rm = T),
     demeaned_log_gdp_pc_sq = log_gdp_pc_sq - mean(log_gdp_pc_sq, na.rm = T),
     mean_log_co2 = mean(log_wdi_co2, na.rm = T),
     mean_log_pm25 = mean(log_pm25_pop, na.rm = T),
     mean_log_cc_outs = mean(log_cc_outs, na.rm = T),
+    mean_log_cc_sum_outs = mean(log_cc_sum_outs, na.rm = T),
+    mean_log_bw_outs = mean(log_bw_outs, na.rm = T),
+    mean_log_en_outs = mean(log_en_outs, na.rm = T),
+    mean_log_lu_outs = mean(log_lu_outs, na.rm = T),
+    mean_log_mf_outs = mean(log_mf_outs, na.rm = T),
     mean_cc_outs = mean(cf_cc_pop_mean_outs, na.rm = T),
+    mean_ef_carb = mean(ef_carb, na.rm = T),
+    mean_env_treat = mean(env_treaties, na.rm = T),
+    mean_dr_pg = mean(dr_pg, na.rm = T),
+    mean_trade = mean(wdi_trade, na.rm = T),
+    mean_gdp = mean(log_gdp, na.rm = T),
     mean_vdem_poly = mean(vdem_polyarchy, na.rm = T),
+    mean_fh = mean(fh_cl, na.rm = T),
+    mean_polity = mean(p_polity2, na.rm = T),
     mean_log_pop = mean(log_pop, na.rm = T),
     mean_log_gdp_pc = mean(log_gdp_pc, na.rm = T),
     mean_log_gdp_pc_sq = mean(log_gdp_pc_sq, na.rm = T),
-    interaction_mean = mean(log_cc_outs, na.rm = T) * mean(vdem_polyarchy, na.rm = T)
-  )
-
-summary(data_s$mean_cc_outs)
+    interaction = log_cc_outs * vdem_polyarchy,
+    interaction_bw = log_bw_outs * vdem_polyarchy,
+    interaction_en = log_en_outs * vdem_polyarchy,
+    interaction_lu = log_lu_outs * vdem_polyarchy,
+    interaction_mf = log_mf_outs * vdem_polyarchy,
+    interaction_fh = log_cc_outs * fh_cl,
+    interaction_polity = log_cc_outs * p_polity2,
+    interaction_cc_sum = log_cc_sum_outs * vdem_polyarchy,
+    interaction_demeaned = interaction - mean(interaction, na.rm = T),
+    interaction_bw_demeaned = interaction_bw - mean(interaction_bw, na.rm = T),
+    interaction_en_demeaned = interaction_en - mean(interaction_en, na.rm = T),
+    interaction_lu_demeaned = interaction_lu - mean(interaction_lu, na.rm = T),
+    interaction_mf_demeaned = interaction_mf - mean(interaction_mf, na.rm = T),
+    interaction_fh_demeaned = interaction_fh - mean(interaction_fh, na.rm = T),
+    interaction_polity_demeaned = interaction_polity - mean(interaction_polity, na.rm = T),
+    interaction_cc_sum_demeaned = interaction_cc_sum - mean(interaction_cc_sum, na.rm = T),
+    interaction_mean = mean(log_cc_outs, na.rm = T) * mean(vdem_polyarchy, na.rm = T),
+    interaction_bw_mean = mean(log_bw_outs, na.rm = T) * mean(vdem_polyarchy, na.rm = T),
+    interaction_en_mean = mean(log_en_outs, na.rm = T) * mean(vdem_polyarchy, na.rm = T),
+    interaction_lu_mean = mean(log_lu_outs, na.rm = T) * mean(vdem_polyarchy, na.rm = T),
+    interaction_mf_mean = mean(log_mf_outs, na.rm = T) * mean(vdem_polyarchy, na.rm = T),
+    interaction_fh_mean = mean(log_cc_outs, na.rm = T) * mean(fh_cl, na.rm = T),
+    interaction_polity_mean = mean(log_cc_outs, na.rm = T) * mean(p_polity2, na.rm = T),
+    interaction_cc_sum_mean = mean(log_cc_sum_outs, na.rm = T) * mean(vdem_polyarchy, na.rm = T)
+  )%>%
+  ungroup()
 
 ```
 
@@ -517,11 +564,13 @@ m4_wb <- lmer(log_cc_outs ~ demeaned_vdem_poly + demeaned_log_gdp_pc + demeaned_
 
 stargazer(list(m1_wb, m2_wb, m3_wb, m4_wb), type = "text", omit = c("year"))
 
+#-------------------------------------------------------------------------------
 ## Output
-htmlreg(list(m1_wb, m2_wb, m3_wb, m4_wb),
+#-------------------------------------------------------------------------------
+texreg(list(m1_wb, m2_wb, m3_wb),
        stars = c(0.01, 0.05, 0.1),
-       file = "texreg1.doc",
-       custom.header = list("Pollution Outsourcing" = 1:4),
+       #file = "texreg1.doc",
+       custom.header = list("Pollution Outsourcing" = 1:3),
        caption = "Democracy and Pollution Outsourcing",
        label = "tab:table1",
        caption.above = T,
@@ -535,62 +584,159 @@ htmlreg(list(m1_wb, m2_wb, m3_wb, m4_wb),
                               "mean_log_gdp_pc" = "GDP per capita (Between)",
                               "mean_log_gdp_pc_sq" = "GDP per capita squ. (Between)", 
                               "(Intercept)" = "Constant"),
-        custom.gof.rows = list("Controls" = c("\\xmark", "\\ding{51}", "\\ding{51}","\\ding{51}"),
-                               "Country-FE" = c("\\ding{51}", "\\ding{51}", "\\ding{51}", "\\ding{51}"),
-                               "Year-FE" = c("\\ding{51}", "\\ding{51}", "\\ding{51}", "\\ding{51}")))
+        custom.gof.rows = list("Controls" = c("\\xmark", "\\ding{51}", "\\ding{51}"),
+                               "Country-FE" = c("\\ding{51}", "\\ding{51}", "\\ding{51}"),
+                               "Year-FE" = c("\\ding{51}", "\\ding{51}", "\\ding{51}")))
 
 
 
+```
+
+## Plot coefficients: Model group 1
+
+```{r plots coefficients 1}
 
 #-------------------------------------------------------------------------------
 # Coefficient plot 
 #-------------------------------------------------------------------------------
-pdf("plots/Coefficients_table1_within.pdf", width = 7.5)
+# pdf("plots/Coefficients_table1_within.pdf", width = 7.5)
+# par(mar = c(5.1, 10, 2.5, 2.1)) # c(bottom, left, top, right))
+# 
+# modelplot(m3_wb, 
+#           coef_map = c("demeaned_log_gdp_pc_sq" = "GDP per capita squ.",
+#                        "demeaned_log_gdp_pc" = "GDP per capita",
+#                        "demeaned_log_pop" = "Population",
+#                        "demeaned_vdem_poly" = "Democracy"),
+#           color = viridis(3, alpha = 0.75)[1],
+#           size = 0.9,
+#           linewidth = 3,
+#           coef_rename = T) +
+#   aes(color = ifelse(p.value < 0.05, "Significant", "Not significant")) +
+#   labs(x = "Within coefficients and 95% confidence intervals") +
+#   geom_errorbarh(aes(y = term, 
+#                      xmin = conf.low, 
+#                      xmax = conf.high,
+#                      color = viridis(3, alpha = 0.75)[1]),
+#                  height = 0.2, size = 1.5) +
+#    scale_color_manual(values = viridis(3, alpha = 0.75)[1]) +
+#   geom_vline(xintercept = 0, color = "black")
+# 
+# 
+# dev.off()
+# 
+# 
+# pdf("plots/Coefficients_table1_between.pdf", width = 7.5)
+# par(mar = c(5.1, 10, 2.5, 2.1)) # c(bottom, left, top, right))
+# 
+# modelplot(m3_wb, 
+#           coef_map = c("mean_log_gdp_pc_sq" = "GDP per capita squ.",
+#                        "mean_log_gdp_pc" = "GDP per capita",
+#                        "mean_log_pop" = "Population",
+#                        "mean_vdem_poly" = "Democracy"),
+#           size = 0.9,
+#           linewidth = 3,
+#           coef_rename = T) +
+#   labs(x = "Between coefficients and 95% confidence intervals") +
+#   aes(color = ifelse(p.value < 0.05, "Significant", "Not significant")) +
+#   geom_errorbarh(aes(y = term, 
+#                      xmin = conf.low, 
+#                      xmax = conf.high, 
+#                      color = ifelse(p.value < 0.05, "Significant", "Not significant")),
+#                  height = 0.2, size = 1.5) +
+#   scale_color_manual(values = c("grey", viridis(3, alpha = 0.75)[1])) +
+#   geom_vline(xintercept = 0, color = "black")
+# 
+# dev.off()
+
+coefs_within <- as.data.frame(summary(m3_wb)$coefficients[c(2,5,3,4),])
+coefs_between <- as.data.frame(summary(m3_wb)$coefficients[c(6,9,7,8),])
+
+# Create data frames for each model
+coefs_within$CI_low <- coefs_within[,"Estimate"] - qnorm(0.95)*coefs_within[,"Std. Error"]
+coefs_within$CI_high <- coefs_within[,"Estimate"] + qnorm(0.95)*coefs_within[,"Std. Error"]
+
+coefs_between$CI_low <- coefs_between[,"Estimate"] - qnorm(0.95)*coefs_between[,"Std. Error"]
+coefs_between$CI_high <- coefs_between[,"Estimate"] + qnorm(0.95)*coefs_between[,"Std. Error"]
+
+
+pdf("Plots/Coefficients_table1_within_between.pdf", width = 7.5)
+
 par(mar = c(5.1, 10, 2.5, 2.1)) # c(bottom, left, top, right))
 
-modelplot(m3_wb, 
-          coef_map = c("demeaned_log_gdp_pc_sq" = "GDP per capita squ.",
-                       "demeaned_log_gdp_pc" = "GDP per capita",
-                       "demeaned_log_pop" = "Population",
-                       "demeaned_vdem_poly" = "Democracy"),
-          color = viridis(3, alpha = 0.75)[1],
-          size = 0.9,
-          linewidth = 3,
-          coef_rename = T) +
-  aes(color = ifelse(p.value < 0.05, "Significant", "Not significant")) +
-  labs(x = "Within coefficients and 95% confidence intervals") +
-  geom_errorbarh(aes(y = term, 
-                     xmin = conf.low, 
-                     xmax = conf.high,
-                     color = viridis(3, alpha = 0.75)[1]),
-                 height = 0.2, size = 1.5) +
-   scale_color_manual(values = viridis(3, alpha = 0.75)[1]) +
-  geom_vline(xintercept = 0, color = "black")
+plot(1,
+     type = "n",
+     ylim = c(0,2),
+     bty = "n",
+     xlab = "Coefficients and 95% confidence intervals",
+     xlim = c(-1.75, 2.25),
+     ylab = "",
+     yaxt = "n",
+     cex.lab = 1.1)
 
 
-dev.off()
+# add grid
+segments(x0 = c(-1.25,-1,-0.75, -0.5, -0.25, 0, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2), y0 = 0,
+         x1 = c(-1.25,-1,-0.75, -0.5, -0.25, 0, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2), y1 = 2,
+         col = "lightgrey",
+         lty = "solid", lwd = 0.7)
+
+segments(x0 = -1.5, y0 = rev(c(0.25, 0.5, 0.75, 1,
+                               1.25, 1.5, 1.75)),
+         x1 = 2, y1 = rev(c(0.25, 0.5, 0.75, 1,
+                               1.25, 1.5, 1.75)),
+         col = "lightgrey",
+         lty = "solid", lwd = 0.7)
+
+# add null line
+segments(x0 = 0, y0 = 0,
+         x1 = 0, y1 = 2.5,
+         lty = "solid", lwd = 1, col = "black")
 
 
-pdf("plots/Coefficients_table1_between.pdf", width = 7.5)
-par(mar = c(5.1, 10, 2.5, 2.1)) # c(bottom, left, top, right))
+# add point estimates
+points(x = coefs_within$Estimate,
+       y = rev(c(0.25, 0.75, 1.25, 1.75)),
+       pch = 16,
+       col = c(viridis(3)[1], viridis(3)[1], viridis(3)[1], viridis(3)[1]),
+       cex = 1)
 
-modelplot(m3_wb, 
-          coef_map = c("mean_log_gdp_pc_sq" = "GDP per capita squ.",
-                       "mean_log_gdp_pc" = "GDP per capita",
-                       "mean_log_pop" = "Population",
-                       "mean_vdem_poly" = "Democracy"),
-          size = 0.9,
-          linewidth = 3,
-          coef_rename = T) +
-  labs(x = "Between coefficients and 95% confidence intervals") +
-  aes(color = ifelse(p.value < 0.05, "Significant", "Not significant")) +
-  geom_errorbarh(aes(y = term, 
-                     xmin = conf.low, 
-                     xmax = conf.high, 
-                     color = ifelse(p.value < 0.05, "Significant", "Not significant")),
-                 height = 0.2, size = 1.5) +
-  scale_color_manual(values = c("grey", viridis(3, alpha = 0.75)[1])) +
-  geom_vline(xintercept = 0, color = "black")
+# add CIs
+segments(y0 = rev(c(0.25, 0.75, 1.25, 1.75)), 
+         y1 = rev(c(0.25, 0.75, 1.25, 1.75)), 
+         col = c(viridis(3)[1], viridis(3)[1], viridis(3)[1], viridis(3)[1]),
+         x0 = coefs_within$CI_low,
+         x1 = coefs_within$CI_high,
+         lwd = 3, cex = 1.3, lend = 1)
+
+# add point estimates
+points(x = coefs_between$Estimate,
+       y = rev(c(0.15, 0.65, 1.15, 1.65)),
+       pch = 16,
+       col = c(viridis(3)[2], viridis(3)[2], viridis(3)[2], viridis(3, alpha = 0.6)[2]),
+       cex = 1)
+
+# add CIs
+segments(y0 = rev(c(0.15, 0.65, 1.15, 1.65)), 
+         y1 = rev(c(0.15, 0.65, 1.15, 1.65)), 
+         col = c(viridis(3)[2], viridis(3)[2], viridis(3)[2], viridis(3, alpha = 0.3)[2]),
+         x0 = coefs_between$CI_low,
+         x1 = coefs_between$CI_high,
+         lwd = 3, cex = 1.3, lend = 1)
+
+# add coefficients text
+text(x = -2.75,
+     y = rev(c(0.25, 0.75, 1.25, 1.75)),
+     labels = c("Democracy", "Population", "GDP per capita", expression("GDP per capita"^2)),
+     xpd = T,
+     cex = 0.9,
+     pos = 4)
+
+# Add a legend
+legend("topright", 
+       legend = c("Within", "Between"), 
+       col = c(viridis(3)[1],viridis(3)[2]), 
+       pch = 19,
+       bty = "n")
 
 dev.off()
 
@@ -606,80 +752,42 @@ dev.off()
 m5_wb <- lmer(log_wdi_co2 ~ demeaned_log_cc_outs + demeaned_vdem_poly + 
                mean_log_cc_outs + mean_vdem_poly +
                as.factor(year) + (1 | ccode),
-              data = data_s)
+              data = data_s[which(!is.na(data_s$log_gdp_pc)),])
 
-m6_wb <- lmer(log_wdi_co2 ~ demeaned_log_pop + demeaned_log_gdp_pc + demeaned_log_gdp_pc_sq + 
+m6_wb <- lmer(log_wdi_co2 ~ demeaned_log_cc_outs + demeaned_vdem_poly +
+               interaction_demeaned + 
+               mean_log_cc_outs + mean_vdem_poly +
+               interaction_mean +
+               as.factor(year) + (1 | ccode),
+              data = data_s[which(!is.na(data_s$log_gdp_pc)),])
+
+m7_wb <- lmer(log_wdi_co2 ~ demeaned_log_pop + demeaned_log_gdp_pc + demeaned_log_gdp_pc_sq + 
                mean_log_pop + mean_log_gdp_pc + mean_log_gdp_pc_sq + 
                as.factor(year) + (1 | ccode),
               data = data_s[which(!is.na(data_s$log_wdi_co2) &
                                   !is.na(data_s$log_cc_outs) &
                                   !is.na(data_s$vdem_polyarchy)),])
 
-m7_wb <- lmer(log_wdi_co2 ~ demeaned_log_cc_outs + demeaned_vdem_poly + 
+m8_wb <- lmer(log_wdi_co2 ~ demeaned_log_cc_outs + demeaned_vdem_poly + 
+                interaction_demeaned +
                 demeaned_log_pop + demeaned_log_gdp_pc + demeaned_log_gdp_pc_sq +
                 mean_log_cc_outs + mean_vdem_poly +
+                interaction_mean +
                 mean_log_pop +  mean_log_gdp_pc + mean_log_gdp_pc_sq +
                 as.factor(year) + (1 | ccode),
               data = data_s)
 
-stargazer(m5_wb, m6_wb, m7_wb, type = "text", omit = c("ccode", "year"))
-
-
-#-------------------------------------------------------------------------------
-# Model group 2 - Split by median of democracy variable (within effects)
-#-------------------------------------------------------------------------------
-data_dem_low <- data_s[which(data_s$vdem_polyarchy < median(data_s$vdem_polyarchy, na.rm = T)),]
-data_dem_high <- data_s[which(data_s$vdem_polyarchy >= median(data_s$vdem_polyarchy, na.rm = T)),]
-
-m8_dem_low <- lmer(log_wdi_co2 ~ demeaned_log_cc_outs + #demeaned_vdem_poly + 
-                    demeaned_log_pop + demeaned_log_gdp_pc + demeaned_log_gdp_pc_sq +
-                    mean_log_cc_outs + #mean_vdem_poly +
-                    mean_log_pop +  mean_log_gdp_pc + mean_log_gdp_pc_sq +
-                    as.factor(year) + (1 | ccode),
-                   data = data_dem_low)
-
-m8_dem_high <- lmer(log_wdi_co2 ~ demeaned_log_cc_outs + #demeaned_vdem_poly + 
-                     demeaned_log_pop + demeaned_log_gdp_pc + demeaned_log_gdp_pc_sq +
-                     mean_log_cc_outs + #mean_vdem_poly +
-                     mean_log_pop +  mean_log_gdp_pc + mean_log_gdp_pc_sq +
-                     as.factor(year) + (1 | ccode),
-                    data = data_dem_high)
-
-stargazer(m8_dem_low, m8_dem_high, type = "text", omit = c("ccode", "year"))
-summary(m8_dem_high)
-
+stargazer(m5_wb, m6_wb, m7_wb, m8_wb, type = "text", omit = c("ccode", "year"))
 
 #-------------------------------------------------------------------------------
-# Model group 2 - Split by median of mean democracy variable (between effects)
-#-------------------------------------------------------------------------------
-data_dem_low2 <- data_s[which(data_s$mean_vdem_poly < median(data_s$mean_vdem_poly, na.rm = T)),]
-data_dem_high2 <- data_s[which(data_s$mean_vdem_poly >= median(data_s$mean_vdem_poly, na.rm = T)),]
-
-m9_dem_low <- lmer(log_wdi_co2 ~ demeaned_log_cc_outs + #demeaned_vdem_poly + 
-                    demeaned_log_pop + demeaned_log_gdp_pc + demeaned_log_gdp_pc_sq +
-                    mean_log_cc_outs + #mean_vdem_poly +
-                    mean_log_pop +  mean_log_gdp_pc + mean_log_gdp_pc_sq +
-                    as.factor(year) + (1 | ccode),
-                   data = data_dem_low2)
-
-m9_dem_high <- lmer(log_wdi_co2 ~ demeaned_log_cc_outs + #demeaned_vdem_poly + 
-                     demeaned_log_pop + demeaned_log_gdp_pc + demeaned_log_gdp_pc_sq +
-                     mean_log_cc_outs + #mean_vdem_poly +
-                     mean_log_pop +  mean_log_gdp_pc + mean_log_gdp_pc_sq +
-                     as.factor(year) + (1 | ccode),
-                    data = data_dem_high2)
-
-stargazer(m9_dem_low, m9_dem_high, type = "text", omit = c("ccode", "year"))
-summary(m8_dem_high)
-
-
 # Output
-htmlreg(list(m5_wb, m6_wb, m7_wb),
+#-------------------------------------------------------------------------------
+texreg(list(m5_wb, m6_wb, m7_wb, m8_wb),
        stars = c(0.01, 0.05, 0.1),
-       file = "texreg2.doc",
-       custom.header = list("CO$_2$ emissions" = 1:3),
+      # file = "texreg2.doc",
+       custom.header = list("CO$_2$ emissions" = 1:4),
        caption = "Environmental Performance and Pollution Outsourcing",
-       custom.model.names = c("Model 5", "Model 6", "Model 7"),
+       custom.model.names = c("Model 4", "Model 5", "Model 6", "Model 7"),
        label = "tab:table2",
        caption.above = T,
        fontsize = "scriptsize",
@@ -687,6 +795,8 @@ htmlreg(list(m5_wb, m6_wb, m7_wb),
                               "mean_log_cc_outs" = "Pollution Outsourcing (Between)",
                               "demeaned_vdem_poly" = "Democracy (Within)",
                               "mean_vdem_poly" = "Democracy (Between)",
+                              "interaction_demeaned" = "Pollution Outsourcing x Democracy (Within)",
+                              "interaction_mean" = "Pollution Outsourcing x Democracy (Between)",
                               "demeaned_log_pop" = "Population (Within)",
                               "mean_log_pop" = "Population (Between)",
                               "demeaned_log_gdp_pc" = "GDP per capita (Within)",
@@ -694,61 +804,135 @@ htmlreg(list(m5_wb, m6_wb, m7_wb),
                               "mean_log_gdp_pc" = "GDP per capita (Between)",
                               "mean_log_gdp_pc_sq" = "GDP per capita squ. (Between)",
                               "(Intercept)" = "Constant"),
-        custom.gof.rows = list("Controls" = c("\\xmark", "\\ding{51}", "\\ding{51}"),
-                               "Country-FE" = c("\\ding{51}", "\\ding{51}", "\\ding{51}"),
-                               "Year-FE" = c("\\ding{51}", "\\ding{51}", "\\ding{51}")))
+        custom.gof.rows = list("Controls" = c("\\xmark", "\\xmark", "\\ding{51}", "\\ding{51}"),
+                               "Country-FE" = c("\\ding{51}", "\\ding{51}", "\\ding{51}", "\\ding{51}"),
+                               "Year-FE" = c("\\ding{51}", "\\ding{51}", "\\ding{51}", "\\ding{51}")))
 
 
-# Output
-htmlreg(list(m8_dem_low, m8_dem_high),
-       stars = c(0.01, 0.05, 0.1),
-       file = "texreg3.doc",
-       custom.header = list("CO2 emissions" = 1:2),
-       caption = "Environmental Performance and Pollution Outsourcing",
-       custom.model.names = c("Low dem.", "High dem."),
-       label = "tab:table3",
-       caption.above = T,
-       fontsize = "scriptsize",
-       custom.coef.map = list("demeaned_log_cc_outs" = "Pollution Outsourcing (Within)",
-                              "mean_log_cc_outs" = "Pollution Outsourcing (Between)",
-                              "demeaned_log_pop" = "Population (Within)",
-                              "mean_log_pop" = "Population (Between)",
-                              "demeaned_log_gdp_pc" = "GDP per capita (Within)",
-                              "demeaned_log_gdp_pc_sq" = "GDP per capita squ. (Within)",
-                              "mean_log_gdp_pc" = "GDP per capita (Between)",
-                              "mean_log_gdp_pc_sq" = "GDP per capita squ. (Between)",
-                              "(Intercept)" = "Constant"),
-        custom.gof.rows = list("Controls" = c("\\ding{51}", "\\ding{51}"),
-                               "Country-FE" = c("\\ding{51}", "\\ding{51}"),
-                               "Year-FE" = c("\\ding{51}", "\\ding{51}")))
 
-texreg(list(m9_dem_low, m9_dem_high),
-       stars = c(0.01, 0.05, 0.1),
-      # file = "texreg4.doc",
-       custom.header = list("CO2 emissions" = 1:2),
-       caption = "Environmental Performance and Pollution Outsourcing",
-       custom.model.names = c("Low dem.", "High dem."),
-       label = "tab:table4",
-       caption.above = T,
-       fontsize = "scriptsize",
-       custom.coef.map = list("demeaned_log_cc_outs" = "Pollution Outsourcing (Within)",
-                              "mean_log_cc_outs" = "Pollution Outsourcing (Between)",
-                              "demeaned_log_pop" = "Population (Within)",
-                              "mean_log_pop" = "Population (Between)",
-                              "demeaned_log_gdp_pc" = "GDP per capita (Within)",
-                              "demeaned_log_gdp_pc_sq" = "GDP per capita squ. (Within)",
-                              "mean_log_gdp_pc" = "GDP per capita (Between)",
-                              "mean_log_gdp_pc_sq" = "GDP per capita squ. (Between)",
-                              "(Intercept)" = "Constant"),
-        custom.gof.rows = list("Controls" = c("\\ding{51}", "\\ding{51}"),
-                               "Country-FE" = c("\\ding{51}", "\\ding{51}"),
-                               "Year-FE" = c("\\ding{51}", "\\ding{51}")))
+#-------------------------------------------------------------------------------
+# Model group 2 - Interaction - Check
+#-------------------------------------------------------------------------------
+m8_lm_int <- lm(log_wdi_co2 ~ log_cc_outs + vdem_polyarchy + 
+                 log_cc_outs * vdem_polyarchy +
+                 log_pop + log_gdp_pc + log_gdp_pc_sq +
+                 as.factor(year) + as.factor(ccode),
+                data = data_s)
 
+stargazer(m8_wb, m8_lm_int, type = "text", omit = c("ccode", "year"))
+
+```
+
+## Plot coefficients: Model group 2
+
+```{r plot coefficients 2}
+
+#-------------------------------------------------------------------------------
+# Coefficient plot - Model group 2
+#-------------------------------------------------------------------------------
+coefs_within2 <- as.data.frame(summary(m8_wb)$coefficients[2:7,])
+coefs_between2 <- as.data.frame(summary(m8_wb)$coefficients[8:13,])
+
+# Create data frames for each model
+coefs_within2$CI_low <- coefs_within2[,"Estimate"] - qnorm(0.95)*coefs_within2[,"Std. Error"]
+coefs_within2$CI_high <- coefs_within2[,"Estimate"] + qnorm(0.95)*coefs_within2[,"Std. Error"]
+
+coefs_between2$CI_low <- coefs_between2[,"Estimate"] - qnorm(0.95)*coefs_between2[,"Std. Error"]
+coefs_between2$CI_high <- coefs_between2[,"Estimate"] + qnorm(0.95)*coefs_between2[,"Std. Error"]
+
+
+pdf("Plots/Coefficients_table2_within_between.pdf", width = 7.5)
+
+par(mar = c(5.1, 10, 2.5, 2.1)) # c(bottom, left, top, right))
+
+plot(1,
+     type = "n",
+     ylim = c(0,2.5),
+     bty = "n",
+     xlab = "Coefficients and 95% confidence intervals",
+     xlim = c(-0.95, 1.1),
+     ylab = "",
+     yaxt = "n",
+     cex.lab = 1.1)
+
+
+# add grid
+segments(x0 = c(-1.25,-1,-0.75, -0.5, -0.25, 0, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2), y0 = 0,
+         x1 = c(-1.25,-1,-0.75, -0.5, -0.25, 0, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2), y1 = 2.5,
+         col = "lightgrey",
+         lty = "solid", lwd = 0.7)
+
+segments(x0 = -1.5, y0 = rev(c(0.25, 0.5, 0.75, 1,
+                               1.25, 1.5, 1.75, 2, 2.25)),
+         x1 = 2, y1 = rev(c(0.25, 0.5, 0.75, 1,
+                               1.25, 1.5, 1.75, 2, 2.25)),
+         col = "lightgrey",
+         lty = "solid", lwd = 0.7)
+
+# add null line
+segments(x0 = 0, y0 = 0,
+         x1 = 0, y1 = 2.5,
+         lty = "solid", lwd = 1, col = "black")
+
+
+# add point estimates
+points(x = coefs_within2$Estimate,
+       y = rev(c(0.25, 0.65, 1.05, 1.45, 1.85, 2.25)),
+       pch = 16,
+       col = c(viridis(3)[1], viridis(3)[1],viridis(3)[1],viridis(3)[1], viridis(3, alpha = 0.6)[1],viridis(3, alpha = 0.6)[1]),
+       cex = 1)
+
+# add CIs
+segments(y0 = rev(c(0.25, 0.65, 1.05, 1.45, 1.85, 2.25)), 
+         y1 = rev(c(0.25, 0.65, 1.05, 1.45, 1.85, 2.25)), 
+         col = c(viridis(3)[1], viridis(3)[1], viridis(3)[1],viridis(3)[1], viridis(3, alpha = 0.3)[1],viridis(3, alpha = 0.3)[1]),
+         x0 = coefs_within2$CI_low,
+         x1 = coefs_within2$CI_high,
+         lwd = 3, cex = 1.3, lend = 1)
+
+# add point estimates
+points(x = coefs_between2$Estimate,
+       y = rev(c(0.15, 0.55, 0.95, 1.35, 1.75, 2.15)),
+       pch = 16,
+       col = c(viridis(3, alpha = 0.6)[2], viridis(3)[2],viridis(3)[2],viridis(3)[2],
+               viridis(3, alpha = 0.6)[2], viridis(3, alpha = 0.6)[2]),
+       cex = 1)
+
+# add CIs
+segments(y0 = rev(c(0.15, 0.55, 0.95, 1.35, 1.75, 2.15)), 
+         y1 = rev(c(0.15, 0.55, 0.95, 1.35, 1.75, 2.15)), 
+         col = c(viridis(3, alpha = 0.3)[2], viridis(3)[2],viridis(3)[2],viridis(3)[2],
+                 viridis(3, alpha = 0.3)[2], viridis(3, alpha = 0.3)[2]),
+         x0 = coefs_between2$CI_low,
+         x1 = coefs_between2$CI_high,
+         lwd = 3, cex = 1.3, lend = 1)
+
+# add coefficients text
+text(x = -1.85,
+     y = rev(c(0.25, 0.65, 1.05, 1.45, 1.85, 2.25)),
+     labels = c("Pollution outsourcing", "Democracy", "Pollution outsourcing x Democracy", 
+                "Population", "GDP per capita", expression("GDP per capita"^2)),
+     xpd = T,
+     cex = 0.9,
+     pos = 4)
+
+# Add a legend
+legend("topright", 
+       legend = c("Within", "Between"), 
+       col = c(viridis(3)[1], viridis(3)[2]), 
+       pch = 19,
+       bty = "n")
+
+dev.off()
+
+```
+
+
+```{r plots within-between separate}
 
 #-------------------------------------------------------------------------------
 # Coefficient plot - Within
 #-------------------------------------------------------------------------------
-
 coefs_low <- as.data.frame(summary(m8_dem_low)$coefficients[2:5,])
 coefs_high <- as.data.frame(summary(m8_dem_high)$coefficients[2:5,])
 
@@ -791,20 +975,20 @@ segments(x0 = -1.5, y0 = rev(c(0.25, 0.5, 0.75, 1,
 # add null line
 segments(x0 = 0, y0 = 0,
          x1 = 0, y1 = 2.5,
-         lty = "solid", lwd = 2, col = "black")
+         lty = "solid", lwd = 1, col = "black")
 
 
 # add point estimates
 points(x = coefs_low$Estimate,
        y = rev(c(0.25, 0.75, 1.5, 2.25)),
        pch = 16,
-       col = c(viridis(3)[1], "grey", viridis(3)[1], viridis(3)[1]),
+       col = c(viridis(3)[1], viridis(3, alpha = 0.6)[1], viridis(3)[1], viridis(3)[1]),
        cex = 1.25)
 
 # add CIs
 segments(y0 = rev(c(0.25, 0.75, 1.5, 2.25)), 
          y1 = rev(c(0.25, 0.75, 1.5, 2.25)), 
-         col = c(viridis(3, alpha = 0.4)[1], "grey", viridis(3, alpha = 0.4)[1], viridis(3, alpha = 0.4)[1]),
+         col = c(viridis(3)[1], viridis(3, alpha = 0.3)[1], viridis(3)[1], viridis(3)[1]),
          x0 = coefs_low$CI_low,
          x1 = coefs_low$CI_high,
          lwd = 3, cex = 1.5, lend = 1)
@@ -819,7 +1003,7 @@ points(x = coefs_high$Estimate,
 # add CIs
 segments(y0 = rev(c(0.15, 0.65, 1.4, 2.15)), 
          y1 = rev(c(0.15, 0.65, 1.4, 2.15)), 
-         col = c(viridis(3, alpha = 0.4)[2], viridis(3, alpha = 0.4)[2], viridis(3, alpha = 0.4)[2], viridis(3, alpha = 0.4)[2]),
+         col = c(viridis(3)[2], viridis(3)[2], viridis(3)[2], viridis(3)[2]),
          x0 = coefs_high$CI_low,
          x1 = coefs_high$CI_high,
          lwd = 3, cex = 1.5, lend = 1)
@@ -827,15 +1011,15 @@ segments(y0 = rev(c(0.15, 0.65, 1.4, 2.15)),
 # add coefficients text
 text(x = -1.25,
      y = rev(c(0.25, 0.75, 1.5, 2.25)),
-     labels = c("Pollution outsourcing", "Population", "GDP per capita", "GDP per capita squ."),
+     labels = c("Pollution outsourcing", "Population", "GDP per capita", expression("GDP per capita"^2)),
      xpd = T,
      cex = 0.9,
      pos = 4)
 
 # Add a legend
 legend("topright", 
-       legend = c("Less democratic", "More democratic", "Not significant"), 
-       col = c(viridis(3)[1], viridis(3)[2], "grey"), 
+       legend = c("Less democratic", "More democratic"), 
+       col = c(viridis(3)[1], viridis(3)[2]), 
        pch = 19,
        bty = "n")
 
@@ -845,15 +1029,15 @@ dev.off()
 #-------------------------------------------------------------------------------
 # Coefficient plot - Between
 #-------------------------------------------------------------------------------
-coefs_low <- as.data.frame(summary(m9_dem_low)$coefficients[6:9,])
-coefs_high <- as.data.frame(summary(m9_dem_high)$coefficients[6:9,])
+coefs_low2 <- as.data.frame(summary(m9_dem_low)$coefficients[6:9,])
+coefs_high2 <- as.data.frame(summary(m9_dem_high)$coefficients[6:9,])
 
 # Create data frames for each model
-coefs_low$CI_low <- coefs_low[,"Estimate"] - qnorm(0.95)*coefs_low[,"Std. Error"]
-coefs_low$CI_high <- coefs_low[,"Estimate"] + qnorm(0.95)*coefs_low[,"Std. Error"]
+coefs_low2$CI_low <- coefs_low2[,"Estimate"] - qnorm(0.95)*coefs_low2[,"Std. Error"]
+coefs_low2$CI_high <- coefs_low2[,"Estimate"] + qnorm(0.95)*coefs_low2[,"Std. Error"]
 
-coefs_high$CI_low <- coefs_high[,"Estimate"] - qnorm(0.95)*coefs_high[,"Std. Error"]
-coefs_high$CI_high <- coefs_high[,"Estimate"] + qnorm(0.95)*coefs_high[,"Std. Error"]
+coefs_high2$CI_low <- coefs_high2[,"Estimate"] - qnorm(0.95)*coefs_high2[,"Std. Error"]
+coefs_high2$CI_high <- coefs_high2[,"Estimate"] + qnorm(0.95)*coefs_high2[,"Std. Error"]
 
 
 pdf("Plots/Coefficients_table2_between.pdf", width = 7.5)
@@ -887,51 +1071,51 @@ segments(x0 = -1.5, y0 = rev(c(0.25, 0.5, 0.75, 1,
 # add null line
 segments(x0 = 0, y0 = 0,
          x1 = 0, y1 = 2.5,
-         lty = "solid", lwd = 2, col = "black")
+         lty = "solid", lwd = 1, col = "black")
 
 
 # add point estimates
-points(x = coefs_low$Estimate,
+points(x = coefs_low2$Estimate,
        y = rev(c(0.25, 0.75, 1.5, 2.25)),
        pch = 16,
-       col = c("grey", viridis(3)[1], "grey", viridis(3)[1]),
+       col = c(viridis(3, alpha = 0.6)[1], viridis(3)[1], viridis(3, alpha = 0.6)[1], viridis(3)[1]),
        cex = 1.25)
 
 # add CIs
 segments(y0 = rev(c(0.25, 0.75, 1.5, 2.25)), 
          y1 = rev(c(0.25, 0.75, 1.5, 2.25)), 
-         col = c("grey", viridis(3, alpha = 0.4)[1], "grey", viridis(3, alpha = 0.4)[1]),
-         x0 = coefs_low$CI_low,
-         x1 = coefs_low$CI_high,
+         col = c(viridis(3, alpha = 0.3)[1], viridis(3,)[1], viridis(3, alpha = 0.3)[1], viridis(3)[1]),
+         x0 = coefs_low2$CI_low,
+         x1 = coefs_low2$CI_high,
          lwd = 3, cex = 1.5, lend = 1)
 
 # add point estimates
-points(x = coefs_high$Estimate,
+points(x = coefs_high2$Estimate,
        y = rev(c(0.15, 0.65, 1.4, 2.15)),
        pch = 16,
-       col = c(viridis(3)[2], viridis(3)[2], viridis(3)[2], "grey"),
+       col = c(viridis(3)[2], viridis(3)[2], viridis(3)[2], viridis(3, alpha = 0.6)[2]),
        cex = 1.25)
 
 # add CIs
 segments(y0 = rev(c(0.15, 0.65, 1.4, 2.15)), 
          y1 = rev(c(0.15, 0.65, 1.4, 2.15)), 
-         col = c(viridis(3, alpha = 0.4)[2], viridis(3, alpha = 0.4)[2], viridis(3, alpha = 0.4)[2], "grey"),
-         x0 = coefs_high$CI_low,
-         x1 = coefs_high$CI_high,
+         col = c(viridis(3)[2], viridis(3)[2], viridis(3)[2], viridis(3, alpha = 0.3)[2]),
+         x0 = coefs_high2$CI_low,
+         x1 = coefs_high2$CI_high,
          lwd = 3, cex = 1.5, lend = 1)
 
 # add coefficients text
 text(x = -1.95,
      y = rev(c(0.25, 0.75, 1.5, 2.25)),
-     labels = c("Pollution outsourcing", "Population", "GDP per capita", "GDP per capita squ."),
+     labels = c("Pollution outsourcing", "Population", "GDP per capita", expression("GDP per capita"^2)),
      xpd = T,
      cex = 0.9,
      pos = 4)
 
 # Add a legend
 legend("topright", 
-       legend = c("Less democratic", "More democratic", "Not significant"), 
-       col = c(viridis(3)[1], viridis(3)[2], "grey"), 
+       legend = c("Less democratic", "More democratic"), 
+       col = c(viridis(3)[1], viridis(3)[2]), 
        pch = 19,
        bty = "n")
 
@@ -969,7 +1153,7 @@ plot(density(S[,"log_cc_outs:vdem_polyarchy"]),
      cex.lab = 1.3,
      yaxt = "n",
      ylab = "Density",
-     main = "Democracy x Pollution Outsourcing",
+     main = "Pollution Outsourcing x Democracy",
      xlab = "Simulated Interaction Effect")
 
 abline(v = c(quants_S[c(1,3), "log_cc_outs:vdem_polyarchy"]), lty = 2, col = viridis(3)[2])
@@ -1849,352 +2033,584 @@ dev.off()
 
 # Robustness
 
-## Temporally lagged DV
+## Replacing DV with PM2.5: ROBUST
 
-```{r lagged DV}
+```{r replace DV pm25}
 
 #-------------------------------------------------------------------------------
-# Lag DV
+# Model group 2 
 #-------------------------------------------------------------------------------
-# lag co2
-data_non_oecd <- data_non_oecd %>%
-  group_by(ccode) %>%
-  arrange(year) %>%
-  mutate(lag_wdi_co2 = dplyr::lag(wdi_co2))
+m8_wb_pm25 <- lmer(log_pm25_pop ~ demeaned_log_cc_outs + demeaned_vdem_poly + 
+                    interaction_demeaned +
+                    demeaned_log_pop + demeaned_log_gdp_pc + demeaned_log_gdp_pc_sq +
+                    mean_log_cc_outs + mean_vdem_poly +
+                    interaction_mean +
+                    mean_log_pop +  mean_log_gdp_pc + mean_log_gdp_pc_sq +
+                    as.factor(year) + (1 | ccode),
+                   data = data_s)
+
+stargazer(m8_wb, m8_wb_pm25, type = "text", omit = c("ccode", "year"))
+
+```
+
+## Replacing DV with carbon footprint: ROBUST
+
+```{r replace DV carbon footprint}
+
+#-------------------------------------------------------------------------------
+# Model group 2 
+#-------------------------------------------------------------------------------
+m8_wb_cf <- lmer(ef_carb ~ demeaned_log_cc_outs + demeaned_vdem_poly + 
+                    interaction_demeaned +
+                    demeaned_log_pop + demeaned_log_gdp_pc + demeaned_log_gdp_pc_sq +
+                    mean_log_cc_outs + mean_vdem_poly +
+                    interaction_mean +
+                    mean_log_pop +  mean_log_gdp_pc + mean_log_gdp_pc_sq +
+                    as.factor(year) + (1 | ccode),
+                   data = data_s)
+
+stargazer(m8_wb, m8_wb_cf, type = "text", omit = c("ccode", "year"))
+
+
+#-------------------------------------------------------------------------------
+# Output
+#-------------------------------------------------------------------------------
+texreg(list(m8_wb, m8_wb_pm25, m8_wb_cf),
+       stars = c(0.01, 0.05, 0.1),
+      # file = "texreg2.doc",
+       caption = "Alternative Dependent Variables",
+       custom.model.names = c("Model 7", "Model A1-PM2.5", "Model A2-Carbon Footprint"),
+       label = "tab:table3",
+       caption.above = T,
+       fontsize = "scriptsize",
+       custom.coef.map = list("demeaned_log_cc_outs" = "Pollution Outsourcing (Within)",
+                              "mean_log_cc_outs" = "Pollution Outsourcing (Between)",
+                              "demeaned_vdem_poly" = "Democracy (Within)",
+                              "mean_vdem_poly" = "Democracy (Between)",
+                              "interaction_demeaned" = "Pollution Outsourcing x Democracy (Within)",
+                              "interaction_mean" = "Pollution Outsourcing x Democracy (Between)",
+                              "demeaned_log_pop" = "Population (Within)",
+                              "mean_log_pop" = "Population (Between)",
+                              "demeaned_log_gdp_pc" = "GDP per capita (Within)",
+                              "demeaned_log_gdp_pc_sq" = "GDP per capita squ. (Within)",
+                              "mean_log_gdp_pc" = "GDP per capita (Between)",
+                              "mean_log_gdp_pc_sq" = "GDP per capita squ. (Between)",
+                              "(Intercept)" = "Constant"),
+        custom.gof.rows = list("Controls" = c("\\ding{51}", "\\ding{51}", "\\ding{51}"),
+                               "Country-FE" = c("\\ding{51}", "\\ding{51}", "\\ding{51}"),
+                               "Year-FE" = c("\\ding{51}", "\\ding{51}", "\\ding{51}")))
+
+```
+
+## Different outsourcing variables: NOT ROBUST (Between for land use & energy)
+
+```{r diff outsourcing}
+
+#-------------------------------------------------------------------------------
+# Model group 2 
+#-------------------------------------------------------------------------------
+m8_wb_bw <- lmer(log_wdi_co2 ~ demeaned_log_bw_outs + demeaned_vdem_poly + 
+                     interaction_bw_demeaned +
+                     demeaned_log_pop + demeaned_log_gdp_pc + demeaned_log_gdp_pc_sq +
+                     mean_log_cc_outs + mean_vdem_poly +
+                     interaction_bw_mean +
+                     mean_log_pop +  mean_log_gdp_pc + mean_log_gdp_pc_sq +
+                     as.factor(year) + (1 | ccode),
+                    data = data_s)
+
+m8_wb_en <- lmer(log_wdi_co2 ~ demeaned_log_en_outs + demeaned_vdem_poly + 
+                     interaction_en_demeaned +
+                     demeaned_log_pop + demeaned_log_gdp_pc + demeaned_log_gdp_pc_sq +
+                     mean_log_cc_outs + mean_vdem_poly +
+                     interaction_en_mean +
+                     mean_log_pop +  mean_log_gdp_pc + mean_log_gdp_pc_sq +
+                     as.factor(year) + (1 | ccode),
+                    data = data_s)
+
+m8_wb_lu <- lmer(log_wdi_co2 ~ demeaned_log_lu_outs + demeaned_vdem_poly + 
+                     interaction_lu_demeaned +
+                     demeaned_log_pop + demeaned_log_gdp_pc + demeaned_log_gdp_pc_sq +
+                     mean_log_cc_outs + mean_vdem_poly +
+                     interaction_lu_mean +
+                     mean_log_pop +  mean_log_gdp_pc + mean_log_gdp_pc_sq +
+                     as.factor(year) + (1 | ccode),
+                    data = data_s)
+
+m8_wb_mf <- lmer(log_wdi_co2 ~ demeaned_log_mf_outs + demeaned_vdem_poly + 
+                     interaction_mf_demeaned +
+                     demeaned_log_pop + demeaned_log_gdp_pc + demeaned_log_gdp_pc_sq +
+                     mean_log_cc_outs + mean_vdem_poly +
+                     interaction_mf_mean +
+                     mean_log_pop +  mean_log_gdp_pc + mean_log_gdp_pc_sq +
+                     as.factor(year) + (1 | ccode),
+                    data = data_s)
+
+stargazer(m8_wb, m8_wb_bw, m8_wb_en, m8_wb_lu, m8_wb_mf, type = "text", omit = c("ccode", "year"))
+
+
+#-------------------------------------------------------------------------------
+# Output
+#-------------------------------------------------------------------------------
+texreg(list(m8_wb, m8_wb_bw, m8_wb_en, m8_wb_lu, m8_wb_mf),
+       stars = c(0.01, 0.05, 0.1),
+      # file = "texreg2.doc",
+       caption = "Alternative Outsourcing Variables",
+       custom.model.names = c("Model 7", "Model A3-bluewater", "Model A4-energy", "Model A5-landuse", "Model A6-material"),
+       label = "tab:table4",
+       caption.above = T,
+       fontsize = "scriptsize",
+       custom.coef.map = list("demeaned_log_cc_outs" = "Pollution Outsourcing (Within)",
+                              "demeaned_log_bw_outs" = "Pollution Outsourcing (Within)",
+                              "demeaned_log_en_outs" = "Pollution Outsourcing (Within)",
+                              "demeaned_log_lu_outs" = "Pollution Outsourcing (Within)",
+                              "demeaned_log_mf_outs" = "Pollution Outsourcing (Within)",
+                              "mean_log_cc_outs" = "Pollution Outsourcing (Between)",
+                              "mean_log_bw_outs" = "Pollution Outsourcing (Between)",
+                              "mean_log_en_outs" = "Pollution Outsourcing (Between)",
+                              "mean_log_lu_outs" = "Pollution Outsourcing (Between)",
+                              "mean_log_mf_outs" = "Pollution Outsourcing (Between)",
+                              "demeaned_vdem_poly" = "Democracy (Within)",
+                              "mean_vdem_poly" = "Democracy (Between)",
+                              "interaction_demeaned" = "Pollution Outsourcing x Democracy (Within)",
+                              "interaction_bw_demeaned" = "Pollution Outsourcing x Democracy (Within)",
+                              "interaction_en_demeaned" = "Pollution Outsourcing x Democracy (Within)",
+                              "interaction_lu_demeaned" = "Pollution Outsourcing x Democracy (Within)",
+                              "interaction_mf_demeaned" = "Pollution Outsourcing x Democracy (Within)",
+                              "interaction_mean" = "Pollution Outsourcing x Democracy (Between)",
+                              "interaction_bw_mean" = "Pollution Outsourcing x Democracy (Between)",
+                              "interaction_en_mean" = "Pollution Outsourcing x Democracy (Between)",
+                              "interaction_lu_mean" = "Pollution Outsourcing x Democracy (Between)",
+                              "interaction_mf_mean" = "Pollution Outsourcing x Democracy (Between)",
+                              "demeaned_log_pop" = "Population (Within)",
+                              "mean_log_pop" = "Population (Between)",
+                              "demeaned_log_gdp_pc" = "GDP per capita (Within)",
+                              "demeaned_log_gdp_pc_sq" = "GDP per capita squ. (Within)",
+                              "mean_log_gdp_pc" = "GDP per capita (Between)",
+                              "mean_log_gdp_pc_sq" = "GDP per capita squ. (Between)",
+                              "(Intercept)" = "Constant"),
+        custom.gof.rows = list("Controls" = c("\\ding{51}", "\\ding{51}", "\\ding{51}","\\ding{51}", "\\ding{51}"),
+                               "Country-FE" = c("\\ding{51}", "\\ding{51}", "\\ding{51}", "\\ding{51}", "\\ding{51}"),
+                               "Year-FE" = c("\\ding{51}", "\\ding{51}", "\\ding{51}", "\\ding{51}", "\\ding{51}")))
+
+```
+
+## Alternative operationalization outsourcing: Total sum of pollution outsourced
+
+```{r total sum}
+
+#-------------------------------------------------------------------------------
+# Model group 1
+#-------------------------------------------------------------------------------
+m1_wb_sum <- lmer(log_cc_sum_outs ~ demeaned_vdem_poly + mean_vdem_poly + as.factor(year) +
+                   (1 | ccode), 
+                  data = data_s[which(!is.na(data_s$log_gdp_pc) &
+                                      !is.na(data_s$log_cc_outs)),])
+
+m2_wb_sum <- lmer(log_cc_sum_outs ~ demeaned_log_pop + demeaned_log_gdp_pc + demeaned_log_gdp_pc_sq + 
+                   mean_log_pop + mean_log_gdp_pc + mean_log_gdp_pc_sq +
+                   as.factor(year) + (1 | ccode),
+                  data = data_s[which(!is.na(data_s$log_gdp_pc) &
+                                      !is.na(data_s$log_cc_outs)),])
+
+m3_wb_sum <- lmer(log_cc_sum_outs ~ demeaned_vdem_poly + demeaned_log_gdp_pc + demeaned_log_gdp_pc_sq + 
+                   demeaned_log_pop + 
+                   mean_vdem_poly + mean_log_gdp_pc + mean_log_gdp_pc_sq + mean_log_pop + as.factor(year) +
+                   (1 | ccode), 
+                  data = data_s[which(!is.na(data_s$log_gdp_pc) &
+                                      !is.na(data_s$log_cc_outs)),])
+
+stargazer(m1_wb_sum, m2_wb_sum, m3_wb_sum, type = "text", omit = c("ccode", "year"))
+
+
+#-------------------------------------------------------------------------------
+## Output
+#-------------------------------------------------------------------------------
+texreg(list(m1_wb_sum, m2_wb_sum, m3_wb_sum),
+       stars = c(0.01, 0.05, 0.1),
+       #file = "texreg1.doc",
+       caption = "Total Sum of Pollution Outsourced - Analysis 1",
+       custom.model.names = c("Model A7", "Model A8", "Model A9"),
+       label = "tab:table5",
+       caption.above = T,
+       fontsize = "scriptsize",
+       custom.coef.map = list("demeaned_vdem_poly" = "Democracy (Within)",
+                              "mean_vdem_poly" = "Democracy (Between)",
+                              "demeaned_log_pop" = "Population (Within)",
+                              "mean_log_pop" = "Population (Between)",
+                              "demeaned_log_gdp_pc" = "GDP per capita (Within)",
+                              "demeaned_log_gdp_pc_sq" = "GDP per capita squ. (Within)", 
+                              "mean_log_gdp_pc" = "GDP per capita (Between)",
+                              "mean_log_gdp_pc_sq" = "GDP per capita squ. (Between)", 
+                              "(Intercept)" = "Constant"),
+        custom.gof.rows = list("Controls" = c("\\xmark", "\\ding{51}", "\\ding{51}"),
+                               "Country-FE" = c("\\ding{51}", "\\ding{51}", "\\ding{51}"),
+                               "Year-FE" = c("\\ding{51}", "\\ding{51}", "\\ding{51}")))
+
+
+#-------------------------------------------------------------------------------
+# Model group 2
+#-------------------------------------------------------------------------------
+m5_wb_sum <- lmer(log_wdi_co2 ~ demeaned_log_cc_sum_outs + demeaned_vdem_poly + 
+                   mean_log_cc_sum_outs + mean_vdem_poly +
+                   as.factor(year) + (1 | ccode),
+                  data = data_s[which(!is.na(data_s$log_gdp_pc) &
+                                      !is.na(data_s$log_cc_outs)),])
+
+m6_wb_sum <- lmer(log_wdi_co2 ~ demeaned_log_cc_sum_outs + demeaned_vdem_poly +
+                   interaction_cc_sum_demeaned + 
+                   mean_log_cc_sum_outs + mean_vdem_poly +
+                   interaction_cc_sum_mean +
+                   as.factor(year) + (1 | ccode),
+                  data = data_s[which(!is.na(data_s$log_gdp_pc) &
+                                      !is.na(data_s$log_cc_outs)),])
+
+m8_wb_sum <- lmer(log_wdi_co2 ~ demeaned_log_cc_sum_outs + demeaned_vdem_poly + 
+                   interaction_cc_sum_demeaned +
+                   demeaned_log_pop + demeaned_log_gdp_pc + demeaned_log_gdp_pc_sq +
+                   mean_log_cc_sum_outs + mean_vdem_poly +
+                   interaction_cc_sum_mean +
+                   mean_log_pop +  mean_log_gdp_pc + mean_log_gdp_pc_sq +
+                   as.factor(year) + (1 | ccode),
+                  data = data_s[which(!is.na(data_s$log_gdp_pc) &
+                                      !is.na(data_s$log_cc_outs)),])
+
+stargazer(m5_wb_sum, m6_wb_sum, m7_wb, m8_wb_sum, type = "text", omit = c("ccode", "year"))
+
+
+#-------------------------------------------------------------------------------
+# Output
+#-------------------------------------------------------------------------------
+texreg(list(m5_wb_sum, m6_wb_sum, m7_wb, m8_wb_sum),
+       stars = c(0.01, 0.05, 0.1),
+      # file = "texreg2.doc",
+       caption = "Total Sum of Pollution Outsourced - Analysis 2",
+       custom.model.names = c("Model A10", "Model A11", "Model A12", "Model A13"),
+       label = "tab:table6",
+       caption.above = T,
+       fontsize = "scriptsize",
+       custom.coef.map = list("demeaned_log_cc_sum_outs" = "Pollution Outsourcing (Within)",
+                              "mean_log_cc_sum_outs" = "Pollution Outsourcing (Between)",
+                              "demeaned_vdem_poly" = "Democracy (Within)",
+                              "mean_vdem_poly" = "Democracy (Between)",
+                              "interaction_cc_sum_demeaned" = "Pollution Outsourcing x Democracy (Within)",
+                              "interaction_cc_sum_mean" = "Pollution Outsourcing x Democracy (Between)",
+                              "demeaned_log_pop" = "Population (Within)",
+                              "mean_log_pop" = "Population (Between)",
+                              "demeaned_log_gdp_pc" = "GDP per capita (Within)",
+                              "demeaned_log_gdp_pc_sq" = "GDP per capita squ. (Within)",
+                              "mean_log_gdp_pc" = "GDP per capita (Between)",
+                              "mean_log_gdp_pc_sq" = "GDP per capita squ. (Between)",
+                              "(Intercept)" = "Constant"),
+        custom.gof.rows = list("Controls" = c("\\xmark", "\\xmark", "\\ding{51}", "\\ding{51}"),
+                               "Country-FE" = c("\\ding{51}", "\\ding{51}", "\\ding{51}", "\\ding{51}"),
+                               "Year-FE" = c("\\ding{51}", "\\ding{51}", "\\ding{51}", "\\ding{51}")))
 
 
 ```
 
-## Replacing DV with ecological footprint data
+## Alternative operationalization for democracy: ROBUST
 
-```{r DV ecolog footprint}
-
-#-------------------------------------------------------------------------------
-# Base models
-#-------------------------------------------------------------------------------
-m3_eco <- lm(ef_ef ~ lag_ef_ef + export_fdi_index + vdem_polyarchy + 
-              as.factor(year) + as.factor(ccode),
-             data = data_s)
+```{r diff  dem}
 
 #-------------------------------------------------------------------------------
-# Base model + interaction
+# Model group 2 
 #-------------------------------------------------------------------------------
-m3_eco_int <- lm(ef_ef ~ lag_ef_ef + export_fdi_index + vdem_polyarchy + 
-                  export_fdi_index * vdem_polyarchy + 
-                  as.factor(year) + as.factor(ccode),
-                 data = data_s)
+m8_wb_polity <- lmer(log_wdi_co2 ~ demeaned_log_cc_outs + demeaned_polity + 
+                      interaction_polity_demeaned +
+                      demeaned_log_pop + demeaned_log_gdp_pc + demeaned_log_gdp_pc_sq +
+                      mean_log_cc_outs + mean_polity +
+                      interaction_polity_mean +
+                      mean_log_pop +  mean_log_gdp_pc + mean_log_gdp_pc_sq +
+                      as.factor(year) + (1 | ccode),
+                     data = data_s)
 
-#-------------------------------------------------------------------------------
-# Base model + controls
-#-------------------------------------------------------------------------------
-m3_eco_c <- lm(ef_ef ~ lag_ef_ef + export_fdi_index + vdem_polyarchy +
-                gdp_pc_log + gdp_pc_log_sq + pop_log +
-                as.factor(year) + as.factor(ccode),
-               data = data_s)
-
-#-------------------------------------------------------------------------------
-# Base model + interaction + controls
-#-------------------------------------------------------------------------------
-m3_eco_int_c <- lm(ef_ef ~ lag_ef_ef + export_fdi_index + vdem_polyarchy + 
-                    export_fdi_index * vdem_polyarchy  +
-                    gdp_pc_log + gdp_pc_log_sq + pop_log +
-                    as.factor(year) + as.factor(ccode),
-                   data = data_s)
-
-## Output
-stargazer(list(m3_eco, m3_eco_int, m3_eco_c, m3_eco_int_c),
-          omit = c("ccode", "year"), type = "latex",
-          model.numbers = T,
-          font.size = "scriptsize",
-          digits = 2,
-          header = F,
-          omit.stat = c("f"),
-          dep.var.labels = "ln(Ecological footprint)",
-          covariate.labels = c("ln(Ecological footprint)$_{t-1}$", "Export-FDI index",
-                               "Electoral democracy", "ln(GDP per capita)", "ln(GDP per capita)$^2$",
-                               "ln(Pop. size)", "Export-FDI index x Electoral dem.", "Constant"))
-``` 
-
-## Replacing DV with changes in CO2
-
-```{r DV CO2 change}
-
-#-------------------------------------------------------------------------------
-# Calculate (lagged) change variable
-#-------------------------------------------------------------------------------
-data_s$co2change <- data_s$lag_wdi_co2 - data_s$wdi_co2
-
-# lag change co2
-data_s <- data_s %>%
-  group_by(ccode) %>%
-  arrange(year) %>%
-  mutate(lag_co2change = dplyr::lag(co2change))
+stargazer(m8_wb, m8_wb_polity, type = "text", omit = c("ccode", "year"))
 
 
 #-------------------------------------------------------------------------------
-# Base models
+# Output
 #-------------------------------------------------------------------------------
-m3_co2c <- lm(co2change ~ lag_co2change + export_fdi_index + vdem_polyarchy + 
-              as.factor(year) + as.factor(ccode),
-             data = data_s)
+texreg(list(m8_wb, m8_wb_polity),
+       stars = c(0.01, 0.05, 0.1),
+      # file = "texreg2.doc",
+       caption = "Alternative Operationalization for Democracy",
+       custom.model.names = c("Model 7-Vdem", "Model A14-Polity"),
+       label = "tab:table6",
+       caption.above = T,
+       fontsize = "scriptsize",
+       custom.coef.map = list("demeaned_log_cc_outs" = "Pollution Outsourcing (Within)",
+                              "mean_log_cc_outs" = "Pollution Outsourcing (Between)",
+                              "demeaned_vdem_poly" = "Democracy (Within)",
+                              "demeaned_polity" = "Democracy (Within)",
+                              "mean_vdem_poly" = "Democracy (Between)",
+                              "mean_polity" = "Democracy (Between)",
+                              "interaction_demeaned" = "Pollution Outsourcing x Democracy (Within)",
+                              "interaction_polity_demeaned" = "Pollution Outsourcing x Democracy (Within)",
+                              "interaction_mean" = "Pollution Outsourcing x Democracy (Between)",
+                              "interaction_polity_mean" = "Pollution Outsourcing x Democracy (Between)",
+                              "demeaned_log_pop" = "Population (Within)",
+                              "mean_log_pop" = "Population (Between)",
+                              "demeaned_log_gdp_pc" = "GDP per capita (Within)",
+                              "demeaned_log_gdp_pc_sq" = "GDP per capita squ. (Within)",
+                              "mean_log_gdp_pc" = "GDP per capita (Between)",
+                              "mean_log_gdp_pc_sq" = "GDP per capita squ. (Between)",
+                              "(Intercept)" = "Constant"),
+        custom.gof.rows = list("Controls" = c("\\ding{51}", "\\ding{51}"),
+                               "Country-FE" = c("\\ding{51}", "\\ding{51}"),
+                               "Year-FE" = c("\\ding{51}", "\\ding{51}")))
+```
 
-#-------------------------------------------------------------------------------
-# Base model + interaction
-#-------------------------------------------------------------------------------
-m3_co2c_int <- lm(co2change ~ lag_co2change + export_fdi_index + vdem_polyarchy + 
-                  export_fdi_index * vdem_polyarchy + 
-                  as.factor(year) + as.factor(ccode),
-                 data = data_s)
-
-#-------------------------------------------------------------------------------
-# Base model + controls
-#-------------------------------------------------------------------------------
-m3_co2c_c <- lm(co2change ~ lag_co2change + export_fdi_index + vdem_polyarchy +
-                gdp_pc_log + gdp_pc_log_sq + pop_log +
-                as.factor(year) + as.factor(ccode),
-               data = data_s)
-
-#-------------------------------------------------------------------------------
-# Base model + interaction + controls
-#-------------------------------------------------------------------------------
-m3_co2c_int_c <- lm(co2change ~ lag_co2change + export_fdi_index + vdem_polyarchy + 
-                    export_fdi_index * vdem_polyarchy  +
-                    gdp_pc_log + gdp_pc_log_sq + pop_log +
-                    as.factor(year) + as.factor(ccode),
-                   data = data_s)
-
-## Output
-stargazer(list(m3_co2c, m3_co2c_int, m3_co2c_c, m3_co2c_int_c),
-          omit = c("ccode", "year"), type = "latex",
-          model.numbers = T,
-          font.size = "scriptsize",
-          digits = 2,
-          header = F,
-          omit.stat = c("f"),
-          dep.var.labels = "Change ln(CO$_2$ emissions per capita)",
-          covariate.labels = c("Change ln(CO$_2$ emissions per capita)$_{t-1}$", "Export-FDI index",
-                               "Electoral democracy", "ln(GDP per capita)", "ln(GDP per capita)$^2$",
-                               "ln(Pop. size)", "Export-FDI index x Electoral dem.", "Constant"))
-
-``` 
-
-## Replacing Democracy variable: Freedom House & Polity V
-
-```{r IV Freedom House and Polity V}
-
-#-------------------------------------------------------------------------------
-# Base models
-#-------------------------------------------------------------------------------
-m3_fh <- lm(log_wdi_co2 ~ lag_log_wdi_co2 + export_fdi_index + fh_cl + 
-              as.factor(year) + as.factor(ccode),
-             data = data_s)
-
-#-------------------------------------------------------------------------------
-# Base model + interaction
-#-------------------------------------------------------------------------------
-m3_fh_int <- lm(log_wdi_co2 ~ lag_log_wdi_co2 + export_fdi_index + fh_cl + 
-                  export_fdi_index * fh_cl + 
-                  as.factor(year) + as.factor(ccode),
-                 data = data_s)
-
-#-------------------------------------------------------------------------------
-# Base model + controls
-#-------------------------------------------------------------------------------
-m3_fh_c <- lm(log_wdi_co2 ~ lag_log_wdi_co2 + export_fdi_index + fh_cl +
-                gdp_pc_log + gdp_pc_log_sq + pop_log +
-                as.factor(year) + as.factor(ccode),
-               data = data_s)
-
-#-------------------------------------------------------------------------------
-# Base model + interaction + controls
-#-------------------------------------------------------------------------------
-m3_fh_int_c <- lm(log_wdi_co2 ~ lag_log_wdi_co2 + export_fdi_index + fh_cl + 
-                    export_fdi_index * fh_cl  +
-                    gdp_pc_log + gdp_pc_log_sq + pop_log +
-                    as.factor(year) + as.factor(ccode),
-                   data = data_s)
-
-## Output
-stargazer(list(m3_fh, m3_fh_int, m3_fh_c, m3_fh_int_c),
-          omit = c("ccode", "year"), type = "latex",
-          model.numbers = T,
-          font.size = "scriptsize",
-          digits = 2,
-          header = F,
-          omit.stat = c("f"),
-          dep.var.labels = "ln(CO$_2$ emissions per capita)",
-          covariate.labels = c("ln(CO$_2$ emissions per capita)$_{t-1}$", "Export-FDI index",
-                               "Dem. (Freedom House)", "ln(GDP per capita)", "ln(GDP per capita)$^2$",
-                               "ln(Pop. size)", "Export-FDI index x Dem. (Freedom House).", "Constant"))
-
-
-#-------------------------------------------------------------------------------
-# Base models
-#-------------------------------------------------------------------------------
-m3_pol <- lm(log_wdi_co2 ~ lag_log_wdi_co2 + export_fdi_index + p_polity2 + 
-              as.factor(year) + as.factor(ccode),
-             data = data_s)
-
-#-------------------------------------------------------------------------------
-# Base model + interaction
-#-------------------------------------------------------------------------------
-m3_pol_int <- lm(log_wdi_co2 ~ lag_log_wdi_co2 + export_fdi_index + p_polity2 + 
-                  export_fdi_index * p_polity2 + 
-                  as.factor(year) + as.factor(ccode),
-                 data = data_s)
-
-#-------------------------------------------------------------------------------
-# Base model + controls
-#-------------------------------------------------------------------------------
-m3_pol_c <- lm(log_wdi_co2 ~ lag_log_wdi_co2 + export_fdi_index + p_polity2 +
-                gdp_pc_log + gdp_pc_log_sq + pop_log +
-                as.factor(year) + as.factor(ccode),
-               data = data_s)
-
-#-------------------------------------------------------------------------------
-# Base model + interaction + controls
-#-------------------------------------------------------------------------------
-m3_pol_int_c <- lm(log_wdi_co2 ~ lag_log_wdi_co2 + export_fdi_index + p_polity2 + 
-                    export_fdi_index * p_polity2  +
-                    gdp_pc_log + gdp_pc_log_sq + pop_log +
-                    as.factor(year) + as.factor(ccode),
-                   data = data_s)
-
-## Output
-stargazer(list(m3_pol, m3_pol_int, m3_pol_c, m3_pol_int_c),
-          omit = c("ccode", "year"), type = "latex",
-          model.numbers = T,
-          font.size = "scriptsize",
-          digits = 2,
-          header = F,
-          omit.stat = c("f"),
-          dep.var.labels = "ln(CO$_2$ emissions per capita)",
-          covariate.labels = c("ln(CO$_2$ emissions per capita)$_{t-1}$", "Export-FDI index",
-                               "Dem. (Polity V)", "ln(GDP per capita)", "ln(GDP per capita)$^2$",
-                               "ln(Pop. size)", "Export-FDI index x Dem. (Polity V).", "Constant"))
-
-summary(data$fh)
-``` 
-
-## Additional controls: Political globaliz. & env. treaties
+## Additional controls: Political globaliz. & env. treaties: NOT ROBUST (BETWEEN)
 
 ```{r additional controls}
 
 #-------------------------------------------------------------------------------
-# Base models
+# Model group 2 
 #-------------------------------------------------------------------------------
-m3_add_int <- lm(log_wdi_co2 ~ lag_log_wdi_co2 + export_fdi_index + vdem_polyarchy + 
-                   export_fdi_index * vdem_polyarchy +
-                   as.factor(year) + as.factor(ccode),
-                 data = data_s)
-
-#-------------------------------------------------------------------------------
-# Base model + controls
-#-------------------------------------------------------------------------------
-m3_add_c <- lm(log_wdi_co2 ~ lag_log_wdi_co2 + export_fdi_index + vdem_polyarchy +
-                env_treaties + dr_pg + gdp_pc_log + pop_log +
-                as.factor(year) + as.factor(ccode),
-               data = data_s)
-
-#-------------------------------------------------------------------------------
-# Base model + interaction + controls
-#-------------------------------------------------------------------------------
-m3_add_int_c <- lm(log_wdi_co2 ~ lag_log_wdi_co2 + export_fdi_index + vdem_polyarchy + 
-                    export_fdi_index * vdem_polyarchy  +
-                    env_treaties + dr_pg + gdp_pc_log + pop_log +
-                    as.factor(year) + as.factor(ccode),
+m8_wb_ac1 <- lmer(log_wdi_co2 ~ demeaned_log_cc_outs + demeaned_vdem_poly + 
+                    interaction_demeaned +
+                    demeaned_log_pop + demeaned_log_gdp_pc + demeaned_log_gdp_pc_sq +
+                    demeaned_trade + 
+                    mean_log_cc_outs + mean_vdem_poly +
+                    interaction_mean +
+                    mean_log_pop +  mean_log_gdp_pc + mean_log_gdp_pc_sq +
+                    mean_trade +
+                    as.factor(year) + (1 | ccode),
                    data = data_s)
 
-## Output
-stargazer(list(m3_add_int, m3_add_c, m3_add_int_c),
-          omit = c("ccode", "year"), type = "text",
-          model.numbers = T,
-          font.size = "scriptsize",
-          digits = 2,
-          header = F,
-          omit.stat = c("f"),
-          dep.var.labels = "ln(CO$_2$ emissions per capita)",
-          covariate.labels = c("ln(CO$_2$ emissions per capita)$_{t-1}$", "Export-FDI index",
-                               "Electoral democracy", "Environm. treaties", "Political globaliz.", 
-                               "ln(GDP per cap.)", "ln(Pop. size)",
-                               "Export-FDI index x Electoral dem.", "Constant"))
+m8_wb_ac2 <- lmer(log_wdi_co2 ~ demeaned_log_cc_outs + demeaned_vdem_poly + 
+                    interaction_demeaned +
+                    demeaned_log_pop + demeaned_log_gdp_pc + demeaned_log_gdp_pc_sq +
+                   # demeaned_env_treat + (only between because variation only between-countries)
+                    mean_log_cc_outs + mean_vdem_poly +
+                    interaction_mean +
+                    mean_log_pop +  mean_log_gdp_pc + mean_log_gdp_pc_sq +
+                    mean_env_treat +
+                    as.factor(year) + (1 | ccode),
+                   data = data_s)
 
-``` 
+m8_wb_ac3 <- lmer(log_wdi_co2 ~ demeaned_log_cc_outs + demeaned_vdem_poly + 
+                    interaction_demeaned +
+                    demeaned_log_pop + demeaned_log_gdp_pc + demeaned_log_gdp_pc_sq +
+                    demeaned_dr_pg + 
+                    mean_log_cc_outs + mean_vdem_poly +
+                    interaction_mean +
+                    mean_log_pop +  mean_log_gdp_pc + mean_log_gdp_pc_sq +
+                    mean_dr_pg +
+                    as.factor(year) + (1 | ccode),
+                   data = data_s)
 
-## No lagged DV
+m8_wb_ac4 <- lmer(log_wdi_co2 ~ demeaned_log_cc_outs + demeaned_vdem_poly + 
+                    interaction_demeaned +
+                    demeaned_log_pop + demeaned_log_gdp_pc + demeaned_log_gdp_pc_sq +
+                    demeaned_gdp + 
+                    mean_log_cc_outs + mean_vdem_poly +
+                    interaction_mean +
+                    mean_log_pop +  mean_log_gdp_pc + mean_log_gdp_pc_sq +
+                    mean_gdp +
+                    as.factor(year) + (1 | ccode),
+                   data = data_s)
 
-```{r no lagged DV}
+m8_wb_ac_all <- lmer(log_wdi_co2 ~ demeaned_log_cc_outs + demeaned_vdem_poly + 
+                      interaction_demeaned +
+                      demeaned_log_pop + demeaned_log_gdp_pc + demeaned_log_gdp_pc_sq +
+                      demeaned_trade + demeaned_dr_pg + demeaned_gdp + 
+                      mean_log_cc_outs + mean_vdem_poly +
+                      interaction_mean +
+                      mean_log_pop +  mean_log_gdp_pc + mean_log_gdp_pc_sq +
+                      mean_trade + mean_env_treat + mean_dr_pg + mean_gdp +
+                      as.factor(year) + (1 | ccode),
+                    data = data_s)
 
-#-------------------------------------------------------------------------------
-# Base model + interaction
-#-------------------------------------------------------------------------------
-m3_ind_int_no_lag <- lm(log_wdi_co2 ~ export_fdi_index + vdem_polyarchy + 
-                         export_fdi_index * vdem_polyarchy + 
-                         as.factor(year) + as.factor(ccode),
-                       data = data_s)
 
-stargazer(m3_ind_int_no_lag, type = "text", omit = c("ccode", "year"))
+stargazer(m8_wb, m8_wb_ac1, m8_wb_ac2, m8_wb_ac3, m8_wb_ac4, m8_wb_ac_all, type = "text", omit = c("ccode", "year"))
+
+
+texreg(list(m8_wb, m8_wb_ac1, m8_wb_ac2, m8_wb_ac3, m8_wb_ac4, m8_wb_ac_all),
+       stars = c(0.01, 0.05, 0.1),
+      # file = "texreg2.doc",
+       caption = "Additional Control Variables",
+       custom.model.names = c("Model 7", "Model A15", "Model A16", "Model A17", "Model A18", "Model A19"),
+       label = "tab:table7",
+       caption.above = T,
+       fontsize = "scriptsize",
+       custom.coef.map = list("demeaned_log_cc_outs" = "Pollution Outsourcing (Within)",
+                              "mean_log_cc_outs" = "Pollution Outsourcing (Between)",
+                              "demeaned_polity" = "Democracy (Within)",
+                              "mean_vdem_poly" = "Democracy (Between)",
+                              "interaction_demeaned" = "Pollution Outsourcing x Democracy (Within)",
+                              "interaction_mean" = "Pollution Outsourcing x Democracy (Between)",
+                              "demeaned_log_pop" = "Population (Within)",
+                              "mean_log_pop" = "Population (Between)",
+                              "demeaned_log_gdp_pc" = "GDP per capita (Within)",
+                              "demeaned_log_gdp_pc_sq" = "GDP per capita squ. (Within)",
+                              "mean_log_gdp_pc" = "GDP per capita (Between)",
+                              "mean_log_gdp_pc_sq" = "GDP per capita squ. (Between)",
+                              "demeaned_trade" = "Trade Openness (Within)",
+                              "mean_trade" = "Trade Openness (Between)",
+                              "mean_env_treat" = "Environmental Treaties (Between)",
+                              "demeaned_dr_pg" = "Political Globalization (Within)",
+                              "mean_dr_pg" = "Political Globalization (Between)",
+                              "demeaned_gdp" = "GDP (Within)",
+                              "mean_gdp" = "GDP (Between)",
+                              "(Intercept)" = "Constant"),
+        custom.gof.rows = list("Controls" = c("\\ding{51}", "\\ding{51}", "\\ding{51}", "\\ding{51}", "\\ding{51}", "\\ding{51}"),
+                               "Country-FE" = c("\\ding{51}", "\\ding{51}", "\\ding{51}", "\\ding{51}", "\\ding{51}", "\\ding{51}"),
+                               "Year-FE" = c("\\ding{51}", "\\ding{51}", "\\ding{51}", "\\ding{51}", "\\ding{51}", "\\ding{51}")))
+
 
 ```
 
-## Checking autocorrelation and panel-corrected SEs
+## Drop high-income states: ROBUST
 
-```{r autocorr}
-
-#-------------------------------------------------------------------------------
-# Run model
-#-------------------------------------------------------------------------------
-
-## Set up panel data
-panel_data <- pdata.frame(data_s, index = c("ccode", "year"))
-
-m3_int_auto <- plm(log_wdi_co2 ~ lag_log_wdi_co2 + export_fdi_index + vdem_polyarchy + 
-                     export_fdi_index * vdem_polyarchy,
-                    data = panel_data, model = "within", effect = "twoways")
+```{r drop high-income}
 
 #-------------------------------------------------------------------------------
-# Look at summary
+# Model group 2 
 #-------------------------------------------------------------------------------
-summary(m3_int_auto)
+m8_wb_low_income <- lmer(log_wdi_co2 ~ demeaned_log_cc_outs + demeaned_vdem_poly + 
+                          interaction_demeaned +
+                          demeaned_log_pop + demeaned_log_gdp_pc + demeaned_log_gdp_pc_sq +
+                          mean_log_cc_outs + mean_vdem_poly +
+                          interaction_mean +
+                          mean_log_pop +  mean_log_gdp_pc + mean_log_gdp_pc_sq +
+                          as.factor(year) + (1 | ccode),
+                         data = data_s[data_s$log_gdp_pc < 10.1,])
+
+stargazer(m8_wb, m8_wb_low_income, type = "text", omit = c("ccode", "year"))
+
 
 #-------------------------------------------------------------------------------
-# Use Breusch-Godfrey test for serial correlation
+# Output
 #-------------------------------------------------------------------------------
-bg_test <- bgtest(m3_int_auto)
+texreg(list(m8_wb, m8_wb_low_income),
+       stars = c(0.01, 0.05, 0.1),
+      # file = "texreg2.doc",
+       caption = "Exclusion of the Richest States",
+       custom.model.names = c("Model 7", "Model A20"),
+       label = "tab:table9",
+       caption.above = T,
+       fontsize = "scriptsize",
+       custom.coef.map = list("demeaned_log_cc_outs" = "Pollution Outsourcing (Within)",
+                              "mean_log_cc_outs" = "Pollution Outsourcing (Between)",
+                              "demeaned_polity" = "Democracy (Within)",
+                              "mean_vdem_poly" = "Democracy (Between)",
+                              "interaction_demeaned" = "Pollution Outsourcing x Democracy (Within)",
+                              "interaction_mean" = "Pollution Outsourcing x Democracy (Between)",
+                              "demeaned_log_pop" = "Population (Within)",
+                              "mean_log_pop" = "Population (Between)",
+                              "demeaned_log_gdp_pc" = "GDP per capita (Within)",
+                              "demeaned_log_gdp_pc_sq" = "GDP per capita squ. (Within)",
+                              "mean_log_gdp_pc" = "GDP per capita (Between)",
+                              "mean_log_gdp_pc_sq" = "GDP per capita squ. (Between)",
+                              "(Intercept)" = "Constant"),
+        custom.gof.rows = list("Controls" = c("\\ding{51}", "\\ding{51}"),
+                               "Country-FE" = c("\\ding{51}", "\\ding{51}"),
+                               "Year-FE" = c("\\ding{51}", "\\ding{51}")))
+```
 
-``` 
+## Sample split instead of interaction: ROBUST
 
-## Generalized methods-of-moments dynamic panel estimator
-
-```{r GMM dynamic panel}
+```{r sample split}
 
 #-------------------------------------------------------------------------------
-# Run model
+# Model group 2 - Split by median of democracy variable (within effects)
 #-------------------------------------------------------------------------------
+data_dem_low <- data_s[which(data_s$vdem_polyarchy < median(data_s$vdem_polyarchy, na.rm = T)),]
+data_dem_high <- data_s[which(data_s$vdem_polyarchy >= median(data_s$vdem_polyarchy, na.rm = T)),]
 
-## Set up panel data
-panel_data <- pdata.frame(data_s, index = c("ccode", "year"))
+m8_dem_low <- lmer(log_wdi_co2 ~ demeaned_log_cc_outs + #demeaned_vdem_poly + 
+                    demeaned_log_pop + demeaned_log_gdp_pc + demeaned_log_gdp_pc_sq +
+                    mean_log_cc_outs + #mean_vdem_poly +
+                    mean_log_pop +  mean_log_gdp_pc + mean_log_gdp_pc_sq +
+                    as.factor(year) + (1 | ccode),
+                   data = data_dem_low)
 
-## Estimate fixed effects model with individual and time fixed effects
-model_fe <- plm(log_wdi_co2 ~ lag_log_wdi_co2 + export_fdi_index + vdem_polyarchy + 
-                   export_fdi_index * vdem_polyarchy, 
-                data = panel_data, 
-                model = "within", 
-                effect = "twoways")
+m8_dem_high <- lmer(log_wdi_co2 ~ demeaned_log_cc_outs + #demeaned_vdem_poly + 
+                     demeaned_log_pop + demeaned_log_gdp_pc + demeaned_log_gdp_pc_sq +
+                     mean_log_cc_outs + #mean_vdem_poly +
+                     mean_log_pop +  mean_log_gdp_pc + mean_log_gdp_pc_sq +
+                     as.factor(year) + (1 | ccode),
+                    data = data_dem_high)
 
-m3_int_gmm <- pgmm(log_wdi_co2 ~ lag_log_wdi_co2 + export_fdi_index + vdem_polyarchy + 
-                   export_fdi_index * vdem_polyarchy,
-                   data = panel_data, 
-                   effect = "twoways",
-                   model = "twosteps",
-                   exo = c("export_fdi_index", "vdem_polyarchy", "export_fdi_index:vdem_polyarchy"),
-                   endo = "lag_log_wdi_co2",
-                   instruments = c("export_fdi_index", "vdem_polyarchy", 
-                                   "export_fdi_index:vdem_polyarchy", 
-                                   "year_fe", "country_fe"),
-                   gmm.kernel = "two-step")
+stargazer(m8_dem_low, m8_dem_high, type = "text", omit = c("ccode", "year"))
 
-``` 
+
+#-------------------------------------------------------------------------------
+# Model group 2 - Split by median of mean democracy variable (between effects)
+#-------------------------------------------------------------------------------
+data_dem_low2 <- data_s[which(data_s$mean_vdem_poly < median(data_s$mean_vdem_poly, na.rm = T)),]
+data_dem_high2 <- data_s[which(data_s$mean_vdem_poly >= median(data_s$mean_vdem_poly, na.rm = T)),]
+
+m9_dem_low <- lmer(log_wdi_co2 ~ demeaned_log_cc_outs + #demeaned_vdem_poly + 
+                    demeaned_log_pop + demeaned_log_gdp_pc + demeaned_log_gdp_pc_sq +
+                    mean_log_cc_outs + #mean_vdem_poly +
+                    mean_log_pop +  mean_log_gdp_pc + mean_log_gdp_pc_sq +
+                    as.factor(year) + (1 | ccode),
+                   data = data_dem_low2)
+
+m9_dem_high <- lmer(log_wdi_co2 ~ demeaned_log_cc_outs + #demeaned_vdem_poly + 
+                     demeaned_log_pop + demeaned_log_gdp_pc + demeaned_log_gdp_pc_sq +
+                     mean_log_cc_outs + #mean_vdem_poly +
+                     mean_log_pop +  mean_log_gdp_pc + mean_log_gdp_pc_sq +
+                     as.factor(year) + (1 | ccode),
+                    data = data_dem_high2)
+
+stargazer(m9_dem_low, m9_dem_high, type = "text", omit = c("ccode", "year"))
+
+
+#-------------------------------------------------------------------------------
+# Output
+#-------------------------------------------------------------------------------
+texreg(list(m8_dem_low, m8_dem_high),
+       stars = c(0.01, 0.05, 0.1),
+      # file = "texreg3.doc",
+       caption = "Alternative Model Specification - Sample Split (Within)",
+       custom.model.names = c("Model A21-Low dem.", "Model A21-High dem."),
+       label = "tab:table10",
+       caption.above = T,
+       fontsize = "scriptsize",
+       custom.coef.map = list("demeaned_log_cc_outs" = "Pollution Outsourcing (Within)",
+                              "mean_log_cc_outs" = "Pollution Outsourcing (Between)",
+                              "demeaned_log_pop" = "Population (Within)",
+                              "mean_log_pop" = "Population (Between)",
+                              "demeaned_log_gdp_pc" = "GDP per capita (Within)",
+                              "demeaned_log_gdp_pc_sq" = "GDP per capita squ. (Within)",
+                              "mean_log_gdp_pc" = "GDP per capita (Between)",
+                              "mean_log_gdp_pc_sq" = "GDP per capita squ. (Between)",
+                              "(Intercept)" = "Constant"),
+        custom.gof.rows = list("Controls" = c("\\ding{51}", "\\ding{51}"),
+                               "Country-FE" = c("\\ding{51}", "\\ding{51}"),
+                               "Year-FE" = c("\\ding{51}", "\\ding{51}")))
+
+texreg(list(m9_dem_low, m9_dem_high),
+       stars = c(0.01, 0.05, 0.1),
+      # file = "texreg4.doc",
+       caption = "Alternative Model Specification - Sample Split (Between)",
+       custom.model.names = c("Model A22Low dem.", "Model A22-High dem."),
+       label = "tab:table11",
+       caption.above = T,
+       fontsize = "scriptsize",
+       custom.coef.map = list("demeaned_log_cc_outs" = "Pollution Outsourcing (Within)",
+                              "mean_log_cc_outs" = "Pollution Outsourcing (Between)",
+                              "demeaned_log_pop" = "Population (Within)",
+                              "mean_log_pop" = "Population (Between)",
+                              "demeaned_log_gdp_pc" = "GDP per capita (Within)",
+                              "demeaned_log_gdp_pc_sq" = "GDP per capita squ. (Within)",
+                              "mean_log_gdp_pc" = "GDP per capita (Between)",
+                              "mean_log_gdp_pc_sq" = "GDP per capita squ. (Between)",
+                              "(Intercept)" = "Constant"),
+        custom.gof.rows = list("Controls" = c("\\ding{51}", "\\ding{51}"),
+                               "Country-FE" = c("\\ding{51}", "\\ding{51}"),
+                               "Year-FE" = c("\\ding{51}", "\\ding{51}")))
+
+```
+
+
+
+
+
+
 
 ## Random effects model
 
