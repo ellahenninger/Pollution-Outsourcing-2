@@ -2320,6 +2320,7 @@ texreg(list(m8_wb, m8_wb_pm25, m8_wb_cf),
                               "mean_vdem_poly" = "Democracy (Between)",
                               "demeaned_log_cc_outs:mean_vdem_poly" = "Pollution Outsourcing x Democracy (Within)",
                               "interaction_mean" = "Pollution Outsourcing x Democracy (Between)",
+                              "mean_vdem_poly:mean_log_cc_outs" = "Pollution Outsourcing x Democracy (Between)",
                               "demeaned_log_pop" = "Population (Within)",
                               "mean_log_pop" = "Population (Between)",
                               "demeaned_log_gdp_pc" = "GDP per capita (Within)",
@@ -2407,6 +2408,7 @@ texreg(list(m8_wb, m8_wb_bw, m8_wb_en, m8_wb_lu, m8_wb_mf),
                               "demeaned_log_en_outs:mean_vdem_poly" = "Pollution Outsourcing x Democracy (Within)",
                               "demeaned_log_lu_outs:mean_vdem_poly" = "Pollution Outsourcing x Democracy (Within)",
                               "demeaned_log_mf_outs:mean_vdem_poly" = "Pollution Outsourcing x Democracy (Within)",
+                              "mean_vdem_poly:mean_log_cc_outs" = "Pollution Outsourcing x Democracy (Between)",
                               "interaction_mean" = "Pollution Outsourcing x Democracy (Between)",
                               "interaction_bw_mean" = "Pollution Outsourcing x Democracy (Between)",
                               "interaction_en_mean" = "Pollution Outsourcing x Democracy (Between)",
@@ -2573,6 +2575,7 @@ texreg(list(m8_wb, m8_wb_polity),
                               "demeaned_log_cc_outs:mean_polity" = "Pollution Outsourcing x Democracy (Within)",
                               "demeaned_log_cc_outs:mean_vdem_poly" = "Pollution Outsourcing x Democracy (Within)",
                               "interaction_mean" = "Pollution Outsourcing x Democracy (Between)",
+                              "mean_vdem_poly:mean_log_cc_outs" = "Pollution Outsourcing x Democracy (Between)",
                               "interaction_polity_mean" = "Pollution Outsourcing x Democracy (Between)",
                               "demeaned_log_pop" = "Population (Within)",
                               "mean_log_pop" = "Population (Between)",
@@ -2668,6 +2671,7 @@ texreg(list(m8_wb, m8_wb_ac1, m8_wb_ac2, m8_wb_ac3, m8_wb_ac4, m8_wb_ac_all),
                               "demeaned_log_cc_outs:mean_vdem_poly" = "Pollution Outsourcing x Democracy (Within)",
                               "mean_vdem_poly:mean_log_cc_outs" = "Pollution Outsourcing x Democracy (Between)",
                               "interaction_mean" = "Pollution Outsourcing x Democracy (Between)",
+                              "mean_vdem_poly:mean_log_cc_outs" = "Pollution Outsourcing x Democracy (Between)",
                               "demeaned_log_pop" = "Population (Within)",
                               "mean_log_pop" = "Population (Between)",
                               "demeaned_log_gdp_pc" = "GDP per capita (Within)",
@@ -2724,6 +2728,7 @@ texreg(list(m8_wb, m8_wb_low_income),
                               "demeaned_polity" = "Democracy (Within)",
                               "mean_vdem_poly" = "Democracy (Between)",
                               "demeaned_log_cc_outs:mean_vdem_poly" = "Pollution Outsourcing x Democracy (Within)",
+                              "mean_vdem_poly:mean_log_cc_outs" = "Pollution Outsourcing x Democracy (Between)",
                               "interaction_mean" = "Pollution Outsourcing x Democracy (Between)",
                               "demeaned_log_pop" = "Population (Within)",
                               "mean_log_pop" = "Population (Between)",
@@ -2832,25 +2837,5 @@ texreg(list(m9_dem_low, m9_dem_high),
                                "Country-FE" = c("\\ding{51}", "\\ding{51}"),
                                "Year-FE" = c("\\ding{51}", "\\ding{51}")))
 
-```
-
-
-
-
-
-## Random effects model
-
-```{r random}
-
-#-------------------------------------------------------------------------------
-# Run model
-#-------------------------------------------------------------------------------
-model_re <- plm(log_wdi_co2 ~ lag_log_wdi_co2 + export_fdi_index + vdem_polyarchy + 
-                   export_fdi_index * vdem_polyarchy, 
-                data = panel_data, 
-                model = "random",
-                effect = "individual")
-
-summary(model_re)
 ```
 
