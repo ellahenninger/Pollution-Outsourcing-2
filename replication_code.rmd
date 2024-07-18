@@ -494,6 +494,7 @@ data_s <- data_s %>%
     mean_log_en_outs = mean(log_en_outs, na.rm = T),
     mean_log_lu_outs = mean(log_lu_outs, na.rm = T),
     mean_log_mf_outs = mean(log_mf_outs, na.rm = T),
+    mean_wdi = mean(wdi_co2, na.rm = T),
     mean_cc_outs = mean(cf_cc_pop_mean_outs, na.rm = T),
     mean_ef_carb = mean(ef_carb, na.rm = T),
     mean_env_treat = mean(env_treaties, na.rm = T),
@@ -2022,9 +2023,6 @@ FD_hat_b_mean <- E_Y_c_hat_b_mean[,2] - E_Y_c_hat_b_mean[,1]
 FD_b_mean <- E_Y_c_b_mean[,2] - E_Y_c_b_mean[,1]
 CI_FD_b_mean <- quantile(FD_b_mean, c(0.025, 0.975))
 
-summary(exp(data_ova$log_wdi_co2)-1)
-summary(data_ova$wdi_co2)
-
 
 #-------------------------------------------------------------------------------
 ## Plot First differences
@@ -2256,6 +2254,18 @@ dev.off()
 # FD_FD_b2 <- FD_dem_high_b - FD_dem_low_b
 # CI_FD_FD_b2 <- quantile(FD_FD_b2, c(0.025, 0.975))
 
+
+#-------------------------------------------------------------------------------
+## How "big" is the difference compared to variation in the dataset?
+#-------------------------------------------------------------------------------
+sd_co2 <- aggregate(data_ova$wdi_co2,
+                    by = list(data_ova$cname),
+                    FUN = sd)
+
+mean_within_country_sd_co2 <- mean(sd_co2[,2], na.rm = T)
+mean_between_country_sd_co2 <- sd(data_ova$mean_wdi, na.rm = T)
+share_FD_var_w_co2 <- abs(FD_FD_hat_w) / mean_within_country_sd_co2
+share_FD_var_b_co2 <- abs(FD_FD_hat_b) / mean_between_country_sd_co2
 
 ```
 
