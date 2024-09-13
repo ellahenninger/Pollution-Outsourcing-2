@@ -134,6 +134,28 @@ data <- read_dta("data/QoG/qog_std_ts_jan23_stata14.dta")
 data <- data[which(data$year >= 1989),]
 data <- data[which(data$year <= 2022),]
 
+#-------------------------------------------------------------------------------
+# Data - GHG emissions
+#-------------------------------------------------------------------------------
+ghg <- read_dta("data/GHG Emissions.dta")
+ghg$ccodealp <- ghg$countrycode
+ghg <- ghg[,c(3,4,6)]
+
+
+#-------------------------------------------------------------------------------
+# Match
+#-------------------------------------------------------------------------------
+data <- left_join(data, ghg, by = c("ccodealp", "year"))
+
+data_ghg <- data[,c("ccodealp",
+                    "year",
+                    "en_atm_ghgt_kt_ce",
+                    "wdi_pop",
+                    "wdi_co2")]
+
+data_ghg$ghg_pc <- data_ghg$en_atm_ghgt_kt_ce * 1000 / data_ghg$wdi_pop
+data_ghg$ghg_pc_mt <- data_ghg$ghg_pc * 1000
+
 ```
 
 ## Create lagged and logged variables 
@@ -141,10 +163,20 @@ data <- data[which(data$year <= 2022),]
 ```{r variable selection}
 
 #-------------------------------------------------------------------------------
+# Create GHG per capita
+#-------------------------------------------------------------------------------
+data$ghg_pc <- data$en_atm_ghgt_kt_ce * 1000 / data$wdi_pop # transform into metric tons
+data$ghg <- data$en_atm_ghgt_kt_ce
+
+summary(log(data$ghg_pc + 1))
+
+#-------------------------------------------------------------------------------
 # Create logs
 #-------------------------------------------------------------------------------
 data$insourced_GHG <- data$cf_cc_pop_mean
 data$log_wdi_co2 <- log(1 + data$wdi_co2)  ## plus 1 to avoid negative numbers
+data$log_ghg <- log(data$ghg)
+data$log_ghg_pc <- log(data$ghg_pc + 1)
 
 ## outsourced CO2
 data$log_cc_outs <- log(data$cf_cc_pop_mean_outs)
@@ -196,6 +228,7 @@ data$dr_pg <- data$dr_pg/100
 # Subset data to relevant variables
 #-------------------------------------------------------------------------------
 data_s <- dplyr::select(data, "cname", "ccode", "year", "ccodealp", 
+                              "ghg", "ghg_pc", "log_ghg", "log_ghg_pc",
                               "insourced_GHG", "cf_cc_pop_mean", "cf_cc_pop_mean_outs", "cf_cc_pop_sum_outs", "log_cc_outs",
                               "log_cc_sum_outs",
                               "log_lu_outs", "log_mf_outs", "log_bw_outs", "log_en_outs",
@@ -222,10 +255,12 @@ data_s <- dplyr::select(data, "cname", "ccode", "year", "ccodealp",
 # Table: Summary statistics
 #-------------------------------------------------------------------------------
 data_descript <- data_s[which(!is.na(data_s$log_cc_outs) &
+                             # !is.na(data_s$log_ghg) &
                               data_s$log_ef_carb != -Inf),]
 
 # options("modelsummary_format_numeric_latex" = "plain")
 # datasummary(formula = (`Pollution Outsourcing` = cf_cc_pop_mean_outs) + (`ln(Pollution Outsourcing)` = log_cc_outs) +
+#                       (`ln(GHG)` = log_ghg) +
 #                       (`ln(CO2)` = log_wdi_co2) +
 #                       (`ln(PM2.5) (pop. weighted)` = log_pm25_pop) +
 #                       (`ln(Environm. Footprint Consumpt.)` = log_ef_carb) +
@@ -465,6 +500,7 @@ dev.off()
 data_s <- data_s %>%
   group_by(ccode) %>%
   mutate(
+    demeaned_log_ghg = log_ghg - mean(log_ghg, na.rm = T),
     demeaned_log_co2 = log_wdi_co2 - mean(log_wdi_co2, na.rm = T),
     demeaned_log_pm25 = log_pm25_pop - mean(log_pm25_pop, na.rm = T),
     demeaned_log_cc_outs = log_cc_outs - mean(log_cc_outs, na.rm = T),
@@ -487,6 +523,7 @@ data_s <- data_s %>%
     demeaned_log_gdp_pc_sq = log_gdp_pc_sq - mean(log_gdp_pc_sq, na.rm = T),
     mean_cf_log_outs = mean(cf_cc_pop_mean_outs, na.rm = T),
     mean_log_co2 = mean(log_wdi_co2, na.rm = T),
+    mean_log_ghg = mean(log_ghg, na.rm = T),
     mean_log_pm25 = mean(log_pm25_pop, na.rm = T),
     mean_log_cc_outs = mean(log_cc_outs, na.rm = T),
     mean_log_cc_sum_outs = mean(log_cc_sum_outs, na.rm = T),
@@ -707,7 +744,38 @@ dev.off()
 ```{r within-between 2}
 
 #-------------------------------------------------------------------------------
-# Model group 2
+# Model group 2 - R & R
+#-------------------------------------------------------------------------------
+m5_wb <- lmer(log_ghg ~ demeaned_log_cc_outs + demeaned_vdem_poly + 
+               mean_log_cc_outs + mean_vdem_poly +
+               as.factor(year) + (1 | ccode),
+              data = data_ova)
+
+m6_wb <- lmer(log_ghg ~ demeaned_log_cc_outs + demeaned_vdem_poly +
+               demeaned_log_cc_outs * mean_vdem_poly + 
+               mean_log_cc_outs + mean_vdem_poly +
+               interaction_mean +
+               as.factor(year) + (1 | ccode),
+              data = data_ova)
+
+m7_wb <- lmer(log_ghg ~ demeaned_log_pop + demeaned_log_gdp_pc + demeaned_log_gdp_pc_sq + 
+               mean_log_pop + mean_log_gdp_pc + mean_log_gdp_pc_sq + 
+               as.factor(year) + (1 | ccode),
+              data = data_ova)
+
+m8_wb <- lmer(log_ghg ~ demeaned_log_cc_outs + demeaned_vdem_poly + 
+                demeaned_log_cc_outs * mean_vdem_poly +
+                demeaned_log_pop + 
+                demeaned_log_gdp_pc + demeaned_log_gdp_pc_sq +
+                mean_log_cc_outs + mean_vdem_poly +
+                mean_log_cc_outs * mean_vdem_poly +
+                mean_log_pop +  
+                mean_log_gdp_pc + mean_log_gdp_pc_sq +
+                as.factor(year) + (1 | ccode),
+              data = data_ova)
+
+#-------------------------------------------------------------------------------
+# Model group 2 - Original
 #-------------------------------------------------------------------------------
 m5_wb <- lmer(log_wdi_co2 ~ demeaned_log_cc_outs + demeaned_vdem_poly + 
                mean_log_cc_outs + mean_vdem_poly +
@@ -726,16 +794,19 @@ m7_wb <- lmer(log_wdi_co2 ~ demeaned_log_pop + demeaned_log_gdp_pc + demeaned_lo
                as.factor(year) + (1 | ccode),
               data = data_ova)
 
-m8_wb <- lmer(log_wdi_co2 ~ demeaned_log_cc_outs + demeaned_vdem_poly + 
+m8_wb <- lmer(log_ghg ~ demeaned_log_cc_outs + demeaned_vdem_poly + 
                 demeaned_log_cc_outs * mean_vdem_poly +
-                demeaned_log_pop + demeaned_log_gdp_pc + demeaned_log_gdp_pc_sq +
+                demeaned_log_pop + 
+                demeaned_log_gdp_pc + demeaned_log_gdp_pc_sq +
                 mean_log_cc_outs + mean_vdem_poly +
                 mean_log_cc_outs * mean_vdem_poly +
-                mean_log_pop +  mean_log_gdp_pc + mean_log_gdp_pc_sq +
+                mean_log_pop +  
+                mean_log_gdp_pc + mean_log_gdp_pc_sq +
                 as.factor(year) + (1 | ccode),
               data = data_ova)
 
 stargazer(m5_wb, m6_wb, m7_wb, m8_wb, type = "text", omit = c("ccode", "year"))
+
 
 #-------------------------------------------------------------------------------
 # Output
@@ -772,13 +843,13 @@ texreg(list(m5_wb, m6_wb, m7_wb, m8_wb),
 #-------------------------------------------------------------------------------
 # Model group 2 - Interaction - Check
 #-------------------------------------------------------------------------------
-m8_lm_int <- lm(log_wdi_co2 ~ log_cc_outs + vdem_polyarchy + 
-                 log_cc_outs * vdem_polyarchy +
-                 log_pop + log_gdp_pc + log_gdp_pc_sq +
-                 as.factor(year) + as.factor(ccode),
-                data = data_s)
-
-stargazer(m8_wb, m8_lm_int, type = "text", omit = c("ccode", "year"))
+# m8_lm_int <- lm(log_wdi_co2 ~ log_cc_outs + vdem_polyarchy + 
+#                  log_cc_outs * vdem_polyarchy +
+#                  log_pop + log_gdp_pc + log_gdp_pc_sq +
+#                  as.factor(year) + as.factor(ccode),
+#                 data = data_s)
+# 
+# stargazer(m8_wb, m8_lm_int, type = "text", omit = c("ccode", "year"))
 
 ```
 
@@ -800,6 +871,95 @@ coefs_between2$CI_low <- coefs_between2[,"Estimate"] - qnorm(0.95)*coefs_between
 coefs_between2$CI_high <- coefs_between2[,"Estimate"] + qnorm(0.95)*coefs_between2[,"Std. Error"]
 
 
+#-------------------------------------------------------------------------------
+# Coefficient plot - Model group 2 - R & R
+#-------------------------------------------------------------------------------
+pdf("Plots/Coefficients_table2_within_between_new.pdf", width = 7.5)
+
+par(mar = c(5.1, 10, 2.5, 2.1)) # c(bottom, left, top, right))
+
+plot(1,
+     type = "n",
+     ylim = c(0,2.5),
+     bty = "n",
+     xlab = "Coefficients and 95% confidence intervals",
+     xlim = c(-1.25, 1.5),
+     ylab = "",
+     yaxt = "n",
+     cex.lab = 1.1)
+
+
+# add grid
+segments(x0 = c(-1.25,-1,-0.75, -0.5, -0.25, 0, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2), y0 = 0,
+         x1 = c(-1.25,-1,-0.75, -0.5, -0.25, 0, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2), y1 = 2.5,
+         col = "lightgrey",
+         lty = "solid", lwd = 0.7)
+
+segments(x0 = -1.5, y0 = rev(c(0.25, 0.45, 0.65, 0.85, 1.05, 1.25, 1.45, 1.65, 1.85, 2.05, 2.25)),
+         x1 = 2, y1 = rev(c(0.25, 0.45, 0.65, 0.85, 1.05, 1.25, 1.45, 1.65, 1.85, 2.05, 2.25)),
+         col = "lightgrey",
+         lty = "solid", lwd = 0.7)
+
+# add null line
+segments(x0 = 0, y0 = 0,
+         x1 = 0, y1 = 2.5,
+         lty = "solid", lwd = 1, col = "black")
+
+
+# add point estimates
+points(x = coefs_within2$Estimate,
+       y = rev(c(0.25, 0.65, 1.05, 1.45, 1.85, 2.25)),
+       pch = 16,
+       col = c(viridis(3)[1], viridis(3)[1],viridis(3)[1],viridis(3)[1], viridis(3)[1],viridis(3, alpha = 0.6)[1]),
+       cex = 1)
+
+# add CIs
+segments(y0 = rev(c(0.25, 0.65, 1.05, 1.45, 1.85, 2.25)), 
+         y1 = rev(c(0.25, 0.65, 1.05, 1.45, 1.85, 2.25)), 
+         col = c(viridis(3)[1], viridis(3)[1], viridis(3)[1],viridis(3)[1], viridis(3)[1],viridis(3, alpha = 0.3)[1]),
+         x0 = coefs_within2$CI_low,
+         x1 = coefs_within2$CI_high,
+         lwd = 3, cex = 1.3, lend = 1)
+
+# add point estimates
+points(x = coefs_between2$Estimate,
+       y = rev(c(0.15, 0.55, 0.95, 1.35, 1.75, 2.15)),
+       pch = 16,
+       col = c(viridis(3, alpha = 0.6)[2], viridis(3)[2],viridis(3, alpha = 0.6)[2],viridis(3)[2],
+               viridis(3)[2], viridis(3, alpha = 0.6)[2]),
+       cex = 1)
+
+# add CIs
+segments(y0 = rev(c(0.15, 0.55, 0.95, 1.35, 1.75, 2.15)), 
+         y1 = rev(c(0.15, 0.55, 0.95, 1.35, 1.75, 2.15)), 
+         col = c(viridis(3, alpha = 0.3)[2], viridis(3)[2],viridis(3, alpha = 0.3)[2],viridis(3)[2],
+                 viridis(3)[2], viridis(3, alpha = 0.3)[2]),
+         x0 = coefs_between2$CI_low,
+         x1 = coefs_between2$CI_high,
+         lwd = 3, cex = 1.3, lend = 1)
+
+# add coefficients text
+text(x = -2,
+     y = rev(c(0.25, 0.65, 1.05, 1.35, 1.85, 2.25)),
+     labels = c("Pollution outsourcing", "Democracy", "Pollution outsourcing \nx Democracy", 
+                "Population", "GDP per capita", expression("GDP per capita"^2)),
+     xpd = T,
+     cex = 0.9,
+     pos = 4)
+
+# Add a legend
+legend("topright", 
+       legend = c("Within", "Between"), 
+       col = c(viridis(3)[1], viridis(3)[2]), 
+       pch = 19,
+       bty = "n")
+
+dev.off()
+
+
+#-------------------------------------------------------------------------------
+# Coefficient plot - Model group 2 - Original
+#-------------------------------------------------------------------------------
 pdf("Plots/Coefficients_table2_within_between.pdf", width = 7.5)
 
 par(mar = c(5.1, 10, 2.5, 2.1)) # c(bottom, left, top, right))
@@ -1075,7 +1235,37 @@ out1_raw <- interflex(Y = "log_wdi_co2",
 ## Plot raw
 plot(out1_raw)
 
-## Marginal effects plot (within interaction)
+## Marginal effects plot (within interaction) - R & R
+out1 <- interflex(Y = "log_ghg", 
+                  D = "demeaned_log_cc_outs", 
+                  X = "mean_vdem_poly", 
+                  treat.type = "continuous",
+                  Z = c("demeaned_vdem_poly", "demeaned_log_pop", "demeaned_log_gdp_pc",
+                       "demeaned_log_gdp_pc_sq", "mean_log_pop", "mean_log_gdp_pc",
+                       "mean_log_gdp_pc_sq", "interaction_between"),
+                  data = data_ova, 
+                  FE = c("year", "ccode"),
+                  na.rm = T,
+                  estimator = "binning", 
+                  vcov.type = "robust", 
+                  main = "Marginal Effects", 
+                  ylim = c(-15, 15))
+
+
+pdf("plots/Marginal_interflex_within_new.pdf", width = 12)
+
+plot(out1,
+     pool = T,
+     xlab = "Democracy",
+     ylab = "Marginal Effect of Pollution Outsourcing",
+     Dlabel = "",
+     theme.bw = TRUE, show.grid = FALSE,
+     cex.axis = 0.8, cex.lab = 0.8, color = viridis(3)[1], legend.title = "")
+
+dev.off()
+
+
+## Marginal effects plot (within interaction) - Original
 out1 <- interflex(Y = "log_wdi_co2", 
                   D = "demeaned_log_cc_outs", 
                   X = "mean_vdem_poly", 
@@ -1110,7 +1300,7 @@ dev.off()
 
 data_s$year2 <- as.factor(data_s$year)
 
-m8_wb_exp <- lmer(log_wdi_co2 ~ demeaned_log_cc_outs + demeaned_vdem_poly + 
+m8_wb_exp <- lmer(log_ghg ~ demeaned_log_cc_outs + demeaned_vdem_poly + 
                     demeaned_log_cc_outs * mean_vdem_poly +
                     demeaned_log_pop + demeaned_log_gdp_pc + demeaned_log_gdp_pc_sq +
                     mean_log_cc_outs + mean_vdem_poly +
@@ -1169,7 +1359,36 @@ out2_raw <- interflex(Y = "log_wdi_co2",
 ## Plot raw
 plot(out2_raw)
 
-## Marginal effects plot (between interaction)
+## Marginal effects plot (between interaction) - R & R
+out2 <- interflex(Y = "log_ghg", 
+                  D = "mean_log_cc_outs", 
+                  X = "mean_vdem_poly", 
+                  treat.type = "continuous",
+                  Z = c("mean_log_pop", "mean_log_gdp_pc",
+                        "mean_log_gdp_pc_sq", "demeaned_log_cc_outs", 
+                        "demeaned_vdem_poly", "demeaned_log_pop", "demeaned_log_gdp_pc",
+                        "demeaned_log_gdp_pc_sq", "interaction_within"),
+                  data = data_ova, 
+                  FE = c("year"),
+                  na.rm = T,
+                  estimator = "binning", 
+                  vcov.type = "cluster", 
+                  cl = "ccode",
+                  main = "Marginal Effects", 
+                  ylim = c(-15, 15))
+
+pdf("plots/Marginal_interflex_between_new.pdf", width = 12)
+
+plot(out2,
+     pool = T,
+     xlab = "Democracy",
+     ylab = "Marginal Effect of Pollution Outsourcing",
+     theme.bw = TRUE, show.grid = FALSE,
+     cex.axis = 0.8, cex.lab = 0.8, color = viridis(3)[2], legend.title = "")
+
+dev.off()
+
+## Marginal effects plot (between interaction) - Original
 out2 <- interflex(Y = "log_wdi_co2", 
                   D = "mean_log_cc_outs", 
                   X = "mean_vdem_poly", 
@@ -1319,7 +1538,7 @@ min_dem <- range_dem$range[,1][which.max(range_dem$diff)]
 max_dem <- range_dem$range[,2][which.max(range_dem$diff)]
 
 # center around 0 (mean of demeaned_poly distribution) by adding midpoint of range to min and max
-min_dem_w <- min_dem_w - ((min_dem + max_dem)/2)
+min_dem_w <- min_dem - ((min_dem + max_dem)/2)
 max_dem_w <- max_dem_w - ((min_dem + max_dem)/2)
 
 # Within range
@@ -1704,7 +1923,7 @@ for(i in 1:4){                              # four rounds (for scenarios)
   ev <- beta_tilde %*% t(cases_w[,,i])      # calculate linear predictor on log scale
   ev_plus_gamma <- ev + 1/2*sigma2_tilde    # add draws of 1/2*sigma2_tilde
   ev_transf <- exp(ev_plus_gamma)           # transform
-  ev_transf_m <- ev_transf - 1              # E(y) - 1
+  ev_transf_m <- ev_transf #- 1              # E(y) - 1
   tmp_val <- apply(ev_transf_m, 1, mean)    # now average results
   E_Y_c_w[,i] <- tmp_val                    # store in val object
 }
@@ -1719,7 +1938,7 @@ for(i in 1:4){                                       # four rounds (for scenario
   ev_point <- beta_hat %*% t(cases_w[,,i])           # use beta_hat (not simulated)
   ev_point_plus_gamma <- ev_point + 1/2*sigma_hat^2  # use sigma_hat (not simulated)
   ev_point_transf <- exp(ev_point_plus_gamma)        # transform
-  ev_point_transf_m <- ev_point_transf - 1           # E(y) - 1
+  ev_point_transf_m <- ev_point_transf #- 1           # E(y) - 1
   tmp_val_point <- apply(ev_point_transf_m, 1, mean) # now average results
   E_Y_c_hat_w[i,] <- tmp_val_point                   # store
 }
@@ -1740,23 +1959,24 @@ FD_dem_high_w <- E_Y_c_w[,4] - E_Y_c_w[,3]
 CI_FD_dem_high_w <- quantile(FD_dem_high_w, c(0.025, 0.975))
 
 ## First difference of first difference
-FD_FD_hat_w <- FD_dem_high_hat_w - FD_dem_low_hat_w
+FD_FD_hat_w/1000 <- FD_dem_high_hat_w - FD_dem_low_hat_w
 FD_FD_w <- FD_dem_high_w - FD_dem_low_w
-CI_FD_FD_w <- quantile(FD_FD_w, c(0.025, 0.975))
+CI_FD_FD_w/1000 <- quantile(FD_FD_w, c(0.025, 0.975))
 
 
 
 #-------------------------------------------------------------------------------
 ## Plot First differences
 #-------------------------------------------------------------------------------
-pdf("plots/FD_interaction_within.pdf")
+pdf("plots/FD_interaction_within_new.pdf")
 
 plot(y = 1,
-     x = FD_dem_low_hat_w,
+     x = FD_dem_low_hat_w/1000,
      col = viridis(3)[1],
      ylim = c(0,3),
-     xlim = c(-2,5.5),
-     xlab = expression("CO"[2]*" emissions [metric tons/capita]"),
+     xlim = c(-75,110),
+    # xlab = expression("CO"[2]*" emissions [metric tons/capita]"),
+     xlab = "GHG emissions [metric tons]",
      pch = 19,
      main = NULL, 
      bty = "n",
@@ -1765,18 +1985,18 @@ plot(y = 1,
      cex = 3,
      cex.lab = 1.1)
 
-segments(y0 = 1, x0 = CI_FD_dem_low_w[1],
-         y1 = 1, x1 = CI_FD_dem_low_w[2],
+segments(y0 = 1, x0 = CI_FD_dem_low_w[1]/1000,
+         y1 = 1, x1 = CI_FD_dem_low_w[2]/1000,
          col = viridis(3)[1],
          lwd = 12, cex = 1.5, lend = 1)
 
-segments(y0 = 2, x0 = CI_FD_dem_high_w[1],
-         y1 = 2, x1 = CI_FD_dem_high_w[2],
+segments(y0 = 2, x0 = CI_FD_dem_high_w[1]/1000,
+         y1 = 2, x1 = CI_FD_dem_high_w[2]/1000,
          col = viridis(3, alpha = 0.3)[1],
          lwd = 12, cex = 1.5, lend = 1)
 
 points(y = 2,
-       x = FD_dem_high_hat_w,
+       x = FD_dem_high_hat_w/1000,
        col = viridis(3)[1],
        xlab = "",
        pch = 19,
@@ -1791,22 +2011,22 @@ segments(x0 = 0, y0 = 0,
          x1 = 0, y1 = 3,
          lty = "dashed", lwd = 2)
 
-text(x = FD_dem_low_hat_w,
+text(x = FD_dem_low_hat_w/1000,
      y = 0.8,
      labels = c("Less democratic"),
      cex = 1.1)
 
-text(x = FD_dem_low_hat_w,
+text(x = FD_dem_low_hat_w/1000,
      y = 0.57,
      labels = c("Outsourcing (max - min)"),
      cex = 0.9)
 
-text(x = FD_dem_high_hat_w-0.35,
+text(x = FD_dem_high_hat_w/1000-0.35,
      y = 1.8,
      labels = c("More democratic"),
      cex = 1.1)
 
-text(x = FD_dem_high_hat_w-0.35,
+text(x = FD_dem_high_hat_w/1000-0.35,
      y = 1.57,
      labels = c("Outsourcing (max - min)"),
      cex = 0.9)
@@ -1978,9 +2198,9 @@ X_beta_sigma_tilde_b_max_dem <- apply(X_beta_b_max_dem, 2, function(x) x + 1/2*s
 X_beta_sigma_tilde_b_mean <- apply(X_beta_b_mean, 2, function(x) x + 1/2*sigma2_tilde)
 
 # Transform
-E_Y_c_b_min_dem <- exp(X_beta_sigma_tilde_b_min_dem) - 1
-E_Y_c_b_max_dem <- exp(X_beta_sigma_tilde_b_max_dem) - 1
-E_Y_c_b_mean <- exp(X_beta_sigma_tilde_b_mean) - 1
+E_Y_c_b_min_dem <- exp(X_beta_sigma_tilde_b_min_dem) #- 1
+E_Y_c_b_max_dem <- exp(X_beta_sigma_tilde_b_max_dem) #- 1
+E_Y_c_b_mean <- exp(X_beta_sigma_tilde_b_mean) #- 1
 
 # Summarize to get CIs
 CI_E_Y_c_b_min_dem <- apply(E_Y_c_b_min_dem, 2, quantile, c(0.025, 0.975))
@@ -1998,9 +2218,9 @@ X_beta_hat_b_mean <- beta_hat %*% t(X_b_mean)
 X_beta_sigma_hat_b_mean <- X_beta_hat_b_mean + 1/2*sigma_hat^2
 
 # Point estimate
-E_Y_c_hat_b_min_dem <- exp(X_beta_sigma_hat_b_min_dem) - 1
-E_Y_c_hat_b_max_dem <- exp(X_beta_sigma_hat_b_max_dem) - 1
-E_Y_c_hat_b_mean <- exp(X_beta_sigma_hat_b_mean) - 1
+E_Y_c_hat_b_min_dem <- exp(X_beta_sigma_hat_b_min_dem) #- 1
+E_Y_c_hat_b_max_dem <- exp(X_beta_sigma_hat_b_max_dem) #- 1
+E_Y_c_hat_b_mean <- exp(X_beta_sigma_hat_b_mean) #- 1
 
 # First difference (min democracy (outsource from max to min))
 FD_hat_b_min_dem <- E_Y_c_hat_b_min_dem[,2] - E_Y_c_hat_b_min_dem[,1]
@@ -2027,14 +2247,16 @@ CI_FD_b_mean <- quantile(FD_b_mean, c(0.025, 0.975))
 #-------------------------------------------------------------------------------
 ## Plot First differences
 #-------------------------------------------------------------------------------
-pdf("plots/FD_interaction_between.pdf")
+pdf("plots/FD_interaction_between_new.pdf")
 
 plot(y = 1,
-     x = FD_hat_b_min_dem,
+     x = FD_hat_b_min_dem/1000,
      col = viridis(3)[2],
      ylim = c(0,3),
-     xlim = c(-16,12),
-     xlab = expression("CO"[2]*" emissions [metric tons/capita]"),
+     xlim = c(-210, 170),
+    # xlim = c(-16,12),
+     xlab = "GHG emissions [metric tons]",
+    # xlab = expression("CO"[2]*" emissions [metric tons/capita]"),
      pch = 19,
      main = NULL, 
      bty = "n",
@@ -2043,18 +2265,18 @@ plot(y = 1,
      cex = 3,
      cex.lab = 1.1)
 
-segments(y0 = 1, x0 = CI_FD_b_min_dem[1],
-         y1 = 1, x1 = CI_FD_b_min_dem[2],
+segments(y0 = 1, x0 = CI_FD_b_min_dem[1]/1000,
+         y1 = 1, x1 = CI_FD_b_min_dem[2]/1000,
          col = viridis(3, alpha = 0.3)[2],
          lwd = 12, cex = 1.5, lend = 1)
 
-segments(y0 = 2, x0 = CI_FD_b_max_dem[1],
-         y1 = 2, x1 = CI_FD_b_max_dem[2],
+segments(y0 = 2, x0 = CI_FD_b_max_dem[1]/1000,
+         y1 = 2, x1 = CI_FD_b_max_dem[2]/1000,
          col = viridis(3)[2],
          lwd = 12, cex = 1.5, lend = 1)
 
 points(y = 2,
-       x = FD_hat_b_max_dem,
+       x = FD_hat_b_max_dem/1000,
        col = viridis(3)[2],
        xlab = "",
        pch = 19,
@@ -2069,22 +2291,22 @@ segments(x0 = 0, y0 = 0,
          x1 = 0, y1 = 3,
          lty = "dashed", lwd = 2)
 
-text(x = FD_hat_b_min_dem,
+text(x = FD_hat_b_min_dem/1000,
      y = 0.8,
      labels = c("Less democratic"),
      cex = 1.1)
 
-text(x = FD_hat_b_min_dem,
+text(x = FD_hat_b_min_dem/1000,
      y = 0.57,
      labels = c("Outsourcing (max - min)"),
      cex = 0.9)
 
-text(x = FD_hat_b_max_dem-0.35,
+text(x = FD_hat_b_max_dem/1000-0.35,
      y = 1.8,
      labels = c("More democratic"),
      cex = 1.1)
 
-text(x = FD_hat_b_max_dem-0.35,
+text(x = FD_hat_b_max_dem/1000-0.35,
      y = 1.57,
      labels = c("Outsourcing (max - min)"),
      cex = 0.9)
@@ -2134,14 +2356,16 @@ dev.off()
 #-------------------------------------------------------------------------------
 # First difference at mean of outsourcing
 #-------------------------------------------------------------------------------
-pdf("plots/FD_mean_outsource_between.pdf")
+pdf("plots/FD_mean_outsource_between_new.pdf")
 
 plot(y = 1.5,
-     x = FD_hat_b_mean,
+     x = FD_hat_b_mean/1000,
      col = viridis(3)[2],
      ylim = c(0,3),
-     xlim = c(-16,5.5),
-     xlab = expression("CO"[2]*" emissions [metric tons/capita]"),
+     xlim = c(-70,20),
+     #xlim = c(-16,5.5),
+     xlab = "GHG emissions [metric tons]",
+     #xlab = expression("CO"[2]*" emissions [metric tons/capita]"),
      pch = 19,
      main = NULL, 
      bty = "n",
@@ -2150,8 +2374,8 @@ plot(y = 1.5,
      cex = 3,
      cex.lab = 1.1)
 
-segments(y0 = 1.5, x0 = CI_FD_b_mean[1],
-         y1 = 1.5, x1 = CI_FD_b_mean[2],
+segments(y0 = 1.5, x0 = CI_FD_b_mean[1]/1000,
+         y1 = 1.5, x1 = CI_FD_b_mean[2]/1000,
          col = viridis(3, alpha = 0.3)[2],
          lwd = 12, cex = 1.5, lend = 1)
 
@@ -2159,12 +2383,12 @@ segments(x0 = 0, y0 = 0,
          x1 = 0, y1 = 3,
          lty = "dashed", lwd = 2)
 
-text(x = FD_hat_b_mean,
+text(x = FD_hat_b_mean/1000,
      y = 1.26,
      labels = c("First difference"),
      cex = 1.1)
 
-text(x = FD_hat_b_mean,
+text(x = FD_hat_b_mean/1000,
      y = 1.05,
      labels = c("Democracy (more - less)"),
      cex = 0.9)
