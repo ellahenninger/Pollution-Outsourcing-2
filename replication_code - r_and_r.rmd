@@ -1,0 +1,1474 @@
+---
+title: "Pollution Outsourcing and Democracy 2"
+author: "Ella Henninger"
+date: "2023-07-25"
+output:
+  word_document: default
+  html_document: default
+---
+
+# Contents of the replication packet
+
+This R-Markdown file replicates all analyses and figures included in the paper "What Makes Democracies Greener? The Role of Pollution Offshoring" by Tobias Böhmelt, Ella Henninger, and Thomas Bernauer.
+
+## Data
+ - **Outsourcing data**: Presberger and Bernauer (2023), https://www.sciencedirect.com/science/article/pii/S0959378023000031?via%3Dihub
+ - **Pollution data**: Van Donkelaar et al. (2021), https://pubs.acs.org/doi/full/10.1021/acs.est.1c05309
+ - **Main data**: Quality of Governance database (QoG), https://www.gu.se/en/quality-government/qog-data
+ - **Economic data**: World Development Indicators (2023), https://databank.worldbank.org/source/world-development-indicators#
+ - **Democracy data**: V-Dem (2023), https://www.v-dem.net/data/the-v-dem-dataset/
+
+
+**The code is structured as follows**:
+
+1. Set up
+
+2. Preparatory steps
+2.1 Load data
+2.2 Create lagged and logged variables
+
+3. Descriptives
+3.1 Table summary statistics
+
+4. Analyses
+4.1 Models democracy and pollution outsourcing: Model group 1
+4.2 Models pollution outsourcing and environmental performance: Model group 2
+4.3 Plots model group 1
+4.4 Plots model group 2
+
+5. Quantities of interest
+5.1 Marginal effects plots
+5.2 Expected values: Model group 1 
+5.3 Expected values & first differences: Model group 2
+
+6. Robustness checks
+6.1 Replacing DV with PM2.5
+6.2 Replacing DV with carbon footprint
+6.3 Different outsourcing variables
+6.4 Alternative operationalization outsourcing
+6.5 Alternative operationalization democracy
+6.6 Additional controls
+6.7 Drop high-income states
+6.8 Alternative model specification
+
+**As a note**: You may be asked to update some packages, please press "yes" to make sure the file runs smoothly.
+
+
+# Set up
+
+```{r setup, include=FALSE}
+
+## clean environment
+rm(list = ls())
+
+# Define which packages needed for analyses
+p_needed <-
+  c("knitr",
+    "dplyr", 
+    "psych",
+    "stargazer",
+    "ggplot2",
+    "viridis",
+    "haven",
+    "MASS",
+    "modelsummary",
+    "WDI",
+    "plm",
+    "lmtest",
+    "ggmap",
+    "maps",
+    "tidyr",
+    "devtools",
+    "data.table",
+    "sjPlot",
+    "interplot",
+    "fastDummies",
+    "texreg",
+    "interflex",
+    "reshape2",
+    "marginaleffects",
+    "ggExtra",
+    "cowplot")
+
+# Check which packages are already installed on your computer
+packages <- rownames(installed.packages())
+
+# Check which packages are not installed
+p_to_install <- p_needed[!(p_needed %in% packages)]
+
+if (length(p_to_install) > 0) {
+  install.packages(p_to_install)
+}
+sapply(p_needed, require, character.only = TRUE)
+
+
+# Set an option for the final document that can be produced from the .Rmd file.
+knitr::opts_chunk$set(echo = TRUE)
+
+## For replicability: session information 
+session_info <- print(sessionInfo())
+
+```
+
+
+
+# Preparatory steps
+
+## Load data
+
+```{r load data}
+
+#-------------------------------------------------------------------------------
+# Data
+#-------------------------------------------------------------------------------
+data <- read_dta("data/QoG/qog_std_ts_jan23_stata14.dta")
+
+#-------------------------------------------------------------------------------
+# Filter data
+#-------------------------------------------------------------------------------
+data <- data[which(data$year >= 1989),]
+data <- data[which(data$year <= 2022),]
+
+#-------------------------------------------------------------------------------
+# Data - GHG emissions
+#-------------------------------------------------------------------------------
+ghg <- read_dta("data/GHG Emissions.dta")
+ghg$ccodealp <- ghg$countrycode
+ghg <- ghg[,c(3,4,6)]
+
+
+#-------------------------------------------------------------------------------
+# Match
+#-------------------------------------------------------------------------------
+data <- left_join(data, ghg, by = c("ccodealp", "year"))
+
+data_ghg <- data[,c("ccodealp",
+                    "year",
+                    "en_atm_ghgt_kt_ce",
+                    "wdi_pop",
+                    "wdi_co2")]
+
+data_ghg$ghg_pc <- data_ghg$en_atm_ghgt_kt_ce * 1000 / data_ghg$wdi_pop
+data_ghg$ghg_pc_mt <- data_ghg$ghg_pc * 1000
+
+```
+
+## Create lagged and logged variables 
+
+```{r variable selection}
+
+#-------------------------------------------------------------------------------
+# Create GHG per capita
+#-------------------------------------------------------------------------------
+data$ghg_pc <- data$en_atm_ghgt_kt_ce * 1000 / data$wdi_pop # transform into metric tons
+data$ghg <- data$en_atm_ghgt_kt_ce
+
+summary(log(data$ghg_pc + 1))
+
+#-------------------------------------------------------------------------------
+# Create logs
+#-------------------------------------------------------------------------------
+data$insourced_GHG <- data$cf_cc_pop_mean
+data$log_wdi_co2 <- log(1 + data$wdi_co2)  ## plus 1 to avoid negative numbers
+data$log_ghg <- log(data$ghg)
+data$log_ghg_pc <- log(data$ghg_pc + 1)
+
+## outsourced CO2
+data$log_cc_outs <- log(data$cf_cc_pop_mean_outs)
+data$log_cc_sum_outs <- log(data$cf_cc_pop_sum_outs + 1)
+
+## other outsourcing variabes
+data$log_lu_outs <- log(data$cf_lu_pop_mean_outs + 1)
+data$log_en_outs <- log(data$cf_en_pop_mean_outs)
+data$log_mf_outs <- log(data$cf_mf_pop_mean_outs)
+data$log_bw_outs <- log(data$cf_bw_pop_mean_outs)
+
+## pm2.5
+data$log_pm25_pop <- log(data$populationweightedpm25ugm3)
+data$log_pm25_geo <- log(data$geographicmeanpm25ugm3)
+
+## carbon footprint of consumption
+data$log_ef_carb <- log(data$ef_carb)
+
+## population
+data$log_pop <- log(data$wdi_pop)
+data$log_pop_den <- log(data$wdi_popden)
+
+## gdp
+data$log_gdp_pc <- log(data$wdi_gdpcapcon2015)
+data$log_gdp_pc_sq <- data$log_gdp_pc^2
+data$log_gdp <- log(data$wdi_gdppppcon2017)
+
+
+#-------------------------------------------------------------------------------
+# Create environmental treaties variable
+#-------------------------------------------------------------------------------
+data <- data %>% 
+  group_by(ccode) %>% 
+  mutate(env_treaties = ifelse(any(!is.na(iea_sum_i)), zoo::na.locf(iea_sum_i), NA))
+
+data$env_treaties <- data$env_treaties/100
+
+#-------------------------------------------------------------------------------
+# Transform Freedom House civil liberties variable
+#-------------------------------------------------------------------------------
+data$fh_cl <- 8 - data$fh_cl
+
+#-------------------------------------------------------------------------------
+# Rescale political globalization variable (1-10)
+#-------------------------------------------------------------------------------
+data$dr_pg <- data$dr_pg/100
+
+#-------------------------------------------------------------------------------
+# Subset data to relevant variables
+#-------------------------------------------------------------------------------
+data_s <- dplyr::select(data, "cname", "ccode", "year", "ccodealp", 
+                              "ghg", "ghg_pc", "log_ghg", "log_ghg_pc",
+                              "insourced_GHG", "cf_cc_pop_mean", "cf_cc_pop_mean_outs", "cf_cc_pop_sum_outs", "log_cc_outs",
+                              "log_cc_sum_outs",
+                              "log_lu_outs", "log_mf_outs", "log_bw_outs", "log_en_outs",
+                              "log_pm25_pop", "log_pm25_geo", "log_wdi_co2", "wdi_co2",
+                              "populationweightedpm25ugm3", "geographicmeanpm25ugm3",
+                              "ef_carb", "log_ef_carb",
+                              "vdem_polyarchy", "log_gdp_pc", "log_gdp_pc_sq", "log_gdp",
+                              "log_pop", "log_pop_den", "fh_cl", "fh_fog",
+                              "cf_bw_pop_mean_outs", "cf_en_pop_mean_outs", "cf_lu_pop_mean_outs", "cf_mf_pop_mean_outs",
+                              "dr_pg", "fh_status", "env_treaties",  "wdi_trade",
+                              "p_polity2", "vdem_partip", "vdem_delibdem", "wdi_gdpind")
+
+```
+
+
+
+# Descriptives
+
+## Table summary statistics
+
+```{r descriptives}
+
+#-------------------------------------------------------------------------------
+# Table: Summary statistics
+#-------------------------------------------------------------------------------
+data_descript <- data_s[which(!is.na(data_s$log_cc_outs) &
+                             # !is.na(data_s$log_ghg) &
+                              data_s$log_ef_carb != -Inf),]
+
+# options("modelsummary_format_numeric_latex" = "plain")
+# datasummary(formula = (`Pollution Outsourcing` = cf_cc_pop_mean_outs) + (`ln(Pollution Outsourcing)` = log_cc_outs) +
+#                       (`ln(GHG)` = log_ghg) +
+#                       (`ln(CO2)` = log_wdi_co2) +
+#                       (`ln(PM2.5) (pop. weighted)` = log_pm25_pop) +
+#                       (`ln(Environm. Footprint Consumpt.)` = log_ef_carb) +
+#                       (`Democracy` = vdem_polyarchy) + (`ln(GDP)` = log_gdp) +
+#                       (`ln(GDP per capita)` = log_gdp_pc) + (`ln(Populat. Size)`= log_pop) +
+#                       (`Civil liberties (Freedom House)` = fh_cl) +
+#                       (`Democracy (Polity V)` = p_polity2) + (`Political Globaliz.` = dr_pg) +
+#                       (`Trade Openness` = wdi_trade) + (`Environm. Treaties` = env_treaties)
+#               ~ N + Mean + SD + Min + Median + Max,
+#             title = "Summary statistics",
+#             data = data_descript,
+#             output = "latex")
+
+```
+
+
+# Analyses
+
+## Model group 1
+
+```{r within-between 1}
+
+## Reduce to correct length
+data_ova <- data_s[which(!is.na(data_s$log_cc_outs) &
+                         !is.na(data_s$vdem_polyarchy) &
+                         !is.na(data_s$log_pop) &
+                         !is.na(data_s$log_gdp_pc) &
+                         !is.na(data_s$log_wdi_co2)),]
+
+#-------------------------------------------------------------------------------
+# Model group 1
+#-------------------------------------------------------------------------------
+m1 <- lm(log_cc_outs ~ vdem_polyarchy + as.factor(year), data = data_ova)
+m2 <- lm(log_cc_outs ~ log_pop + log_gdp_pc + log_gdp_pc_sq + as.factor(year), data = data_ova)
+m3 <- lm(log_cc_outs ~ vdem_polyarchy + log_pop + log_gdp_pc + log_gdp_pc_sq + as.factor(year), data = data_ova)
+
+stargazer(m1, m2, m3, type = "text", omit = "year")
+
+texreg(list(m1, m2, m3),
+       stars = c(0.01, 0.05, 0.1),
+       #file = "texreg1.doc",
+       custom.header = list("Pollution Outsourcing" = 1:3),
+       caption = "Democracy and Pollution Outsourcing",
+       label = "tab:table1",
+       caption.above = T,
+       fontsize = "scriptsize",
+       custom.coef.map = list("vdem_polyarchy" = "Democracy",
+                              "log_pop" = "Population",
+                              "log_gdp_pc" = "GDP per capita",
+                              "log_gdp_pc_sq" = "GDP per capita$^2$", 
+                              "(Intercept)" = "Constant"),
+        custom.gof.rows = list("Controls" = c("\\xmark", "\\ding{51}", "\\ding{51}"),
+                               "Year-FE" = c("\\ding{51}", "\\ding{51}", "\\ding{51}")))
+
+
+
+```
+
+## Plot coefficients: Model group 1
+
+```{r plots coefficients 1}
+
+#-------------------------------------------------------------------------------
+# Coefficient plot 
+#-------------------------------------------------------------------------------
+coefs_m1 <- as.data.frame(summary(m3)$coefficients[c(2:5),])
+
+# Create data frames for each model
+coefs_m1$CI_low <- coefs_m1[,"Estimate"] - qnorm(0.95)*coefs_m1[,"Std. Error"]
+coefs_m1$CI_high <- coefs_m1[,"Estimate"] + qnorm(0.95)*coefs_m1[,"Std. Error"]
+
+
+pdf("Plots/Coefficients_table1.pdf", width = 7.5)
+
+par(mar = c(5.1, 10, 2.5, 2.1)) # c(bottom, left, top, right))
+
+plot(1,
+     type = "n",
+     ylim = c(0,2),
+     bty = "n",
+     xlab = "Coefficients and 95% confidence intervals",
+     xlim = c(-1.75, 2.25),
+     ylab = "",
+     yaxt = "n",
+     cex.lab = 1.1)
+
+
+# add grid
+segments(x0 = c(-1.25,-1,-0.75, -0.5, -0.25, 0, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2), y0 = 0,
+         x1 = c(-1.25,-1,-0.75, -0.5, -0.25, 0, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2), y1 = 2,
+         col = "lightgrey",
+         lty = "solid", lwd = 0.7)
+
+segments(x0 = -1.5, y0 = rev(c(0.25, 0.5, 0.75, 1,
+                               1.25, 1.5, 1.75)),
+         x1 = 2, y1 = rev(c(0.25, 0.5, 0.75, 1,
+                               1.25, 1.5, 1.75)),
+         col = "lightgrey",
+         lty = "solid", lwd = 0.7)
+
+# add null line
+segments(x0 = 0, y0 = 0,
+         x1 = 0, y1 = 2.5,
+         lty = "solid", lwd = 1, col = "black")
+
+
+# add point estimates
+points(x = coefs_m1$Estimate,
+       y = rev(c(0.25, 0.75, 1.25, 1.75)),
+       pch = 16,
+       col = c(viridis(3)[1], viridis(3)[1], viridis(3)[1], viridis(3)[1]),
+       cex = 1)
+
+# add CIs
+segments(y0 = rev(c(0.25, 0.75, 1.25, 1.75)), 
+         y1 = rev(c(0.25, 0.75, 1.25, 1.75)), 
+         col = c(viridis(3)[1], viridis(3)[1], viridis(3)[1], viridis(3)[1]),
+         x0 = coefs_m1$CI_low,
+         x1 = coefs_m1$CI_high,
+         lwd = 3, cex = 1.3, lend = 1)
+
+# add coefficients text
+text(x = -2.75,
+     y = rev(c(0.25, 0.75, 1.25, 1.75)),
+     labels = c("Democracy", "Population", "GDP per capita", expression("GDP per capita"^2)),
+     xpd = T,
+     cex = 0.9,
+     pos = 4)
+
+dev.off()
+
+```
+
+## Model group 2
+
+```{r within-between 2}
+
+#-------------------------------------------------------------------------------
+# Model group 2 - R & R
+#-------------------------------------------------------------------------------
+m5 <- lm(log_ghg_pc ~ log_cc_outs + vdem_polyarchy + as.factor(year), data = data_ova)
+m6 <- lm(log_ghg_pc ~ log_cc_outs + vdem_polyarchy + log_cc_outs*vdem_polyarchy + as.factor(year), data = data_ova)
+m7 <- lm(log_ghg_pc ~ log_pop + log_gdp_pc + log_gdp_pc_sq + as.factor(year), data = data_ova)
+m8 <- lm(log_ghg_pc ~ log_cc_outs + vdem_polyarchy + log_cc_outs*vdem_polyarchy +
+           log_pop + log_gdp_pc + log_gdp_pc_sq + as.factor(year), data = data_ova)
+
+stargazer(m5, m6, m7, m8, type = "text", omit = "year")
+
+texreg(list(m5, m6, m7, m8),
+       stars = c(0.01, 0.05, 0.1),
+      # file = "texreg2.doc",
+       custom.header = list("GHG emissions" = 1:4),
+       caption = "Environmental Performance and Pollution Outsourcing",
+       custom.model.names = c("Model 4", "Model 5", "Model 6", "Model 7"),
+       label = "tab:table2",
+       caption.above = T,
+       fontsize = "scriptsize",
+       custom.coef.map = list("log_cc_outs" = "Pollution Outsourcing",
+                              "vdem_polyarchy" = "Democracy",
+                              "log_cc_outs:vdem_polyarchy" = "Pollution Outsourcing x Democracy",
+                              "log_pop" = "Population",
+                              "log_gdp_pc" = "GDP per capita",
+                              "log_gdp_pc_sq" = "GDP per capita$^2$",
+                              "(Intercept)" = "Constant"),
+        custom.gof.rows = list("Controls" = c("\\xmark", "\\xmark", "\\ding{51}", "\\ding{51}"),
+                               "Year-FE" = c("\\ding{51}", "\\ding{51}", "\\ding{51}", "\\ding{51}")))
+
+```
+
+## Plot coefficients: Model group 2
+
+```{r plot coefficients 2}
+
+#-------------------------------------------------------------------------------
+# Coefficient plot - Model group 2
+#-------------------------------------------------------------------------------
+coefs_m2 <- as.data.frame(summary(m8)$coefficients[c(2,3,32,4:6),])
+
+# Create data frames for each model
+coefs_m2$CI_low <- coefs_m2[,"Estimate"] - qnorm(0.95)*coefs_m2[,"Std. Error"]
+coefs_m2$CI_high <- coefs_m2[,"Estimate"] + qnorm(0.95)*coefs_m2[,"Std. Error"]
+
+
+#-------------------------------------------------------------------------------
+# Coefficient plot - Model group 2 - R & R
+#-------------------------------------------------------------------------------
+pdf("Plots/Coefficients_table2.pdf", width = 7.5)
+
+par(mar = c(5.1, 10, 2.5, 2.1)) # c(bottom, left, top, right))
+
+plot(1,
+     type = "n",
+     ylim = c(0,2.5),
+     bty = "n",
+     xlab = "Coefficients and 95% confidence intervals",
+     xlim = c(-1.25, 1.5),
+     ylab = "",
+     yaxt = "n",
+     cex.lab = 1.1)
+
+
+# add grid
+segments(x0 = c(-1.25,-1,-0.75, -0.5, -0.25, 0, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2), y0 = 0,
+         x1 = c(-1.25,-1,-0.75, -0.5, -0.25, 0, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2), y1 = 2.5,
+         col = "lightgrey",
+         lty = "solid", lwd = 0.7)
+
+segments(x0 = -1.5, y0 = rev(c(0.25, 0.45, 0.65, 0.85, 1.05, 1.25, 1.45, 1.65, 1.85, 2.05, 2.25)),
+         x1 = 2, y1 = rev(c(0.25, 0.45, 0.65, 0.85, 1.05, 1.25, 1.45, 1.65, 1.85, 2.05, 2.25)),
+         col = "lightgrey",
+         lty = "solid", lwd = 0.7)
+
+# add null line
+segments(x0 = 0, y0 = 0,
+         x1 = 0, y1 = 2.5,
+         lty = "solid", lwd = 1, col = "black")
+
+
+# add point estimates
+points(x = coefs_m2$Estimate,
+       y = rev(c(0.25, 0.65, 1.05, 1.45, 1.85, 2.25)),
+       pch = 16,
+       col = c(viridis(3, alpha = 0.6)[1], viridis(3)[1],viridis(3)[1],viridis(3)[1], viridis(3)[1],viridis(3, alpha = 0.6)[1]),
+       cex = 1)
+
+# add CIs
+segments(y0 = rev(c(0.25, 0.65, 1.05, 1.45, 1.85, 2.25)), 
+         y1 = rev(c(0.25, 0.65, 1.05, 1.45, 1.85, 2.25)), 
+         col = c(viridis(3, alpha = 0.3)[1], viridis(3)[1], viridis(3)[1],viridis(3)[1], viridis(3)[1],viridis(3, alpha = 0.3)[1]),
+         x0 = coefs_m2$CI_low,
+         x1 = coefs_m2$CI_high,
+         lwd = 3, cex = 1.3, lend = 1)
+
+# add coefficients text
+text(x = -2,
+     y = rev(c(0.25, 0.65, 1.05, 1.35, 1.85, 2.25)),
+     labels = c("Pollution outsourcing", "Democracy", "Pollution outsourcing \nx Democracy", 
+                "Population", "GDP per capita", expression("GDP per capita"^2)),
+     xpd = T,
+     cex = 0.9,
+     pos = 4)
+
+dev.off()
+
+```
+
+
+
+# Quantities of interest
+
+## Marginal effect plots
+
+```{r marginal effects}
+
+#-------------------------------------------------------------------------------
+# Marginal effects 
+#-------------------------------------------------------------------------------
+# install.packages('devtools', repos = 'http://cran.us.r-project.org') # if not already installed
+# devtools::install_github('xuyiqing/interflex')
+
+#-------------------------------------------------------------------------------
+# Preparation
+ranef_m8 <- as.data.frame(coefficients(m8))
+extract_year <- c(1990:2015)
+
+## Reduce to correct length
+data_ova <- data_s[which(!is.na(data_s$log_cc_outs) &
+                         !is.na(data_s$vdem_polyarchy) &
+                         !is.na(data_s$log_pop) &
+                         !is.na(data_s$log_gdp_pc) &
+                         !is.na(data_s$log_wdi_co2)),]
+
+## Create dummy variables for countries and years
+data_ova <- dummy_cols(data_ova[which(data_ova$year %in% extract_year),],
+                       select_columns = c("year"))
+
+data_ova <- as.data.frame(data_ova)
+
+## Raw
+out1_raw <- interflex(Y = "log_ghg_pc", 
+                      D = "log_cc_outs", 
+                      X = "vdem_polyarchy", 
+                      treat.type = "continuous",
+                      Z = c("log_pop", "log_gdp_pc",
+                            "log_gdp_pc_sq"),
+                      data = data_ova, 
+                      FE = c("year"),
+                      na.rm = T,
+                      estimator = "raw", 
+                      vcov.type = "robust", 
+                      main = "Marginal Effects", 
+                      ylim = c(-15, 15))
+
+## Plot raw
+plot(out1_raw)
+
+## Marginal effects plot 
+out1 <- interflex(Y = "log_ghg_pc", 
+                  D = "log_cc_outs", 
+                  X = "vdem_polyarchy", 
+                  treat.type = "continuous",
+                  Z = c("log_pop", "log_gdp_pc",
+                        "log_gdp_pc_sq"),
+                  data = data_ova, 
+                  FE = c("year"),
+                  na.rm = T,
+                  estimator = "binning", 
+                  vcov.type = "robust", 
+                  main = "Marginal Effects", 
+                  ylim = c(-15, 15))
+
+
+pdf("plots/Marginal_interflex.pdf", width = 12)
+
+plot(out1,
+     pool = T,
+     xlab = "Democracy",
+     ylab = "Marginal Effect of Pollution Outsourcing",
+     Dlabel = "",
+     theme.bw = TRUE, show.grid = FALSE,
+     cex.axis = 0.8, cex.lab = 0.8, color = viridis(3)[1], legend.title = "")
+
+dev.off()
+
+
+## non-linear? --> YES
+out1$tests$p.wald
+out1$est.bin
+
+```
+
+## Simulate expected values: Model group 1 
+
+```{r expected values 1}
+
+#-------------------------------------------------------------------------------
+# Get X for observed value approach
+#-------------------------------------------------------------------------------
+
+# make sure I will select the right columns for the year dummies
+first_year <- which(colnames(data_ova) == "year_1991") # or 1990?
+last_year <- which(colnames(data_ova) == "year_2015")
+
+# Get X
+length(coefficients(m3))
+X1 <- as.matrix(cbind(1,
+                      data_ova$vdem_polyarchy,
+                      data_ova$log_pop,
+                      data_ova$log_gdp_pc, 
+                      data_ova$log_gdp_pc_sq,
+                      data_ova[,c(first_year:last_year)]))
+
+X <- na.omit(X1)
+dim(X1)
+
+## Get colnames
+colnames(X1) <- names(coefficients(m3))
+
+
+#-------------------------------------------------------------------------------
+# Install simulation github Rittmann et al. (2023)
+#-------------------------------------------------------------------------------
+install_github("mneunhoe/simloglm")
+library (simloglm)
+
+## Function to sample from inverse gamma distribution
+rinvgamma <- function(n, shape, rate = 1, scale = 1/rate){
+  if(missing(rate) && !missing(scale))
+    rate <- 1/scale
+  1/stats::rgamma(n, shape, rate)
+}
+
+
+# Set up informal posterior of coefficients
+nsim <- 1000 # number of draws
+
+beta_hat1 <- c()
+
+for(i in 1:length(coefficients(m3))){
+  beta_hat1[i] <- c(coefficients(m3)[[i]])
+}
+
+## Get colnames
+names(beta_hat1) <- names(coefficients(m3))
+
+sigma_hat1 <- summary(m3)$sigma
+X_prime_X1 <- as.matrix(vcov(m3)) / summary(m3)$sigma^2 ## equivalent to vcov$unscaled
+
+# First sigma^2
+set.seed(199610)
+sigma2_tilde1 <- rinvgamma(nsim,
+                           shape = df.residual(m3)/2,
+                           rate = (sigma_hat1^2*df.residual(m3))/2)
+
+# Now the betas
+beta_tilde1 <- matrix(NA,
+                      nrow = nsim,
+                      ncol = length(beta_hat1))
+
+for(sim in 1:nsim){
+  beta_tilde1[sim, ] <-
+    MASS::mvrnorm(1, beta_hat1, X_prime_X1 * sigma2_tilde1[sim])
+}
+
+
+
+#-------------------------------------------------------------------------------
+# Set scenarios: over range of democracy 
+#-------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------
+# Determine "reasonable" variation of democracy variable (within)
+
+# and the respective values (min and max > used for setting the scenario) 
+min_dem <- out1$est.bin$`log_cc_outs=1.843 (50%)`[1,1]  
+max_dem <- out1$est.bin$`log_cc_outs=1.843 (50%)`[3,1]
+
+# Within range
+range_dem_w <- as.vector(seq(min_dem, max_dem, length.out = 30))
+
+
+#-------------------------------------------------------------------------------
+# Create CASES
+#-------------------------------------------------------------------------------
+
+# Create empty matrix to store the scenarios
+cases1w <- array(NA, 
+                 c(dim(X1), length(range_dem_w)))
+
+# Copy in our X
+cases1w[,,] <- X1 # because OVA not Average case!
+
+# Select: Democracy over range
+select <- which(colnames(X1) == "vdem_polyarchy")
+
+for(i in 1:length(range_dem_w)){
+  cases1w[ ,select, i] <- range_dem_w[i]
+}
+
+head(cases1w)
+dim(cases1w) 
+# check dimensions 
+
+# Calculate linear predictor on log scale & retransform
+E_Y_c_dem_1w <- matrix(NA, nrow = nsim, ncol = length(range_dem_w)) # empty matrix for storage
+
+for(i in 1:length(range_dem_w)){             # 30 rounds (for range of dem variable)
+   ev <- beta_tilde1 %*% t(cases1w[,,i])     # calculate linear predictor on log scale
+   ev_plus_gamma <- ev + 1/2*sigma2_tilde1   # add draws of 1/2*sigma2_tilde
+   ev_transf <- exp(ev_plus_gamma)           # transform
+   ev_transf_m <- ev_transf #- 1             # E(y) 
+   tmp_val <- apply(ev_transf_m, 1, mean)    # now average results
+   E_Y_c_dem_1w[,i] <- tmp_val               # store in val object
+}
+
+# Summarize to get CIs
+CI_E_Y_c_dem_1w <- apply(E_Y_c_dem_1w, 2, quantile, c(0.025, 0.975))
+
+# Now get the point estimates 
+E_Y_c_hat_dem_1w <- matrix(NA, nrow = length(range_dem_w), ncol = 1)
+
+for(i in 1:length(range_dem_w)){                       # 30 rounds (for range of dem variable)
+  ev_point <- beta_hat1 %*% t(cases1w[,,i])            # use beta_hat (not simulated)
+  ev_point_plus_gamma <- ev_point + 1/2*sigma_hat1^2   # use sigma_hat (not simulated)
+  ev_point_transf <- exp(ev_point_plus_gamma)          # transform
+  ev_point_transf_m <- ev_point_transf #- 1            # E(y) 
+  tmp_val_point <- apply(ev_point_transf_m, 1, mean)   # now average results
+  E_Y_c_hat_dem_1w[i,] <- tmp_val_point                # store in val object
+}
+
+
+#-------------------------------------------------------------------------------
+# Plot: Expected values of pollution outsourcing (on original scale)
+#-------------------------------------------------------------------------------
+
+pdf("plots/Expected value_m1.pdf") 
+
+par(mar = c(5.1, 4.7, 4.1, 2.1)) # c(bottom, left, top, right))
+
+plot(range_dem_w,
+     E_Y_c_hat_dem_1w,
+     type = "n",
+     ylim = c(40, 80),
+     xlim = c(min_dem, max_dem),
+     ylab = expression("Pollution Outsourcing [Gg]"),
+     xlab = "Democracy",
+     bty = "n",
+     main = NULL,
+     cex.lab = 1.3)
+
+segments(x0 = range_dem_w, x1 = range_dem_w,
+         y1 = CI_E_Y_c_dem_1w[2,], y0 = CI_E_Y_c_dem_1w[1,],
+         col = viridis(3, 0.25)[1],
+         lwd = 4, lend = 1)
+
+points(range_dem_w, E_Y_c_hat_dem_1w, col = viridis(3, 0.8)[1], pch = 20,
+       cex = 1.5)
+
+
+# Add a "histogram" of actual X1-values.
+axis(1,
+     at = data_ova$vdem_polyarchy,
+     col.ticks = "gray30",
+     labels = FALSE,
+     tck = 0.02)
+
+dev.off()
+
+
+#-------------------------------------------------------------------------------
+# First difference (WITHIN)
+#-------------------------------------------------------------------------------
+
+## First difference: Democracy high - low
+FD_dem_hat_1w <- E_Y_c_hat_dem_1w[30,] - E_Y_c_hat_dem_1w[1,]  ## max - min
+FD_dem_1w <- E_Y_c_dem_1w[,30] - E_Y_c_dem_1w[,1] 
+CI_FD_dem_1w <- quantile(FD_dem_1w, c(0.025, 0.975))
+
+#-------------------------------------------------------------------------------
+## How "big" is the difference compared to variation in the dataset?
+#-------------------------------------------------------------------------------
+sd_outs <- aggregate(data_ova$cf_cc_pop_mean_outs,
+                     by = list(data_ova$cname),
+                     FUN = sd)
+
+mean_within_country_sd <- mean(sd_outs[,2], na.rm = T)
+mean_between_country_sd <- sd(data_ova$mean_cc_outs, na.rm = T)
+share_FD_var_w <- FD_dem_hat_1w / mean_within_country_sd
+
+```
+
+## Simulate expected values and first differences: Model group 2 
+
+```{r expected values 2}
+
+#-------------------------------------------------------------------------------
+# Get X for observed value approach
+#-------------------------------------------------------------------------------
+
+# make sure I will select the right columns for the year dummies
+first_year <- which(colnames(data_ova) == "year_1991") # or 1990?
+last_year <- which(colnames(data_ova) == "year_2015")
+
+# Get X
+coefficients(m8)
+X <- as.matrix(cbind(1,
+                     data_ova$log_cc_outs,
+                     data_ova$vdem_polyarchy,
+                     data_ova$log_pop,
+                     data_ova$log_gdp_pc, 
+                     data_ova$log_gdp_pc_sq,
+                     data_ova[,c(first_year:last_year)],
+                     data_ova$log_cc_outs * data_ova$vdem_polyarchy))
+
+X <- na.omit(X)
+dim(X)
+
+## Get colnames
+colnames(X) <- names(coefficients(m8))
+
+#-------------------------------------------------------------------------------
+# Start with set-up for retransformation
+#-------------------------------------------------------------------------------
+# Set up informal posterior of coefficients
+nsim <- 1000 # number of draws
+
+beta_hat <- c()
+
+for(i in 1:length(coefficients(m8))){
+  beta_hat[i] <- c(coefficients(m8)[[i]])
+}
+
+## Get colnames
+names(beta_hat) <- names(coefficients(m8))
+
+sigma_hat <- summary(m8)$sigma
+X_prime_X <- as.matrix(vcov(m8)) / summary(m8)$sigma^2 ## equivalent to vcov$unscaled
+
+# First sigma^2
+set.seed(199610)
+sigma2_tilde <- rinvgamma(nsim,
+                          shape = df.residual(m8)/2,
+                          rate = (sigma_hat^2*df.residual(m8))/2)
+
+# Now the betas
+beta_tilde <- matrix(NA,
+                     nrow = nsim,
+                     ncol = length(beta_hat))
+
+for(sim in 1:nsim){
+  beta_tilde[sim, ] <-
+    MASS::mvrnorm(1, beta_hat, X_prime_X * sigma2_tilde[sim])
+}
+
+
+#-------------------------------------------------------------------------------
+# Set scenarios
+#-------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------
+# Determine "reasonable" variation of outsourcing
+range_outsource_w <- aggregate(data_ova$log_cc_outs,
+                               by = list(data_ova$cname),
+                               FUN = mean)
+
+
+min_outsource_w <- quantile(range_outsource_w[,2], 0.20)
+max_outsource_w <- quantile(range_outsource_w[,2], 0.80)
+
+min_outsource_country <- data_ova$cname[which(data_ova$log_cc_outs %like% min_dem)]
+max_outsource_country <- data_ova$cname[which(data_ova$log_cc_outs %like% max_dem)]
+
+#-------------------------------------------------------------------------------
+# Determine "reasonable" variation of dem (values from binning)
+# see above (Model 1)
+
+min_dem_country <- data_ova$cname[which(data_ova$vdem_polyarchy %like% min_dem)]
+max_dem_country <- data_ova$cname[which(data_ova$vdem_polyarchy %like% max_dem)]
+
+
+#-------------------------------------------------------------------------------
+## Create empty matrix to store the scenarios
+cases_w <- array(NA, 
+                c(dim(X), 4))
+
+## Copy in our X
+cases_w[,,] <- X
+
+## Add names
+colnames(cases_w) <- names(beta_hat)
+
+head(cases_w)
+
+## Case 1: min dem & min outsource
+cases_w[ ,"vdem_polyarchy", 1] <- min_dem
+cases_w[ ,"log_cc_outs", 1] <- min_outsource_w
+cases_w[ ,"log_cc_outs:vdem_polyarchy", 1] <- min_dem* min_outsource_w
+
+## Case 2: min dem & max outsource
+cases_w[ ,"vdem_polyarchy", 2] <- min_dem
+cases_w[ ,"log_cc_outs", 2] <- max_outsource_w
+cases_w[ ,"log_cc_outs:vdem_polyarchy", 2] <- min_dem* max_outsource_w
+
+## Case 3: max dem & min outsource
+cases_w[ ,"vdem_polyarchy", 3] <- max_dem
+cases_w[ ,"log_cc_outs", 3] <- min_outsource_w
+cases_w[ ,"log_cc_outs:vdem_polyarchy", 3] <- max_dem*min_outsource_w
+
+## Case 4: max dem & max outsource
+cases_w[ ,"vdem_polyarchy", 4] <- max_dem
+cases_w[ ,"log_cc_outs", 4] <- max_outsource_w
+cases_w[ ,"log_cc_outs:vdem_polyarchy", 4] <- max_dem*max_outsource_w
+
+## Alternatively
+# cases_w[ ,"vdem_polyarchy", 1] <- min_dem
+# cases_w[ ,"log_cc_outs", 1] <- mean(data_ova$log_cc_outs, na.rm = T) # min_outsource_w
+# cases_w[ ,"log_cc_outs:vdem_polyarchy", 1] <- min_dem*mean(data_ova$log_cc_outs, na.rm = T) # min_outsource_w
+# 
+# ## Case 2: min dem & max outsource
+# cases_w[ ,"vdem_polyarchy", 2] <- max_dem
+# cases_w[ ,"log_cc_outs", 2] <- mean(data_ova$log_cc_outs, na.rm = T) # max_outsource_w
+# cases_w[ ,"log_cc_outs:vdem_polyarchy", 2] <- max_dem*mean(data_ova$log_cc_outs, na.rm = T) # max_outsource_w
+
+
+#-------------------------------------------------------------------------------
+## Calculate linear predictor on log scale & retransform
+#-------------------------------------------------------------------------------
+E_Y_c_w <- matrix(NA, nrow = nsim, ncol = 4)  # empty matrix for storage
+
+for(i in 1:4){                              # four rounds (for scenarios)
+  ev <- beta_tilde %*% t(cases_w[,,i])      # calculate linear predictor on log scale
+  ev_plus_gamma <- ev + 1/2*sigma2_tilde    # add draws of 1/2*sigma2_tilde
+  ev_transf <- exp(ev_plus_gamma)           # transform
+  ev_transf_m <- ev_transf - 1              # E(y) - 1
+  tmp_val <- apply(ev_transf_m, 1, mean)    # now average results
+  E_Y_c_w[,i] <- tmp_val                    # store in val object
+}
+
+## Summarize to get CIs
+CI_E_Y_c_w <- apply(E_Y_c_w, 2, quantile, c(0.025, 0.5, 0.975))
+
+## Now get the point estimates 
+E_Y_c_hat_w <- matrix(NA, nrow = 4, ncol = 1)
+
+for(i in 1:4){                                       # four rounds (for scenarios)
+  ev_point <- beta_hat %*% t(cases_w[,,i])           # use beta_hat (not simulated)
+  ev_point_plus_gamma <- ev_point + 1/2*sigma_hat^2  # use sigma_hat (not simulated)
+  ev_point_transf <- exp(ev_point_plus_gamma)        # transform
+  ev_point_transf_m <- ev_point_transf - 1           # E(y) - 1
+  tmp_val_point <- apply(ev_point_transf_m, 1, mean) # now average results
+  E_Y_c_hat_w[i,] <- tmp_val_point                   # store
+}
+
+
+#-------------------------------------------------------------------------------
+# First differences
+#-------------------------------------------------------------------------------
+
+## First difference: Democracy low -> Outsource max - min
+FD_dem_low_hat_w <- E_Y_c_hat_w[2,] - E_Y_c_hat_w[1,]  ## max - min
+FD_dem_low_w <- E_Y_c_w[,2] - E_Y_c_w[,1] 
+CI_FD_dem_low_w <- quantile(FD_dem_low_w, c(0.025, 0.975))
+
+## First difference: Democracy high -> Outsource max - min
+FD_dem_high_hat_w <- E_Y_c_hat_w[4,] - E_Y_c_hat_w[3,]  ## max - min
+FD_dem_high_w <- E_Y_c_w[,4] - E_Y_c_w[,3] 
+CI_FD_dem_high_w <- quantile(FD_dem_high_w, c(0.025, 0.975))
+
+## First difference of first difference
+FD_FD_hat_w <- FD_dem_high_hat_w - FD_dem_low_hat_w
+FD_FD_w <- FD_dem_high_w - FD_dem_low_w
+CI_FD_FD_w <- quantile(FD_FD_w, c(0.025, 0.975))
+
+
+#-------------------------------------------------------------------------------
+## Plot First differences
+#-------------------------------------------------------------------------------
+pdf("plots/FD_interaction.pdf")
+
+plot(y = 1,
+     x = FD_dem_low_hat_w,
+     col = viridis(3)[1],
+     ylim = c(0,3),
+     xlim = c(-3,0.5),
+     xlab = "GHG emissions [metric tons per capita]",
+     pch = 19,
+     main = NULL, 
+     bty = "n",
+     ylab = "",
+     yaxt = "n",
+     cex = 3,
+     cex.lab = 1.1)
+
+segments(y0 = 1, x0 = CI_FD_dem_low_w[1],
+         y1 = 1, x1 = CI_FD_dem_low_w[2],
+         col = viridis(3)[1],
+         lwd = 12, cex = 1.5, lend = 1)
+
+segments(y0 = 2, x0 = CI_FD_dem_high_w[1],
+         y1 = 2, x1 = CI_FD_dem_high_w[2],
+         col = viridis(3)[1],
+         lwd = 12, cex = 1.5, lend = 1)
+
+points(y = 2,
+       x = FD_dem_high_hat_w,
+       col = viridis(3)[1],
+       xlab = "",
+       pch = 19,
+       main = NULL, 
+       bty = "n",
+       ylab = "",
+       yaxt = "n",
+       cex = 3,
+       cex.lab = 1.1)
+
+segments(x0 = 0, y0 = 0,
+         x1 = 0, y1 = 3,
+         lty = "dashed", lwd = 2)
+
+text(x = FD_dem_low_hat_w,
+     y = 0.8,
+     labels = c("Less democratic"),
+     cex = 1.1)
+
+text(x = FD_dem_low_hat_w,
+     y = 0.57,
+     labels = c("Outsourcing (max - min)"),
+     cex = 0.9)
+
+text(x = FD_dem_high_hat_w,
+     y = 1.8,
+     labels = c("More democratic"),
+     cex = 1.1)
+
+text(x = FD_dem_high_hat_w,
+     y = 1.57,
+     labels = c("Outsourcing (max - min)"),
+     cex = 0.9)
+
+dev.off()
+
+## First difference of first difference
+pdf("plots/FD_FD.pdf")
+
+plot(y = 1.5,
+     x = FD_FD_hat_w,
+     col = viridis(3)[1],
+     ylim = c(0,3),
+     xlim = c(-2,0.5),
+     xlab = "GHG emissions [metric tons per capita]",
+     pch = 19,
+     main = NULL, 
+     bty = "n",
+     ylab = "",
+     yaxt = "n",
+     cex = 3,
+     cex.lab = 1.1)
+
+segments(y0 = 1.5, x0 = CI_FD_FD_w[1],
+         y1 = 1.5, x1 = CI_FD_FD_w[2],
+         col = viridis(3)[1],
+         lwd = 12, cex = 1.5, lend = 1)
+
+segments(x0 = 0, y0 = 0,
+         x1 = 0, y1 = 3,
+         lty = "dashed", lwd = 2)
+
+text(x = FD_FD_hat_w,
+     y = 1.26,
+     labels = c("FD of FD"),
+     cex = 1.1)
+
+text(x = FD_FD_hat_w,
+     y = 1.05,
+     labels = c("Democracy (more - less)"),
+     cex = 0.9)
+
+dev.off()
+
+
+```
+
+
+
+# Robustness
+
+## Replacing DV with PM2.5
+
+```{r replace DV pm25}
+
+#-------------------------------------------------------------------------------
+# Model group 2 
+#-------------------------------------------------------------------------------
+m8_pm25 <- lm(log_pm25_pop ~ log_cc_outs + vdem_polyarchy + log_cc_outs*vdem_polyarchy +
+           log_pop + log_gdp_pc + log_gdp_pc_sq + as.factor(year), data = data_ova)
+
+stargazer(m8, m8_pm25, type = "text", omit = c("ccode", "year"))
+
+```
+
+## Replacing DV with carbon footprint
+
+```{r replace DV carbon footprint}
+
+#-------------------------------------------------------------------------------
+# Model group 2 
+#-------------------------------------------------------------------------------
+m8_cf <- lm(ef_carb ~ log_cc_outs + vdem_polyarchy + log_cc_outs*vdem_polyarchy +
+           log_pop + log_gdp_pc + log_gdp_pc_sq + as.factor(year), data = data_ova)
+
+stargazer(m8, m8_cf, type = "text", omit = c("ccode", "year"))
+
+
+#-------------------------------------------------------------------------------
+# Output
+#-------------------------------------------------------------------------------
+texreg(list(m8, m8_pm25, m8_cf),
+       stars = c(0.01, 0.05, 0.1),
+      # file = "texreg2.doc",
+       caption = "Alternative Dependent Variables",
+       custom.model.names = c("Model 7", "Model A1-PM2.5", "Model A2-Carbon Footprint"),
+       label = "tab:table3",
+       caption.above = T,
+       fontsize = "scriptsize",
+       custom.coef.map = list("log_cc_outs" = "Pollution Outsourcing",
+                              "vdem_polyarchy" = "Democracy",
+                              "log_cc_outs:vdem_polyarchy" = "Pollution Outsourcing x Democracy",
+                              "log_pop" = "Population",
+                              "log_gdp_pc" = "GDP per capita",
+                              "log_gdp_pc_sq" = "GDP per capita$^2$",
+                              "(Intercept)" = "Constant"),
+        custom.gof.rows = list("Controls" = c("\\ding{51}", "\\ding{51}", "\\ding{51}"),
+                               "Country-FE" = c("\\ding{51}", "\\ding{51}", "\\ding{51}"),
+                               "Year-FE" = c("\\ding{51}", "\\ding{51}", "\\ding{51}")))
+
+```
+
+## Different outsourcing variables
+
+```{r diff outsourcing}
+
+#-------------------------------------------------------------------------------
+# Model group 2 
+#-------------------------------------------------------------------------------
+m8_bw <- lm(log_ghg_pc ~ log_bw_outs + vdem_polyarchy + 
+                   log_bw_outs*vdem_polyarchy +
+                   log_pop + log_gdp_pc + log_gdp_pc_sq + as.factor(year), 
+                 data = data_ova)
+
+m8_en <- lm(log_ghg_pc ~ log_en_outs + vdem_polyarchy + 
+                   log_en_outs*vdem_polyarchy +
+                   log_pop + log_gdp_pc + log_gdp_pc_sq + as.factor(year), 
+                 data = data_ova)
+
+m8_lu <- lm(log_ghg_pc ~ log_lu_outs + vdem_polyarchy + 
+                   log_lu_outs*vdem_polyarchy +
+                   log_pop + log_gdp_pc + log_gdp_pc_sq + as.factor(year), 
+                 data = data_ova)
+
+m8_mf <- lm(log_ghg_pc ~ log_mf_outs + vdem_polyarchy + 
+                   log_mf_outs*vdem_polyarchy +
+                   log_pop + log_gdp_pc + log_gdp_pc_sq + as.factor(year), 
+                 data = data_ova)
+
+stargazer(m8, m8_bw, m8_en, m8_lu, m8_mf, type = "text", omit = c("ccode", "year"))
+
+
+#-------------------------------------------------------------------------------
+# Output
+#-------------------------------------------------------------------------------
+texreg(list(m8, m8_bw, m8_en, m8_lu, m8_mf),
+       stars = c(0.01, 0.05, 0.1),
+      # file = "texreg2.doc",
+       caption = "Alternative Outsourcing Variables",
+       custom.model.names = c("Model 7", "Model A3-bluewater", "Model A4-energy", "Model A5-landuse", "Model A6-material"),
+       label = "tab:table4",
+       caption.above = T,
+       fontsize = "scriptsize",
+       custom.coef.map = list("log_cc_outs" = "Pollution Outsourcing",
+                              "log_bw_outs" = "Pollution Outsourcing",
+                              "log_en_outs" = "Pollution Outsourcing",
+                              "log_lu_outs" = "Pollution Outsourcing",
+                              "log_mf_outs" = "Pollution Outsourcing",
+                              "vdem_polyarchy" = "Democracy",
+                              "log_cc_outs:vdem_polyarchy" = "Pollution Outsourcing x Democracy",
+                              "log_bw_outs:vdem_polyarchy" = "Pollution Outsourcing x Democracy",
+                              "log_en_outs:vdem_polyarchy" = "Pollution Outsourcing x Democracy",
+                              "log_lu_outs:vdem_polyarchy" = "Pollution Outsourcing x Democracy",
+                              "log_mf_outs:vdem_polyarchy" = "Pollution Outsourcing x Democracy",
+                              "log_pop" = "Population",
+                              "log_gdp_pc" = "GDP per capita",
+                              "log_gdp_pc_sq" = "GDP per capita$^2$",
+                              "(Intercept)" = "Constant"),
+        custom.gof.rows = list("Controls" = c("\\ding{51}", "\\ding{51}", "\\ding{51}","\\ding{51}", "\\ding{51}"),
+                               "Country-FE" = c("\\ding{51}", "\\ding{51}", "\\ding{51}", "\\ding{51}", "\\ding{51}"),
+                               "Year-FE" = c("\\ding{51}", "\\ding{51}", "\\ding{51}", "\\ding{51}", "\\ding{51}")))
+
+```
+
+## Alternative operationalization outsourcing: Total sum of pollution outsourced
+
+```{r total sum}
+
+#-------------------------------------------------------------------------------
+# Model group 1
+#-------------------------------------------------------------------------------
+m1_sum <- lm(log_cc_sum_outs ~ vdem_polyarchy + as.factor(year), data = data_ova)
+m2_sum <- lm(log_cc_sum_outs ~ log_pop + log_gdp_pc + log_gdp_pc_sq + as.factor(year),data = data_ova)
+m3_sum <- lm(log_cc_sum_outs ~ vdem_polyarchy + log_pop + log_gdp_pc + log_gdp_pc_sq +  as.factor(year), data = data_ova)
+
+stargazer(m1_sum, m2_sum, m3_sum, type = "text", omit = c("ccode", "year"))
+
+
+#-------------------------------------------------------------------------------
+## Output
+#-------------------------------------------------------------------------------
+texreg(list(m1_sum, m2_sum, m3_sum),
+       stars = c(0.01, 0.05, 0.1),
+       #file = "texreg1.doc",
+       caption = "Total Sum of Pollution Outsourced - Analysis 1",
+       custom.model.names = c("Model A7", "Model A8", "Model A9"),
+       label = "tab:table5",
+       caption.above = T,
+       fontsize = "scriptsize",
+       custom.coef.map = list("vdem_polyarchy" = "Democracy",
+                              "log_pop" = "Population",
+                              "log_gdp_pc" = "GDP per capita",
+                              "log_gdp_pc_sq" = "GDP per capita$^2$", 
+                              "(Intercept)" = "Constant"),
+        custom.gof.rows = list("Controls" = c("\\xmark", "\\ding{51}", "\\ding{51}"),
+                               "Country-FE" = c("\\ding{51}", "\\ding{51}", "\\ding{51}"),
+                               "Year-FE" = c("\\ding{51}", "\\ding{51}", "\\ding{51}")))
+
+
+#-------------------------------------------------------------------------------
+# Model group 2
+#-------------------------------------------------------------------------------
+m5_sum <- lm(log_ghg_pc ~ log_cc_sum_outs + vdem_polyarchy + as.factor(year), data = data_ova)
+
+m6_sum <- lm(log_ghg_pc ~ log_cc_sum_outs + vdem_polyarchy + 
+              log_cc_sum_outs*vdem_polyarchy +
+              as.factor(year), data = data_ova)
+
+m7_sum <- lm(log_ghg_pc ~ log_pop + log_gdp_pc + log_gdp_pc_sq + as.factor(year), data = data_ova)
+
+m8_sum <- lm(log_ghg_pc ~ log_cc_sum_outs + vdem_polyarchy + 
+              log_cc_sum_outs*vdem_polyarchy +
+              log_pop + log_gdp_pc + log_gdp_pc_sq + as.factor(year), data = data_ova)
+
+stargazer(m5_sum, m6_sum, m7_sum, m8_sum, type = "text", omit = c("ccode", "year"))
+
+
+#-------------------------------------------------------------------------------
+# Output
+#-------------------------------------------------------------------------------
+texreg(list(m5_sum, m6_sum, m7_sum, m8_sum),
+       stars = c(0.01, 0.05, 0.1),
+      # file = "texreg2.doc",
+       caption = "Total Sum of Pollution Outsourced - Analysis 2",
+       custom.model.names = c("Model A10", "Model A11", "Model A12", "Model A13"),
+       label = "tab:table6",
+       caption.above = T,
+       fontsize = "scriptsize",
+       custom.coef.map = list("log_cc_sum_outs" = "Pollution Outsourcing",
+                              "vdem_polyarchy" = "Democracy",
+                              "log_cc_sum_outs:vdem_polyarchy" = "Pollution Outsourcing x Democracy",
+                              "log_pop" = "Population",
+                              "log_gdp_pc" = "GDP per capita",
+                              "log_gdp_pc_sq" = "GDP per capita$^2$",
+                              "(Intercept)" = "Constant"),
+        custom.gof.rows = list("Controls" = c("\\xmark", "\\xmark", "\\ding{51}", "\\ding{51}"),
+                               "Country-FE" = c("\\ding{51}", "\\ding{51}", "\\ding{51}", "\\ding{51}"),
+                               "Year-FE" = c("\\ding{51}", "\\ding{51}", "\\ding{51}", "\\ding{51}")))
+
+
+```
+
+## Alternative operationalization for democracy
+
+```{r diff  dem}
+
+#-------------------------------------------------------------------------------
+# Model group 2 
+#-------------------------------------------------------------------------------
+m8_polity <- lm(log_ghg_pc ~ log_cc_outs + p_polity2 + 
+                     log_cc_outs*p_polity2 +
+                     log_pop + log_gdp_pc + log_gdp_pc_sq + as.factor(year), data = data_ova)
+
+stargazer(m8, m8_polity, type = "text", omit = c("ccode", "year"))
+
+
+#-------------------------------------------------------------------------------
+# Output
+#-------------------------------------------------------------------------------
+texreg(list(m8, m8_polity),
+       stars = c(0.01, 0.05, 0.1),
+      # file = "texreg2.doc",
+       digits = 3,
+       caption = "Alternative Operationalization for Democracy",
+       custom.model.names = c("Model 7-Vdem", "Model A14-Polity"),
+       label = "tab:table6",
+       caption.above = T,
+       fontsize = "scriptsize",
+       custom.coef.map = list("log_cc_outs" = "Pollution Outsourcing",
+                              "vdem_polyarchy" = "Democracy",
+                              "p_polity2" = "Democracy",
+                              "log_cc_outs:vdem_polyarchy" = "Pollution Outsourcing x Democracy",
+                              "log_cc_outs:p_polity2" = "Pollution Outsourcing x Democracy",
+                              "log_pop" = "Population",
+                              "log_gdp_pc" = "GDP per capita",
+                              "log_gdp_pc_sq" = "GDP per capita$^2$",
+                              "(Intercept)" = "Constant"),
+        custom.gof.rows = list("Controls" = c("\\ding{51}", "\\ding{51}"),
+                               "Country-FE" = c("\\ding{51}", "\\ding{51}"),
+                               "Year-FE" = c("\\ding{51}", "\\ding{51}")))
+
+```
+
+## Additional controls: Trade, political globaliz. & env. treaties, GDP
+
+```{r additional controls}
+
+#-------------------------------------------------------------------------------
+# Model group 2 
+#-------------------------------------------------------------------------------
+m8_ac1 <- lm(log_ghg_pc ~ vdem_polyarchy + log_cc_outs*vdem_polyarchy +
+               log_pop + log_gdp_pc + log_gdp_pc_sq + wdi_trade + as.factor(year), 
+             data = data_ova)
+
+m8_ac2 <- lm(log_ghg_pc ~ vdem_polyarchy + log_cc_outs*vdem_polyarchy +
+               log_pop + log_gdp_pc + log_gdp_pc_sq + env_treaties + as.factor(year), 
+             data = data_ova)
+
+m8_ac3 <- lm(log_ghg_pc ~ vdem_polyarchy + log_cc_outs*vdem_polyarchy +
+               log_pop + log_gdp_pc + log_gdp_pc_sq + dr_pg + as.factor(year), 
+             data = data_ova)
+
+m8_ac4 <- lm(log_ghg_pc ~ vdem_polyarchy + log_cc_outs*vdem_polyarchy +
+               log_pop + log_gdp_pc + log_gdp_pc_sq + log_gdp + as.factor(year), 
+             data = data_ova)
+
+m8_ac_all <- lm(log_ghg_pc ~ vdem_polyarchy + log_cc_outs*vdem_polyarchy +
+                 log_pop + log_gdp_pc + log_gdp_pc_sq + 
+                 wdi_trade + env_treaties + dr_pg + log_gdp + as.factor(year), 
+                data = data_ova)
+
+
+stargazer(m8, m8_ac1, m8_ac2, m8_ac3, m8_ac4, m8_ac_all, type = "text", omit = c("ccode", "year"))
+
+
+texreg(list(m8, m8_ac1, m8_ac2, m8_ac3, m8_ac4, m8_ac_all),
+       stars = c(0.01, 0.05, 0.1),
+      # file = "texreg2.doc",
+       caption = "Additional Control Variables",
+       custom.model.names = c("Model 7", "Model A15", "Model A16", "Model A17", "Model A18", "Model A19"),
+       label = "tab:table7",
+       caption.above = T,
+       fontsize = "scriptsize",
+       custom.coef.map = list("log_cc_outs" = "Pollution Outsourcing",
+                              "vdem_polyarchy" = "Democracy",
+                              "log_cc_outs:vdem_polyarchy" = "Pollution Outsourcing x Democracy",
+                              "vdem_polyarchy:log_cc_outs" = "Pollution Outsourcing x Democracy",
+                              "log_pop" = "Population",
+                              "log_gdp_pc" = "GDP per capita",
+                              "log_gdp_pc_sq" = "GDP per capita$^2$",
+                              "wdi_trade" = "Trade Openness",
+                              "env_treaties" = "Environmental Treaties",
+                              "dr_pg" = "Political Globalization",
+                              "log_gdp" = "GDP",
+                              "(Intercept)" = "Constant"),
+        custom.gof.rows = list("Controls" = c("\\ding{51}", "\\ding{51}", "\\ding{51}", "\\ding{51}", "\\ding{51}", "\\ding{51}"),
+                               "Country-FE" = c("\\ding{51}", "\\ding{51}", "\\ding{51}", "\\ding{51}", "\\ding{51}", "\\ding{51}"),
+                               "Year-FE" = c("\\ding{51}", "\\ding{51}", "\\ding{51}", "\\ding{51}", "\\ding{51}", "\\ding{51}")))
+
+
+```
+
+## Drop high-income states
+
+```{r drop high-income}
+
+#-------------------------------------------------------------------------------
+# Model group 2 
+#-------------------------------------------------------------------------------
+m8_low_income <- lm(log_ghg_pc ~ log_cc_outs + vdem_polyarchy + log_cc_outs*vdem_polyarchy +
+                         log_pop + log_gdp_pc + log_gdp_pc_sq + as.factor(year),
+                       data = data_ova[data_ova$log_gdp_pc < 10.1,])
+
+stargazer(m8, m8_low_income, type = "text", omit = c("ccode", "year"))
+
+
+#-------------------------------------------------------------------------------
+# Output
+#-------------------------------------------------------------------------------
+texreg(list(m8, m8_low_income),
+       stars = c(0.01, 0.05, 0.1),
+      # file = "texreg2.doc",
+       caption = "Exclusion of the Richest States",
+       custom.model.names = c("Model 7", "Model A20"),
+       label = "tab:table9",
+       caption.above = T,
+       fontsize = "scriptsize",
+       custom.coef.map = list("log_cc_outs" = "Pollution Outsourcing",
+                              "vdem_polyarchy" = "Democracy",
+                              "log_cc_outs:vdem_polyarchy" = "Pollution Outsourcing x Democracy",
+                              "log_pop" = "Population",
+                              "log_gdp_pc" = "GDP per capita",
+                              "log_gdp_pc_sq" = "GDP per capita$^2$",
+                              "(Intercept)" = "Constant"),
+        custom.gof.rows = list("Controls" = c("\\ding{51}", "\\ding{51}"),
+                               "Country-FE" = c("\\ding{51}", "\\ding{51}"),
+                               "Year-FE" = c("\\ding{51}", "\\ding{51}")))
+```
+
+## Country-fixed and TWFE 
+
+```{r country-TWFE effects}
+
+#-------------------------------------------------------------------------------
+# Model group 1 
+#-------------------------------------------------------------------------------
+m3_cf <- lm(log_cc_outs ~ vdem_polyarchy + log_pop + log_gdp_pc + log_gdp_pc_sq + as.factor(ccode), data = data_ova)
+m3_twfe <- lm(log_cc_outs ~ vdem_polyarchy + log_pop + log_gdp_pc + log_gdp_pc_sq + as.factor(ccode) + as.factor(year), data = data_ova)
+
+stargazer(m3, m3_cf, m3_twfe, type = "text", omit = c("ccode", "year"))
+
+texreg(list(m3, m3_cf, m3_twfe),
+       stars = c(0.01, 0.05, 0.1),
+       #file = "texreg1.doc",
+       custom.header = list("Pollution Outsourcing" = 1:3),
+       caption = "Alternative Model Specification -- First-Stage Analysis",
+       custom.model.names = c("Model 1", "Model 14", "Model 15"),
+       label = "tab:table10",
+       caption.above = T,
+       fontsize = "scriptsize",
+       custom.coef.map = list("vdem_polyarchy" = "Democracy",
+                              "log_pop" = "Population",
+                              "log_gdp_pc" = "GDP per capita",
+                              "log_gdp_pc_sq" = "GDP per capita$^2$", 
+                              "(Intercept)" = "Constant"),
+        custom.gof.rows = list("Controls" = c("\\xmark", "\\ding{51}", "\\ding{51}"),
+                               "Year-FE" = c("\\ding{51}", "\\ding{51}", "\\ding{51}")))
+
+#-------------------------------------------------------------------------------
+# Model group 2 
+#-------------------------------------------------------------------------------
+m8_cf <- lm(log_ghg_pc ~ log_cc_outs + vdem_polyarchy + log_cc_outs*vdem_polyarchy +
+             log_pop + log_gdp_pc + log_gdp_pc_sq + as.factor(ccode),
+             data = data_ova)
+
+m8_twfe <- lm(log_ghg_pc ~ log_cc_outs + vdem_polyarchy + log_cc_outs*vdem_polyarchy +
+             log_pop + log_gdp_pc + log_gdp_pc_sq + as.factor(year) + as.factor(ccode),
+             data = data_ova)
+
+stargazer(m8, m8_cf, m8_twfe, type = "text", omit = c("ccode", "year"))
+
+
+texreg(list(m8, m8_cf, m8_twfe),
+       stars = c(0.01, 0.05, 0.1),
+      # file = "texreg2.doc",
+       caption = "Alternative Model Specification -- Second-Stage Analysis",
+       custom.model.names = c("Model 2", "Model 16", "Model 17"),
+       label = "tab:table11",
+       caption.above = T,
+       fontsize = "scriptsize",
+       custom.coef.map = list("log_cc_outs" = "Pollution Outsourcing",
+                              "vdem_polyarchy" = "Democracy",
+                              "log_cc_outs:vdem_polyarchy" = "Pollution Outsourcing x Democracy",
+                              "log_pop" = "Population",
+                              "log_gdp_pc" = "GDP per capita",
+                              "log_gdp_pc_sq" = "GDP per capita$^2$",
+                              "(Intercept)" = "Constant"),
+        custom.gof.rows = list("Controls" = c("\\ding{51}", "\\ding{51}", "\\ding{51}"),
+                               "Country-FE" = c("", "\\ding{51}", "\\ding{51}"),
+                               "Year-FE" = c("\\ding{51}", "", "\\ding{51}")))
+```
