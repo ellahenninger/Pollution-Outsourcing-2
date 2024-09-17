@@ -4,7 +4,7 @@
 
 This is the data repository for the paper "What Makes Democracies Greener? The Role of Pollution Offshoring" by Tobias Böhmelt, Ella Henninger, and Thomas Bernauer.
 
-- The main analyses can be found in **replication_code.rmd**.
+- The main analyses can be found in **replication_code.rmd** and **replication_code - r_and_r.rmd**.
 - All relevant plots are stored in *plots*.
 - The relevant data can be found under *data*.
 
@@ -28,8 +28,6 @@ The code in **replication_code.rmd** is structured as follows:
 
 3. Descriptives
 - Table summary statistics
-- Correlations
-- Trends
 
 4. Analyses
 - Models democracy and pollution outsourcing: Model group 1
@@ -40,10 +38,8 @@ The code in **replication_code.rmd** is structured as follows:
 5. Quantities of interest
 - Simulated interaction effects
 - Marginal effects plots
-- Expected values: Model group 1 (within)
-- Expected values: Model group 1 (Between)
-- Expected values & first differences: Model group 2 (within)
-- Expected values & first differences: Model group 2 (between)
+- Expected values: Model group 1 
+- Expected values & first differences: Model group 2 
 
 6. Robustness checks
 - Replacing DV with PM2.5
@@ -53,4 +49,4 @@ The code in **replication_code.rmd** is structured as follows:
 - Alternative operationalization democracy
 - Additional controls
 - Drop high-income states
-- Sample split instead of interaction term
+- Alternative model specification
