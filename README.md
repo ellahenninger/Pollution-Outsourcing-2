@@ -38,7 +38,7 @@ The code in **replication_code.rmd** is structured as follows:
 5. Quantities of interest
 - Simulated interaction effects
 - Marginal effects plots
-- Expected values: Model group 1 
+- Expected values & first differences: Model group 1 
 - Expected values & first differences: Model group 2 
 
 6. Robustness checks

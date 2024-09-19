@@ -38,7 +38,7 @@ This R-Markdown file replicates all analyses and figures included in the paper "
 
 5. Quantities of interest
 5.1 Marginal effects plots
-5.2 Expected values: Model group 1 
+5.2 Expected values & first differences: Model group 1 
 5.3 Expected values & first differences: Model group 2
 
 6. Robustness checks
@@ -587,7 +587,7 @@ out1$est.bin
 
 ```
 
-## Simulate expected values: Model group 1 
+## Simulate expected values and first differences: Model group 1 
 
 ```{r expected values 1}
 
@@ -861,12 +861,12 @@ range_outsource_w <- aggregate(data_ova$log_cc_outs,
                                by = list(data_ova$cname),
                                FUN = mean)
 
-
+## We take the 20th and the 80th percentile of the variable to avoid lack of common support
 min_outsource_w <- quantile(range_outsource_w[,2], 0.20)
 max_outsource_w <- quantile(range_outsource_w[,2], 0.80)
 
-min_outsource_country <- data_ova$cname[which(data_ova$log_cc_outs %like% min_dem)]
-max_outsource_country <- data_ova$cname[which(data_ova$log_cc_outs %like% max_dem)]
+# min_outsource_country <- data_ova$cname[which(data_ova$log_cc_outs %like% min_outsource_w)] ## Barbados, Rwanda
+# max_outsource_country <- data_ova$cname[which(data_ova$log_cc_outs %like% max_outsource_w)] ## South Africa, Indonesia, Netherlands
 
 #-------------------------------------------------------------------------------
 # Determine "reasonable" variation of dem (values from binning)
