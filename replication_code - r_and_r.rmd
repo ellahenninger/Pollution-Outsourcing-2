@@ -49,7 +49,7 @@ This R-Markdown file replicates all analyses and figures included in the paper "
 6.5 Alternative operationalization democracy
 6.6 Additional controls
 6.7 Drop high-income states
-6.8 Alternative model specification
+6.8 Alternative model specifications
 
 **As a note**: You may be asked to update some packages, please press "yes" to make sure the file runs smoothly.
 
@@ -1410,14 +1410,17 @@ texreg(list(m8, m8_low_income),
                                "Year-FE" = c("\\ding{51}", "\\ding{51}")))
 ```
 
-## Country-fixed and TWFE 
+## RE and TWFE 
 
-```{r country-TWFE effects}
+```{r RE-TWFE effects}
 
 #-------------------------------------------------------------------------------
 # Model group 1 
 #-------------------------------------------------------------------------------
-m3_cf <- lm(log_cc_outs ~ vdem_polyarchy + log_pop + log_gdp_pc + log_gdp_pc_sq + as.factor(ccode), data = data_ova)
+## Set up panel data
+panel_data <- pdata.frame(data_ova, index = c("ccode", "year"))
+
+m3_cf <- lmer(log_cc_outs ~ vdem_polyarchy + log_pop + log_gdp_pc + log_gdp_pc_sq + as.factor(year) + (1|ccode), data = data_ova)
 m3_twfe <- lm(log_cc_outs ~ vdem_polyarchy + log_pop + log_gdp_pc + log_gdp_pc_sq + as.factor(ccode) + as.factor(year), data = data_ova)
 
 stargazer(m3, m3_cf, m3_twfe, type = "text", omit = c("ccode", "year"))
@@ -1437,13 +1440,15 @@ texreg(list(m3, m3_cf, m3_twfe),
                               "log_gdp_pc_sq" = "GDP per capita$^2$", 
                               "(Intercept)" = "Constant"),
         custom.gof.rows = list("Controls" = c("\\xmark", "\\ding{51}", "\\ding{51}"),
-                               "Year-FE" = c("\\ding{51}", "\\ding{51}", "\\ding{51}")))
+                               "RE" = c("\\xmark", "\\ding{51}", "\\xmark"),
+                               "Year-FE" = c("\\ding{51}", "\\ding{51}", "\\ding{51}"),
+                               "Country-FE" = c("\\xmark", "\\xmark", "\\ding{51}")))
 
 #-------------------------------------------------------------------------------
 # Model group 2 
 #-------------------------------------------------------------------------------
-m8_cf <- lm(log_ghg_pc ~ log_cc_outs + vdem_polyarchy + log_cc_outs*vdem_polyarchy +
-             log_pop + log_gdp_pc + log_gdp_pc_sq + as.factor(ccode),
+m8_cf <- lmer(log_ghg_pc ~ log_cc_outs + vdem_polyarchy + log_cc_outs*vdem_polyarchy +
+             log_pop + log_gdp_pc + log_gdp_pc_sq + as.factor(year) + (1|ccode),
              data = data_ova)
 
 m8_twfe <- lm(log_ghg_pc ~ log_cc_outs + vdem_polyarchy + log_cc_outs*vdem_polyarchy +
@@ -1468,7 +1473,8 @@ texreg(list(m8, m8_cf, m8_twfe),
                               "log_gdp_pc" = "GDP per capita",
                               "log_gdp_pc_sq" = "GDP per capita$^2$",
                               "(Intercept)" = "Constant"),
-        custom.gof.rows = list("Controls" = c("\\ding{51}", "\\ding{51}", "\\ding{51}"),
-                               "Country-FE" = c("", "\\ding{51}", "\\ding{51}"),
-                               "Year-FE" = c("\\ding{51}", "", "\\ding{51}")))
+        custom.gof.rows = list("Controls" = c("\\xmark", "\\ding{51}", "\\ding{51}"),
+                               "RE" = c("\\xmark", "\\ding{51}", "\\xmark"),
+                               "Year-FE" = c("\\ding{51}", "\\ding{51}", "\\ding{51}"),
+                               "Country-FE" = c("\\xmark", "\\xmark", "\\ding{51}")))
 ```
