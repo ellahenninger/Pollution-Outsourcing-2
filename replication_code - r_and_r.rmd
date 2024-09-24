@@ -271,6 +271,25 @@ data_descript <- data_s[which(!is.na(data_s$log_cc_outs) &
 
 ```
 
+## Create mean and demeaned variables
+
+```{r variable demeaning}
+
+#-------------------------------------------------------------------------------
+# Mean and de-meaning
+#-------------------------------------------------------------------------------
+data_s <- data_s %>%
+  group_by(ccode) %>%
+  mutate(
+    mean_log_ghg_pc = mean(log_ghg_pc, na.rm = T),
+    mean_log_cc_outs = mean(log_cc_outs, na.rm = T),
+    demeaned_log_ghg_pc = log_ghg_pc - mean(log_ghg_pc, na.rm = T),
+    demeaned_log_cc_outs = log_cc_outs - mean(log_cc_outs, na.rm = T))%>% 
+  ungroup()
+
+```
+
+
 
 # Analyses
 
@@ -1477,4 +1496,84 @@ texreg(list(m8, m8_cf, m8_twfe),
                                "RE" = c("\\xmark", "\\ding{51}", "\\xmark"),
                                "Year-FE" = c("\\ding{51}", "\\ding{51}", "\\ding{51}"),
                                "Country-FE" = c("\\xmark", "\\xmark", "\\ding{51}")))
+```
+
+## Cross-sectional
+
+```{r cross-sectional}
+
+#-------------------------------------------------------------------------------
+# Model group 1
+#-------------------------------------------------------------------------------
+m_cs_1 <- list()
+
+# Loop through the specified years
+for (i in 1990:2015) {
+  
+  # Subset the data for the current year
+  year_data <- data_ova[data_ova$year == i, ]
+  
+  # Run the regression
+  model <- lm(log_cc_outs ~ vdem_polyarchy + log_pop + log_gdp_pc + log_gdp_pc_sq, data = year_data)
+  
+  # Extract coefficient for vdem_polyarchy
+  coef_vdem <- summary(model)$coefficients["vdem_polyarchy", c("Estimate", "Pr(>|t|)", "Std. Error")]
+  
+  # Store the results in the list
+  m_cs_1[[as.character(i)]] <- list(
+    coefficient = coef_vdem[1],     # Coefficient size
+    p_value = coef_vdem[2],         # P-value for significance
+    se = coef_vdem[3],              # Standard error
+    n_obs = nrow(year_data)         # Number of observations
+  )
+}
+
+# Convert the results list to a data frame for easier viewing
+results_df <- do.call(rbind, lapply(m_cs_1, function(x) data.frame(t(unlist(x)))))
+results_df$Year <- rownames(results_df)  # Add the year as a column
+rownames(results_df) <- NULL              # Reset row names
+
+# Display the results
+print(results_df)
+
+
+#-------------------------------------------------------------------------------
+# Model group 2
+#-------------------------------------------------------------------------------
+m_cs_2 <- list()
+
+# Loop through the specified years
+for (i in 1990:2015) {
+  
+  # Subset the data for the current year
+  year_data <- data_ova[data_ova$year == i, ]
+  
+  # Run the regression
+  model <- lm(log_ghg_pc ~ log_cc_outs + vdem_polyarchy + log_cc_outs*vdem_polyarchy +
+               log_pop + log_gdp_pc + log_gdp_pc_sq, data = year_data)
+  
+  # Extract coefficient for vdem_polyarchy
+  coef_int <- summary(model)$coefficients["log_cc_outs:vdem_polyarchy", c("Estimate", "Pr(>|t|)", "Std. Error")]
+  
+  # Store the results in the list
+  m_cs_2[[as.character(i)]] <- list(
+    coefficient = coef_int[1],     # Coefficient size
+    p_value = coef_int[2],         # P-value for significance
+    se = coef_int[3],              # Standard error
+    n_obs = nrow(year_data)        # Number of observations
+  )
+}
+
+# Convert the results list to a data frame for easier viewing
+results_df2 <- do.call(rbind, lapply(m_cs_2, function(x) data.frame(t(unlist(x)))))
+results_df2$Year <- rownames(results_df2)  # Add the year as a column
+rownames(results_df2) <- NULL              # Reset row names
+
+# Display the results
+print(results_df2)
+
+## Exclusively negative (even though not )
+results_df2$low_CI <- results_df2$coefficient.Estimate - 1.96*results_df2$se.Std..Error
+results_df2$high_CI <- results_df2$coefficient.Estimate + 1.96*results_df2$se.Std..Error
+
 ```
