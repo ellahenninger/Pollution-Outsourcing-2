@@ -511,7 +511,7 @@ segments(y0 = rev(c(0.25, 0.65, 1.05, 1.45, 1.85, 2.25)),
 # add coefficients text
 text(x = -2,
      y = rev(c(0.25, 0.65, 1.05, 1.35, 1.85, 2.25)),
-     labels = c("Pollution outsourcing", "Democracy", "Pollution outsourcing \nx Democracy", 
+     labels = c("Pollution offshoring", "Democracy", "Pollution offshoring \nx Democracy", 
                 "Population", "GDP per capita", expression("GDP per capita"^2)),
      xpd = T,
      cex = 0.9,
@@ -592,7 +592,7 @@ pdf("plots/Marginal_interflex.pdf", width = 12)
 plot(out1,
      pool = T,
      xlab = "Democracy",
-     ylab = "Marginal Effect of Pollution Outsourcing",
+     ylab = "Marginal Effect of Pollution Offshoring",
      Dlabel = "",
      theme.bw = TRUE, show.grid = FALSE,
      cex.axis = 0.8, cex.lab = 0.8, color = viridis(3)[1], legend.title = "")
@@ -1537,6 +1537,20 @@ rownames(results_df) <- NULL              # Reset row names
 print(results_df)
 
 
+# Load necessary libraries
+library(knitr)
+install.packages("kableExtra")
+library(kableExtra)
+
+# Create a nicely formatted table using knitr and kableExtra
+results_df %>%
+  kable("latex", col.names = c("Estimate Democracy", "P-Value", "Standard Error", "Observations", "Year"), 
+        digits = 2) %>%
+  kable_styling(full_width = F, bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T) # Make the first column bold
+
+
+
 #-------------------------------------------------------------------------------
 # Model group 2
 #-------------------------------------------------------------------------------
@@ -1572,8 +1586,11 @@ rownames(results_df2) <- NULL              # Reset row names
 # Display the results
 print(results_df2)
 
-## Exclusively negative (even though not )
-results_df2$low_CI <- results_df2$coefficient.Estimate - 1.96*results_df2$se.Std..Error
-results_df2$high_CI <- results_df2$coefficient.Estimate + 1.96*results_df2$se.Std..Error
+# In a table
+results_df2 %>%
+  kable("latex", col.names = c("Estimate Pollution offshoring x Democracy", "P-Value", "Standard Error", "Observations", "Year"), 
+        digits = 2) %>%
+  kable_styling(full_width = F, bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>%
+  column_spec(1, bold = T) # Make the first column bold
 
 ```
